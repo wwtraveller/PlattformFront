@@ -1,0 +1,29 @@
+.header {
+    width: 100%;
+    background-color: orange;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* .header > a {
+    color: white;
+    margin-right: 30px;
+    text-decoration: none;
+} */
+
+.header > span {
+    color: blueviolet;
+    margin-right: 20px;
+}
+
+.header > a:hover {
+    text-decoration: underline;
+}
+
+.active {
+    font-weight: 600;
+    text-decoration: underline;
+    color: black;
+}
