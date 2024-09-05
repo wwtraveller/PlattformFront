@@ -11,7 +11,8 @@ root.render(
   <React.StrictMode>
     <><Header/></>
   <div>
-    <h1>hi</h1>
+    <h1>hello</h1>
+    <p>kjl</p>
   </div>
   </React.StrictMode>
 );
