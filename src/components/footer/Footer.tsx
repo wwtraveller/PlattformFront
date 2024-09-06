@@ -8,7 +8,6 @@ export default function Footer() {
         <footer className={styles.footer}>
             footer
         </footer>
-
         </>
     )
 }
