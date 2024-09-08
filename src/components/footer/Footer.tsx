@@ -2,13 +2,15 @@ import React from 'react'
 import styles from './footer.module.css'
 
 
-export default function Footer() {
+function Footer() {
     return (
         <>
         <footer className={styles.footer}>
             footer
         </footer>
-
+   
         </>
     )
 }
+
+export default Footer;

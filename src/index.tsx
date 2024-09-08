@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Header from './components/header/Header.tsx';
-import App from './app/App.tsx'
+import Header from './components/header/Header';
+import App from './app/App'
+import Footer from './components/footer/Footer';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -20,5 +21,6 @@ root.render(
     
     </div>
 
+    <Footer />
   </>
 );
