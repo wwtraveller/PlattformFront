@@ -1,0 +1,20 @@
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .loginForm > input {
+    margin-bottom: 3px;
+  }
+  
+  .loginForm > button {
+    background-color: rgb(163, 192, 255);
+    border: none;
+    border-radius: 3px;
+  }
+  
+  .errors {
+    color: red;
+  }
+  

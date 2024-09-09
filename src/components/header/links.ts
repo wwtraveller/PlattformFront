@@ -20,5 +20,9 @@ interface ILinks {
     {
       pathname: '/blog',
       title: 'Блог'
-    }
+    },
+    {
+      pathname: '/login-form',
+      title: 'login'
+  }
   ];

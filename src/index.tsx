@@ -6,6 +6,7 @@ import Marketing from './components/marketing/Marketing';
 import About from './components/about/About';
 import Product from './components/product/Product';
 import Blog from './components/blog/Blog';
+import Login from './components/login/Login';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -20,6 +21,7 @@ root.render(
         <Route path='/product' element={<Product />} />
         <Route path='/marketing' element={<Marketing />} />
         <Route path='/blog' element={<Blog />} />
+        <Route path='/login-form' element={<Login />} />
         <Route path='*' element={<h1>Error 404 😵</h1>} />
       </Route>
     </Routes>
