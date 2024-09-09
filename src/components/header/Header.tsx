@@ -2,9 +2,10 @@ import { Link, useLocation } from 'react-router-dom';
 import styles from './header.module.css';
 
 import { links } from './links';
-import Button from '../button/Button';
 import { useState } from 'react';
 import Login from '../login/Login';
+import Button from '../button/Button';
+
 
 
 export default function Header() {
@@ -25,11 +26,20 @@ const handleCloseLoginWindow = () => {
   setSearchQuery(event.target.value);
   };
 
-  // Функция, которая будет вызвана при нажатии на кнопку поиска
-  const handleSearch = () => {
-  console.log(`Поиск по запросу: ${searchQuery}`);
-  // Здесь можно добавить логику для выполнения поиска, например, сделать запрос к API
+  // Функция запуска поиска по нажатию Enter
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      console.log(`Поиск по запросу: ${searchQuery}`);
+      // Добавить логику для выполнения поиска, запрос к API
+      setSearchQuery(''); // Очистка поля поиска после запуска
+    }
   };
+
+  // Функция, которая будет вызвана при нажатии на кнопку поиска
+  // const handleSearch = () => {
+  // console.log(`Поиск по запросу: ${searchQuery}`);
+  // Здесь можно добавить логику для выполнения поиска, например, сделать запрос к API
+  //};
 
   return (
     <header className={styles.header}>
@@ -37,21 +47,22 @@ const handleCloseLoginWindow = () => {
       {links.map((el, index) => (
         <Link
           key={index}
-          className={location.pathname === el.pathname ? styles.active : ''}
+          className={`${styles.navLink} ${
+            location.pathname === el.pathname ? styles.active : ''}`}
           to={el.pathname}>{el.title}</Link>
       ))}
       </div>
       <div className={styles.navLeft}>
-        {/* Блок для поиска */}
+        {/* Блок для поиска без кнопки */}
         <div className={styles.navSearch}>
           <input
             type="text"
             value={searchQuery}
             onChange={handleInputChange}
+            onKeyPress={handleKeyPress} // Обработчик нажатия Enter
             placeholder="Введите запрос"
             className={styles.searchInput} 
           />
-          <Button type="button" name="Поиск" onClick={handleSearch} />
         </div>
 
         <div>

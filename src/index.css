@@ -1,6 +1,7 @@
 * {
   /* чтобы padding у всех контейнеров не увеличивал размер элемента */
   box-sizing: border-box;
+  text-decoration: none;
 }
 
 body {
@@ -17,8 +18,8 @@ code {
     monospace;
 }
 
-header > a {
-  text-decoration: none;
+/* header > a {
+  text-decoration: none !important;
   color: white;
   margin-right: 20px;
-}
+} */
