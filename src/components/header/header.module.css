@@ -63,36 +63,11 @@
 }
 
 .navLeft {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  display: flex;
+  align-items: center; /* Центрирует элементы по вертикали */
+  gap: 15px;
   }
-  
-  .navSearch {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  
-  .searchInput {
-    padding: 10px 30px 10px 40px; /* Отступ слева для размещения иконки */
-    border: 1px solid #ccc;
-    border-radius: 20px; /* радиус для округления */
-    outline: none;
-    font-size: 14px;
-    width: 250px;
-    background-color: #fff;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23999" viewBox="0 0 24 24"><path d="M10 2a8 8 0 016.32 12.906l4.387 4.386-1.414 1.415-4.387-4.386A8 8 0 1110 2zm0 2a6 6 0 100 12A6 6 0 0010 4z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: 10px center; /* Позиция иконки лупы */
-    background-size: 16px; /* Размер иконки */
-    transition: border-color 0.3s;
-  }
-
-  .searchInput:focus {
-    border-color: var(--primary-color);
-  }
-  
+    
   .loginButton button {
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -122,7 +97,6 @@
     align-items: center;
     
   }
-
   
   .loginWindowContent {
     background-color: white;
