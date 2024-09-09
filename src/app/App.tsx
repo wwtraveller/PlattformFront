@@ -6,6 +6,7 @@ function App() {
   return (
     <div className="App">
       <h1>Hello, typescript react ⛵</h1>
+      <p>hello</p>
     </div>
   );
 }
