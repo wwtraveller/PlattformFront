@@ -9,7 +9,6 @@ root.render(
 
   <>
     <>
-    <Header/>
     <App />
     </>
     <div>
