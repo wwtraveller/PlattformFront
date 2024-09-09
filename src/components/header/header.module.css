@@ -1,8 +1,9 @@
 :root {
-    --primary-color: #0077b5; /* Синий цвет */
+    --primary-color: #6788f3; /* Основной синий цвет */
+    --active-color: #5b7ff5; /* Более насыщенный синий цвет для активной ссылки */
     --text-color: #000; /* Черный текст */
     --bg-color: #fff; /* Белый фон */
-    --hover-color: #0056a3; /* Темно-синий цвет при наведении */
+    --hover-color: #5278f7; /* Темно-синий цвет при наведении */
   }
 
 .header {
@@ -40,8 +41,9 @@
   .navLink {
     color: var(--text-color);
     text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s;
+    font-weight: 400;
+    /* transition: color 0.3s; */
+    transition: color 0.3s, font-weight 0.3s;
   }
   
   .navLink:hover {
@@ -51,12 +53,13 @@
 .active {
     /* font-weight: 600;
     text-decoration: underline; */
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
+    color: var(--active-color); /* Более насыщенный оттенок синего */
+    font-weight: 700; /* Жирный текст */
+    text-decoration: none !important; /* Убираем подчеркивание полностью */
 }
+
 .navleft {
-    margin-left: 400px;
-    
+    margin-left: 400px;  
 }
 
 .navLeft {
@@ -66,15 +69,28 @@
   }
   
   .navSearch {
+    position: relative;
     display: flex;
     align-items: center;
   }
   
   .searchInput {
-    padding: 5px 10px;
+    padding: 10px 30px 10px 40px; /* Отступ слева для размещения иконки */
     border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-right: 5px;
+    border-radius: 20px; /* радиус для округления */
+    outline: none;
+    font-size: 14px;
+    width: 250px;
+    background-color: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23999" viewBox="0 0 24 24"><path d="M10 2a8 8 0 016.32 12.906l4.387 4.386-1.414 1.415-4.387-4.386A8 8 0 1110 2zm0 2a6 6 0 100 12A6 6 0 0010 4z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: 10px center; /* Позиция иконки лупы */
+    background-size: 16px; /* Размер иконки */
+    transition: border-color 0.3s;
+  }
+
+  .searchInput:focus {
+    border-color: var(--primary-color);
   }
   
   .loginButton button {
