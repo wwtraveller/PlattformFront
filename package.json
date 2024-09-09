@@ -35,7 +35,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "npm run build && gh-pages -d build",
-    "lazy": "git add . && git commit -m 'add button' && git push"
+    "lazy": "git add . && git commit -m 'add button' && git push origin Alena"
   },
   "eslintConfig": {
     "extends": [
