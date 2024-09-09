@@ -1,18 +1,22 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import Header from '../header/Header'
-import Footer from '../footer/Footer'
+import { Outlet } from 'react-router-dom';
+import Footer from '../footer/Footer';
+import styles from './layout.module.css';
+import Header from '../header/Header';
 
-const Layout = () => {
+function Layout() {
+  
   return (
-    <div>
-        <Header />
-        <main>
-            <Outlet />
-        </main>
-        <Footer/>
+
+    <div className={styles.page}>
+      
+      <Header />
+      <main className={styles.main}>
+        {/* сюда вместо outlet приходят все компоненты из вложенных route */}
+        <Outlet />
+      </main>
+      <Footer />
     </div>
-  )
+  );
 }
 
 export default Layout

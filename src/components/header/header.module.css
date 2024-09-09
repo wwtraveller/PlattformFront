@@ -1,6 +1,6 @@
 .header {
     width: 100%;
-    background-color: orange;
+    background-color: #6788f3;
     height: 80px;
     display: flex;
     align-items: center;
@@ -14,7 +14,7 @@
 } */
 
 .header > span {
-    color: blueviolet;
+    color: rgb(104, 50, 251);
     margin-right: 20px;
 }
 
