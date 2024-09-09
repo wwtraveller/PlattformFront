@@ -1,13 +1,13 @@
 import styles from './button.module.css'
 
-interface IMyButtonProps {
+interface IButtonProps {
     name?: string
     type?: 'button' | 'submit' | 'reset'
     onClick?: () => void;
   }
   
   
-  export default function MyButton({ type='button', onClick, name='default' }:IMyButtonProps) {
+  export default function Button({ type='button', onClick, name='default' }:IButtonProps) {
     return (
       <button type={type} onClick={onClick} className={styles.myButton}>
         {name}

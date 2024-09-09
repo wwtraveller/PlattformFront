@@ -20,7 +20,7 @@ root.render(
         <Route path='/product' element={<Product />} />
         <Route path='/marketing' element={<Marketing />} />
         <Route path='/blog' element={<Blog />} />
-        <Route path='*' element={<h1>Error 404 😵</h1>} />
+        <Route path='*' element={<h1>Ошибка 404</h1>} />
       </Route>
     </Routes>
   </HashRouter>
