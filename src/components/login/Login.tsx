@@ -43,7 +43,7 @@ export default function Login() {
 
         <input value={formik.values.password} name='password' onChange={formik.handleChange} type="text" placeholder='password' />
 
-        <Button type='submit'> name={"Sigh in"}/>
+        {/* <Button type='submit'> name={"Sigh in"}/> */}
       </form>
     </div>
   )
