@@ -2,9 +2,9 @@ import { Link, useLocation } from 'react-router-dom';
 import styles from './header.module.css';
 
 import { links } from './links';
-// import Button from '../button/Button';
 import { useState } from 'react';
 import Button from '../button/Button';
+import Search from 'components/search/Search';
 
 
 export default function Header() {
@@ -54,7 +54,6 @@ export default function Header() {
             className={styles.searchInput} // Добавьте стили по желанию
           />
         </div>
-        
         <Link to={'/login'} className={styles.loginButton}><Button name='Войти' /></Link>
         <Link to={'/signup'} className={styles.signupButton}><Button name='Зарегистрироваться' /></Link>
       </div>
