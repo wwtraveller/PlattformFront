@@ -6,11 +6,14 @@ import Marketing from './components/marketing/Marketing';
 import About from './components/about/About';
 import Product from './components/product/Product';
 import Blog from './components/blog/Blog';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  // обертка router над всеми элементами
+  <Provider store={store}>
+   {/* обертка router над всеми элементами */}
   <HashRouter>
     {/* обертка для описания маршрутов */}
     <Routes>
@@ -24,4 +27,5 @@ root.render(
       </Route>
     </Routes>
   </HashRouter>
+  </Provider>
 );
