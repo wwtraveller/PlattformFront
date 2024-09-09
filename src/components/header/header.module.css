@@ -1,10 +1,20 @@
+:root {
+    --primary-color: #0077b5; /* Синий цвет */
+    --text-color: #000; /* Черный текст */
+    --bg-color: #fff; /* Белый фон */
+    --hover-color: #0056a3; /* Темно-синий цвет при наведении */
+  }
+
 .header {
-    width: 100%;
+    /* width: 100%;
     background-color: #6788f3;
-    height: 80px;
+    height: 80px; */
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: var(--bg-color);
+    border-bottom: 1px solid #ddd;
 }
 
 /* .header > a {
@@ -13,17 +23,73 @@
     text-decoration: none;
 } */
 
-.header > span {
+/* .header > span {
     color: rgb(104, 50, 251);
     margin-right: 20px;
 }
 
 .header > a:hover {
     text-decoration: underline;
-}
+} */
+
+.navMenu {
+    display: flex;
+    gap: 20px;
+  }
+
+  .navLink {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+  
+  .navLink:hover {
+    color: var(--primary-color);
+  }
 
 .active {
-    font-weight: 600;
-    text-decoration: underline;
-    color: black;
+    /* font-weight: 600;
+    text-decoration: underline; */
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
 }
+.navleft {
+    margin-left: 400px;
+    
+}
+
+.navLeft {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .navSearch {
+    display: flex;
+    align-items: center;
+  }
+  
+  .searchInput {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 5px;
+  }
+  
+  .loginButton button {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid #ccc;
+  }
+  
+  .signupButton button {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s;
+  }
+  
+  .signupButton button:hover {
+    background-color: var(--hover-color);
+  }
