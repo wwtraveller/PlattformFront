@@ -20,14 +20,14 @@ export default function Login() {
 
   const formik = useFormik({
     initialValues: {
-      username: 'James Bond',
-      password: 'agent007'
+      username: '',
+      password: ''
     } as ILoginFormValues,
     onSubmit: (values: ILoginFormValues, {resetForm}) => {
       dispatch(loginUser(values))
       .then(()=> {
         navigate ('/')
-        //resetForm
+       resetForm()
       })
     }
   })
@@ -37,13 +37,14 @@ export default function Login() {
   return (
     <div>
       <form onSubmit={formik.handleSubmit} className={styles.loginForm}>
-        <label>Login 🔐</label>
+        <div className={styles.loginHere}>Login Here</div>
 
         <input value={formik.values.username} name='username' onChange={formik.handleChange} type="text" placeholder='username' />
 
-        <input value={formik.values.password} name='password' onChange={formik.handleChange} type="text" placeholder='password' />
+        <input value={formik.values.password} name='password' onChange={formik.handleChange} type="password" placeholder='password' />
 
-        {/* <Button type='submit'> name={"Sigh in"}/> */}
+        <Button type='submit' name="Login" />
+
       </form>
     </div>
   )

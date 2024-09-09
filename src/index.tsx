@@ -6,12 +6,14 @@ import Marketing from './components/marketing/Marketing';
 import About from './components/about/About';
 import Product from './components/product/Product';
 import Blog from './components/blog/Blog';
-import Login from './components/login/Login';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  // обертка router над всеми элементами
+  <Provider store={store}>
+   {/* обертка router над всеми элементами */}
   <HashRouter>
     {/* обертка для описания маршрутов */}
     <Routes>
@@ -21,9 +23,9 @@ root.render(
         <Route path='/product' element={<Product />} />
         <Route path='/marketing' element={<Marketing />} />
         <Route path='/blog' element={<Blog />} />
-        <Route path='/login-form' element={<Login />} />
         <Route path='*' element={<h1>Ошибка 404</h1>} />
       </Route>
     </Routes>
   </HashRouter>
+  </Provider>
 );
