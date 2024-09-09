@@ -3,13 +3,23 @@ import styles from './header.module.css';
 
 import { links } from './links';
 import { useState } from 'react';
+import Login from '../login/Login';
 import Button from '../button/Button';
-import Search from 'components/search/Search';
+
 
 
 export default function Header() {
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState(''); // Состояние для хранения запроса
+  const [isLoginWindowOpen, setIsLoginWindowOpen] = useState(false);
+
+const handleOpenLoginWindow = () => {
+  setIsLoginWindowOpen(true);
+};
+
+const handleCloseLoginWindow = () => {
+  setIsLoginWindowOpen(false);
+};
 
   // Функция обработки изменения ввода
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,11 +61,25 @@ export default function Header() {
             onChange={handleInputChange}
             onKeyPress={handleKeyPress} // Обработчик нажатия Enter
             placeholder="Введите запрос"
-            className={styles.searchInput} // Добавьте стили по желанию
+            className={styles.searchInput} 
           />
         </div>
-        <Link to={'/login'} className={styles.loginButton}><Button name='Войти' /></Link>
+
+        <div>
+            <Button name='Войти' onClick={handleOpenLoginWindow} />
+            {isLoginWindowOpen && (
+              <div className={styles.loginWindow}>
+                <div className={styles.loginWindowContent}>
+                   <button className={styles.closeButton} onClick={handleCloseLoginWindow}>Закрыть</button>
+                  <Login />
+                </div>
+              </div>
+  )}
+        </div>
+        
         <Link to={'/signup'} className={styles.signupButton}><Button name='Зарегистрироваться' /></Link>
+
+        
       </div>
 
     </header>
