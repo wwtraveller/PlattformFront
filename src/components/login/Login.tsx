@@ -37,11 +37,10 @@ export default function Login() {
   return (
     <div>
       <form onSubmit={formik.handleSubmit} className={styles.loginForm}>
-        <div className={styles.loginHere}>Login Here</div>
 
-        <input value={formik.values.username} name='username' onChange={formik.handleChange} type="text" placeholder='username' />
+        <input value={formik.values.username} name='username' onChange={formik.handleChange} type="text" placeholder='Username' />
 
-        <input value={formik.values.password} name='password' onChange={formik.handleChange} type="password" placeholder='password' />
+        <input value={formik.values.password} name='password' onChange={formik.handleChange} type="password" placeholder='Password' />
 
         <Button type='submit' name="Login" />
 

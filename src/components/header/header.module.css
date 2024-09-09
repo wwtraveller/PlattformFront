@@ -109,16 +109,33 @@
 
   
   .loginWindowContent {
-    background-color: white;
-    padding: 20px;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.47);
+    /* padding: 20px; */
     border-radius: 10px;
-    max-width: 400px;
+    max-width: 800px;
+    height: 400px;
     width: 100%;
+    
   }
 
+/* Стиль кнопки закрытия */
 .closeButton {
-    color: #0056a3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: transparent;
+    font-size: 5px;  /* Уменьшаем шрифт */
+         /* Уменьшаем внутренние отступы */
+    cursor: pointer;
+    color: #000000;      /* Цвет текста */
+    padding: 5px;
+  }
+  
+  .loginWindowContent button:hover {
+    color: #7531da;   /* Цвет при наведении */
+  }
+
+ 
