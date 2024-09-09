@@ -1,19 +1,27 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-//import './App';
-// import reportWebVitals from './reportWebVitals';
-//import App from '../App';
+import { HashRouter, Route, Routes } from 'react-router-dom';
+import Layout from './components/layout/Layout';
+import Marketing from './components/marketing/Marketing';
+import About from './components/about/About';
+import Product from './components/product/Product';
+import Blog from './components/blog/Blog';
+
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <React.StrictMode>
-  <div>
-    <h1>hi</h1>
-    <p>hello</p>
-  </div>
-  </React.StrictMode>
+  // обертка router над всеми элементами
+  <HashRouter>
+    {/* обертка для описания маршрутов */}
+    <Routes>
+      {/* маршрут-родитель, в котором мы отображаем остальные компоненты */}
+      <Route path='/' element={<Layout />} >
+        <Route path='/about' element={<About />} />
+        <Route path='/product' element={<Product />} />
+        <Route path='/marketing' element={<Marketing />} />
+        <Route path='/blog' element={<Blog />} />
+        <Route path='*' element={<h1>Ошибка 404</h1>} />
+      </Route>
+    </Routes>
+  </HashRouter>
 );
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals();
