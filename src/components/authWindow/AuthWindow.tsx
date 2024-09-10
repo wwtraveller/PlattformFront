@@ -15,7 +15,6 @@ export default function AuthWindow() {
       <div className={styles.authSectionSign}>
         <h2>Регистрация</h2>
         <p>Привет, Друг!</p>
-        <p>Ты, наверное, хотел зарегистрироваться?</p>
         <Registration />  {/* Форма регистрации */}
       </div>
     </div>

@@ -77,7 +77,7 @@ export interface ILoginFormValues {
           <div className={styles.error}>{formik.errors.password}</div>
         )}
 
-        <Link className={styles.link} to='/Registration'>Если у вас нет еще аккаунта, перейдите к регистрации справа!</Link>
+        <p className={styles.p} >Если у вас нет еще аккаунта, перейдите к регистрации справа!</p>
         <Button type="submit" name="Войти" />
       </form>
     );
