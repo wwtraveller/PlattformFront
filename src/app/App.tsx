@@ -6,6 +6,7 @@ import Product from '../components/product/Product';
 import Blog from '../components/blog/Blog';
 import './App.css'; // Сохраняем подключение стилей
 import SearchErrorPage from 'components/search/SearchErrorPage';
+import SearchResultsPage from 'components/search/SearchResultsPage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/product" element={<Product />} />
             <Route path="/marketing" element={<Marketing />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/search-results" element={<SearchResultsPage />} />
             <Route path="/search-error" element={<SearchErrorPage />} />
             <Route path="*" element={<h1>Ошибка 404</h1>} />
           </Route>

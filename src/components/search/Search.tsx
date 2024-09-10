@@ -20,6 +20,7 @@ const Search = (props: SearchProps) => {
   const [group, setGroup] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false); // Флаг, что был выполнен поиск
+  
 
   const groups = ['продукт', 'маркетинг', 'блог'];
   const navigate = useNavigate(); // Хук для навигации
@@ -31,8 +32,8 @@ const Search = (props: SearchProps) => {
       return false;
     }
     if (!group.trim()) {
-      props.setError('Пожалуйста, выберите категорию для поиска.');
-      navigate('/search-error', { state: { error: '' } });
+      props.setError('');
+      navigate('/search-error', { state: { error: 'Пожалуйста, выберите категорию для поиска.' } });
       return false;
     }
     props.setError(null);  // Сброс ошибки, если все условия выполнены
@@ -53,10 +54,12 @@ const Search = (props: SearchProps) => {
           group: group,
         },
       });
+
+
       props.setSearchResults(response.data);
     } catch (error) {
-      props.setError('Ошибка при выполнении поиска. Попробуйте снова.');
-      navigate('/search-error', { state: { }});   {/*error: 'Ошибка при выполнении поиска. Попробуйте снова.' */}
+      props.setError('');
+      navigate('/search-error', { state: { error: 'Ошибка при выполнении поиска. Попробуйте снова.'}});   {/*error: 'Ошибка при выполнении поиска. Попробуйте снова.' */}
     } finally {
       setIsSearching(false);
     }
