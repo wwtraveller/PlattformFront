@@ -11,7 +11,7 @@
     background-color: #6788f3;
     height: 80px; */
     display: flex;
-    align-items: center;
+    align-items: center; /* Центрируем элементы по вертикали */
     justify-content: space-between;
     padding: 10px 20px;
     background-color: var(--bg-color);
@@ -39,11 +39,12 @@
   }
 
   .navLink {
-    color: var(--text-color);
+    color: var(--text-color); /* Подстройка цвета под тему */
     text-decoration: none;
     font-weight: 400;
     /* transition: color 0.3s; */
     transition: color 0.3s, font-weight 0.3s;
+    padding: 10px 0; /* Увеличивает зону клика и выравнивает элементы */
   }
   
   .navLink:hover {
@@ -58,9 +59,16 @@
     text-decoration: none !important; /* Убираем подчеркивание полностью */
 }
 
-.navleft {
+/* Добавляем специфичные стили, чтобы не конфликтовали с глобальными */
+/* .header a {
+  margin: 0;
+  padding: 0; Обнуляем стили, если глобальные заданы иначе
+  color: var(--text-color);
+} */
+
+/* .navleft {
     margin-left: 400px;  
-}
+} */
 
 .navLeft {
   display: flex;
