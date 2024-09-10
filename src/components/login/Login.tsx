@@ -55,7 +55,12 @@ export interface ILoginFormValues {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           placeholder="Имя пользователя"
+          className={formik.touched.username && formik.errors.username ? styles.inputError : ''}
+
         />
+         {formik.touched.username && formik.errors.username && (
+          <div className={styles.error}>{formik.errors.username}</div>
+        )}
         <input
           name="password"
           type="password"
@@ -63,7 +68,12 @@ export interface ILoginFormValues {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           placeholder="Пароль"
+          className={formik.touched.password && formik.errors.password ? styles.inputError : ''}
+
         />
+          {formik.touched.password && formik.errors.password && (
+          <div className={styles.error}>{formik.errors.password}</div>
+        )}
         <Button type="submit" name="Войти" />
       </form>
     );
