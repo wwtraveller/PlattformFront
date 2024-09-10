@@ -20,5 +20,5 @@ interface ILinks {
     {
       pathname: '/blog',
       title: 'Блог'
-    }
+    },
   ];

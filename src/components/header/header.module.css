@@ -11,7 +11,7 @@
     background-color: #6788f3;
     height: 80px; */
     display: flex;
-    align-items: center;
+    align-items: center; /* Центрируем элементы по вертикали */
     justify-content: space-between;
     padding: 10px 20px;
     background-color: var(--bg-color);
@@ -39,11 +39,12 @@
   }
 
   .navLink {
-    color: var(--text-color);
+    color: var(--text-color); /* Подстройка цвета под тему */
     text-decoration: none;
     font-weight: 400;
     /* transition: color 0.3s; */
     transition: color 0.3s, font-weight 0.3s;
+    padding: 10px 0; /* Увеличивает зону клика и выравнивает элементы */
   }
   
   .navLink:hover {
@@ -58,41 +59,23 @@
     text-decoration: none !important; /* Убираем подчеркивание полностью */
 }
 
-.navleft {
+/* Добавляем специфичные стили, чтобы не конфликтовали с глобальными */
+/* .header a {
+  margin: 0;
+  padding: 0; Обнуляем стили, если глобальные заданы иначе
+  color: var(--text-color);
+} */
+
+/* .navleft {
     margin-left: 400px;  
-}
+} */
 
 .navLeft {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  display: flex;
+  align-items: center; /* Центрирует элементы по вертикали */
+  gap: 15px;
   }
-  
-  .navSearch {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  
-  .searchInput {
-    padding: 10px 30px 10px 40px; /* Отступ слева для размещения иконки */
-    border: 1px solid #ccc;
-    border-radius: 20px; /* радиус для округления */
-    outline: none;
-    font-size: 14px;
-    width: 250px;
-    background-color: #fff;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23999" viewBox="0 0 24 24"><path d="M10 2a8 8 0 016.32 12.906l4.387 4.386-1.414 1.415-4.387-4.386A8 8 0 1110 2zm0 2a6 6 0 100 12A6 6 0 0010 4z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: 10px center; /* Позиция иконки лупы */
-    background-size: 16px; /* Размер иконки */
-    transition: border-color 0.3s;
-  }
-
-  .searchInput:focus {
-    border-color: var(--primary-color);
-  }
-  
+    
   .loginButton button {
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -109,3 +92,48 @@
   .signupButton button:hover {
     background-color: var(--hover-color);
   }
+
+  .loginWindow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  
+  .loginWindowContent {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.47);
+    /* padding: 20px; */
+    border-radius: 10px;
+    max-width: 800px;
+    height: 400px;
+    width: 100%;
+    
+  }
+
+/* Стиль кнопки закрытия */
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: transparent;
+    font-size: 5px;  /* Уменьшаем шрифт */
+         /* Уменьшаем внутренние отступы */
+    cursor: pointer;
+    color: #000000;      /* Цвет текста */
+    padding: 5px;
+  }
+  
+  .loginWindowContent button:hover {
+    color: #7531da;   /* Цвет при наведении */
+  }
+
+ 

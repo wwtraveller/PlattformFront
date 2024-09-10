@@ -1,0 +1,76 @@
+.searchContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .searchWrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #fff;
+    height: 40px; /* Задает высоту для выравнивания с другими элементами */
+  }
+
+  .searchIcon {
+    padding: 10px;
+    background-color: #f3f3f3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .searchSelect {
+    padding: 8px;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    appearance: none;
+  }
+  
+  .searchInput {
+    flex: 1;
+    padding: 8px 10px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+  }
+  
+  .searchInput:focus {
+    border-color: var(--primary-color);
+  }
+  
+  .errorText {
+    color: red;
+    font-size: 12px;
+  }
+  
+  .resultsContainer {
+    margin-top: 20px;
+  }
+  
+  .resultItem {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .resultItem h4 {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .resultItem p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #555;
+  }
+
+  .button {
+    margin-top: 80px; /* Отступ сверху, чтобы кнопка была ниже текста */
+  }

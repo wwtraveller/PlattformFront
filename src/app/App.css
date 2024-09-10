@@ -1,16 +1,6 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  /* padding: 20px; */
 }
 
 .App-header {
@@ -26,6 +16,11 @@
 
 .App-link {
   color: #61dafb;
+  transition: color 0.3s;
+}
+
+.App-link:hover {
+  color: #21a1f1; /* Немного темнее цвет при наведении */
 }
 
 @keyframes App-logo-spin {
@@ -36,3 +31,5 @@
     transform: rotate(360deg);
   }
 }
+
+/* Удален .App-logo, так как он не используется */

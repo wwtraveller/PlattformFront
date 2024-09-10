@@ -1,29 +1,50 @@
 import { Link, useLocation } from 'react-router-dom';
 import styles from './header.module.css';
-
 import { links } from './links';
-// import Button from '../button/Button';
 import { useState } from 'react';
-import Button from '../button/Button';
+import AuthWindow from '../authWindow/AuthWindow';
+import Button from 'components/button/Button';
+import Search from 'components/search/Search';
 
+interface SearchItem {
+  id: number;
+  title: string;
+  description: string;
+  group: string;
+}
 
-export default function Header() {
+interface HeaderProps {
+  setError: (message: string | null) => void;
+  setSearchResults: (results: SearchItem[]) => void;
+}
+
+export default function Header({ setError, setSearchResults }: HeaderProps) {
+
   const location = useLocation();
-  const [searchQuery, setSearchQuery] = useState(''); // Состояние для хранения запроса
+  // const [searchQuery, setSearchQuery] = useState(''); // Состояние для хранения запроса
+  const [isLoginWindowOpen, setIsLoginWindowOpen] = useState(false);
+
+const handleOpenLoginWindow = () => {
+  setIsLoginWindowOpen(true);
+};
+
+const handleCloseLoginWindow = () => {
+  setIsLoginWindowOpen(false);
+};
 
   // Функция обработки изменения ввода
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  setSearchQuery(event.target.value);
-  };
+  // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // setSearchQuery(event.target.value);
+  // };
 
   // Функция запуска поиска по нажатию Enter
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      console.log(`Поиск по запросу: ${searchQuery}`);
-      // Добавить логику для выполнения поиска, запрос к API
-      setSearchQuery(''); // Очистка поля поиска после запуска
-    }
-  };
+  // const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if (event.key === 'Enter') {
+  //     console.log(`Поиск по запросу: ${searchQuery}`);
+  //     // Добавить логику для выполнения поиска, запрос к API
+  //     setSearchQuery(''); // Очистка поля поиска после запуска
+  //   }
+  // };
 
   // Функция, которая будет вызвана при нажатии на кнопку поиска
   // const handleSearch = () => {
@@ -43,20 +64,24 @@ export default function Header() {
       ))}
       </div>
       <div className={styles.navLeft}>
-        {/* Блок для поиска без кнопки */}
-        <div className={styles.navSearch}>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={handleInputChange}
-            onKeyPress={handleKeyPress} // Обработчик нажатия Enter
-            placeholder="Введите запрос"
-            className={styles.searchInput} // Добавьте стили по желанию
-          />
+        <Search setError={setError} setSearchResults={setSearchResults}/> {/* Вставка компонента поиска */}
+        <div>
+            <Button name='Войти' onClick={handleOpenLoginWindow} />
+            {isLoginWindowOpen && (
+              <div className={styles.loginWindow}
+                onClick={handleCloseLoginWindow}>  
+                <div className={styles.loginWindowContent}
+                onClick={(e) => e.stopPropagation()}>
+                <button className={styles.closeButton} onClick={handleCloseLoginWindow}>❌</button>
+                  <AuthWindow />
+                </div>
+              </div>
+            )}
         </div>
+
+        {/* <Link to={'/signup'} className={styles.signupButton}><Button name='Зарегистрироваться' /></Link> */}
+
         
-        <Link to={'/login'} className={styles.loginButton}><Button name='Войти' /></Link>
-        <Link to={'/signup'} className={styles.signupButton}><Button name='Зарегистрироваться' /></Link>
       </div>
 
     </header>

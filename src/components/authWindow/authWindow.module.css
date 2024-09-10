@@ -1,0 +1,170 @@
+/* Контейнер для формы */
+.authContainer {
+    display: flex;
+    width: 100%;
+    max-width: 800px;
+    /*Максимальная ширина окна */
+    margin: 0 auto;
+    /* padding: 20px; */
+    /* background-color: #fdfdfd; */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 400px;
+    background-color: transparent;
+    background-image: url('https://img.freepik.com/free-photo/ethereal-environment-with-cloth_23-2151113627.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 1000;
+
+
+
+}
+
+/* Стили для каждой секции (логин и регистрация) */
+.authSectionLog {
+    width: 50%;
+    /* Ширина каждой секции составляет примерно половину */
+    padding: 20px;
+    /* background-color: rgb(239, 239, 239); */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* background-image: url('https://img.freepik.com/free-photo/ethereal-environment-with-cloth_23-2151113627.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    z-index: 1000; */
+}
+
+/* Заголовки секций */
+.authSectionLog h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.authSectionLog p {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.authSectionLog form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.authSectionLog input {
+    padding: 10px;
+    border: 0.5px solid #ccc;
+    border-radius: 4px;
+    background-color: #c4c2c2c2;
+}
+
+.authSectionLog button {
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    width: 180px;
+    cursor: pointer;
+}
+
+.authSectionLog button:hover {
+    background-color: #45a049;
+    border: 1px dashed #1d1d5e;
+}
+
+.authSectionLog button:active {
+    background-color: #76a7d5;
+}
+
+.authSectionLog button:disabled {
+    background: linear-gradient(145deg, #d3d3d3, #e0e0e0);
+    /* Subtle background change */
+    box-shadow: 3px 3px 6px #a9a9a9, -3px -3px 6px #ffffff;
+    /*Subtle shadow change */
+    color: #999;
+    cursor: not-allowed;
+}
+.authSectionLog:hover {
+    cursor: pointer;
+    background-color: #ffffff82;
+
+}
+
+
+
+
+
+
+.authSectionSign {
+    width: 50%;
+    padding: 20px;
+    /* background-color: rgb(239, 239, 239); */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* background-image: url('https://img.freepik.com/free-photo/ethereal-environment-with-cloth_23-2151113627.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    z-index: 1000; */
+}
+
+
+.authSectionSign h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.authSectionSign p {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+.authSectionSign form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.authSectionSign input {
+    padding: 10px;
+    border: 0.5px solid #ccc;
+    border-radius: 4px;
+    background-color: #c4c2c2c2;
+}
+
+.authSectionSign button {
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    width: 180px;
+    cursor: pointer;
+}
+
+.authSectionSign button:hover {
+    background-color: #45a049;
+    border: 1px dashed #1d1d5e;
+}
+
+.authSectionSign button:active {
+    background-color: #76a7d5;
+}
+
+.authSectionSign button:disabled {
+    background: linear-gradient(145deg, #d3d3d3, #e0e0e0);
+    /* Subtle background change */
+    box-shadow: 3px 3px 6px #a9a9a9, -3px -3px 6px #ffffff;
+    /*Subtle shadow change */
+    color: #999;
+    cursor: not-allowed;
+}
+
+
+.authSectionSign:hover {
+    cursor: pointer;
+    background-color: #ffffff82;
+}
