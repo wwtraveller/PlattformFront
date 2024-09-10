@@ -38,11 +38,11 @@ export default function Login() {
     <div>
       <form onSubmit={formik.handleSubmit} className={styles.loginForm}>
 
-        <input value={formik.values.username} name='username' onChange={formik.handleChange} type="text" placeholder='Username' />
+        <input value={formik.values.username} name='username' onChange={formik.handleChange} type="text" placeholder='Ваше имя' />
 
-        <input value={formik.values.password} name='password' onChange={formik.handleChange} type="password" placeholder='Password' />
+        <input value={formik.values.password} name='password' onChange={formik.handleChange} type="password" placeholder='Пароль' />
 
-        <Button type='submit' name="Login" />
+        <Button type='submit' name="Войти" />
 
       </form>
     </div>

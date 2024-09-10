@@ -45,7 +45,6 @@
     margin-bottom: 20px;
 }
 
-/* Дополнительная стилизация по желанию */
 .authSectionLog form {
     display: flex;
     flex-direction: column;
@@ -66,7 +65,7 @@
     color: white;
     border: none;
     border-radius: 30px;
-    width: 100px;
+    width: 180px;
     cursor: pointer;
 }
 
@@ -142,7 +141,7 @@
     color: white;
     border: none;
     border-radius: 30px;
-    width: 100px;
+    width: 180px;
     cursor: pointer;
 }
 
