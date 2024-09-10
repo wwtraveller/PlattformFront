@@ -1,31 +1,13 @@
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { HashRouter, Route, Routes } from 'react-router-dom';
-import Layout from './components/layout/Layout';
-import Marketing from './components/marketing/Marketing';
-import About from './components/about/About';
-import Product from './components/product/Product';
-import Blog from './components/blog/Blog';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
-
+import App from './app/App'; // Подключаем обновленный App
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <Provider store={store}>
-   {/* обертка router над всеми элементами */}
-  <HashRouter>
-    {/* обертка для описания маршрутов */}
-    <Routes>
-      {/* маршрут-родитель, в котором мы отображаем остальные компоненты */}
-      <Route path='/' element={<Layout />} >
-        <Route path='/about' element={<About />} />
-        <Route path='/product' element={<Product />} />
-        <Route path='/marketing' element={<Marketing />} />
-        <Route path='/blog' element={<Blog />} />
-        <Route path='*' element={<h1>Ошибка 404</h1>} />
-      </Route>
-    </Routes>
-  </HashRouter>
+    <App />
   </Provider>
 );
+
