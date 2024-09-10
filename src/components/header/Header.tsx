@@ -64,7 +64,8 @@ const handleCloseLoginWindow = () => {
       ))}
       </div>
       <div className={styles.navLeft}>
-        <Search setError={setError} setSearchResults={setSearchResults}/> {/* Вставка компонента поиска */}
+        <Search setError={setError}
+  setSearchResults={setSearchResults} /> 
         <div>
             <Button name='Войти' onClick={handleOpenLoginWindow} />
             {isLoginWindowOpen && (

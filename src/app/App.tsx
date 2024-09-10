@@ -7,8 +7,19 @@ import Blog from '../components/blog/Blog';
 import './App.css'; // Сохраняем подключение стилей
 import SearchErrorPage from 'components/search/SearchErrorPage';
 import SearchResultsPage from 'components/search/SearchResultsPage';
+import { useState } from 'react';
 
+
+interface SearchItem {
+  id: number;
+  title: string;
+  description: string;
+  group: string;
+}
 function App() {
+
+  const [error, setError] = useState<string | null>(null);
+  const [searchResults, setSearchResults] = useState<SearchItem[]>([]);
   return (
     <div className="App">
       {/* Приветственное сообщение здесь или перенести его лучше в компонент About? */}
