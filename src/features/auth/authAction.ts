@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosResponse } from 'axios';
 import { ILoginFormValues } from '../../components/login/Login';
 import { IUserData } from './types/authType';
+import { IRegisterFormValues } from 'components/registration/Registration';
 
 export const loginUser = createAsyncThunk(
   'loginUser',
@@ -32,6 +33,19 @@ export const getUserWithToken = createAsyncThunk(
         },
       });
       console.log(response.data);
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+// Экшен для регистрации нового пользователя
+export const registerUser = createAsyncThunk(
+  'auth/registerUser',
+  async (data: IRegisterFormValues, thunkAPI) => {
+    try {
+      const response = await axios.post('/api/register', data);
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
