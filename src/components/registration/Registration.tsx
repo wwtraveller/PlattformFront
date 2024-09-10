@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import Button from '../button/Button';
 import styles from './registration.module.css';
-import { loginUser, registerUser } from 'features/auth/authAction';
+import { registerUser } from 'features/auth/authAction';
 import { useAppDispatch } from 'redux/hooks';
 import { useNavigate } from 'react-router-dom';
 

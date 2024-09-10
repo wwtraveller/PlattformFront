@@ -4,6 +4,7 @@ import Login from '../login/Login';
 import Registration from '../registration/Registration';
 
 export default function AuthWindow() {
+    
   return (
     <div className={styles.authContainer}>
       <div className={styles.authSectionLog}>
