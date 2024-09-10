@@ -1,11 +1,12 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik';
 import styles from "./login.module.css"
 import { useAppDispatch } from '../../redux/hooks';
 import { loginUser } from '../../features/auth/authAction';
 import Button from '../button/Button';
 import * as Yup from 'yup';
+import Registration from 'components/registration/Registration';
 
 
 export interface ILoginFormValues {
@@ -33,13 +34,14 @@ export interface ILoginFormValues {
         password: 'emilyspass'
       } as ILoginFormValues,
       validationSchema: schema,
-      onSubmit: (values: ILoginFormValues) => {
+      onSubmit: (values: ILoginFormValues, {resetForm}) => {
         // Диспатчим экшен для логина
         dispatch(loginUser(values))
           .unwrap()
           .then((response) => {
             // Если авторизация успешна, делаем редирект
             navigate('/');
+          //  resetForm()
           })
           .catch((error) => {
             console.error('Ошибка авторизации:', error);
@@ -74,6 +76,8 @@ export interface ILoginFormValues {
           {formik.touched.password && formik.errors.password && (
           <div className={styles.error}>{formik.errors.password}</div>
         )}
+
+        <Link className={styles.link} to='/Registration'>Если у вас нет еще аккаунта, перейдите к регистрации справа!</Link>
         <Button type="submit" name="Войти" />
       </form>
     );

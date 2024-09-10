@@ -85,7 +85,9 @@ const handleCloseLoginWindow = () => {
        {user.username ? (
           <>
             <span>{user.username}</span>
+            <div onClick={handleCloseLoginWindow}>
             <Button name="Выйти" onClick={handleLogout} />
+            </div>
           </>
         ) : (
           <>
