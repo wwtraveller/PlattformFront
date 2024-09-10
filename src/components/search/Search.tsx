@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import styles from './search.module.css';
 
 interface SearchItem {
@@ -9,25 +10,32 @@ interface SearchItem {
   group: string;
 }
 
-const Search = () => {
+interface SearchProps {
+  setError: (message: string | null) => void;
+  setSearchResults: (results: SearchItem[]) => void;
+}
+
+const Search = (props: SearchProps) => {
   const [query, setQuery] = useState('');
   const [group, setGroup] = useState('');
-  const [results, setResults] = useState<SearchItem[]>([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [hasSearched, setHasSearched] = useState(false); // Флаг, что был выполнен поиск
 
   const groups = ['продукт', 'маркетинг', 'блог'];
+  const navigate = useNavigate(); // Хук для навигации
 
   const validateSearch = () => {
     if (!query.trim()) {
-      setError('Пожалуйста, введите строку поиска.');
+      props.setError('Пожалуйста, введите строку поиска.');
+      navigate('/search-error', { state: { error: 'Пожалуйста, введите строку поиска.' } });
       return false;
     }
-    if (!group.trim()) {  // Убедимся, что проверка на пустую строку выполняется корректно
-      setError('Пожалуйста, выберите категорию для поиска.');
+    if (!group.trim()) {
+      props.setError('Пожалуйста, выберите категорию для поиска.');
+      navigate('/search-error', { state: { error: '' } });
       return false;
     }
-    setError(null); // Сброс ошибки, если все условия выполнены
+    props.setError(null);  // Сброс ошибки, если все условия выполнены
     return true;
   };
 
@@ -36,6 +44,7 @@ const Search = () => {
       return;
     }
     setIsSearching(true);
+    
 
     try {
       const response = await axios.get<SearchItem[]>('https://api.example.com/search', {
@@ -44,12 +53,12 @@ const Search = () => {
           group: group,
         },
       });
-      setResults(response.data);
+      props.setSearchResults(response.data);
     } catch (error) {
-      setError('Ошибка при выполнении поиска. Попробуйте снова.');
+      props.setError('Ошибка при выполнении поиска. Попробуйте снова.');
+      navigate('/search-error', { state: { }});   {/*error: 'Ошибка при выполнении поиска. Попробуйте снова.' */}
     } finally {
       setIsSearching(false);
-      // setQuery(''); // Очистка поля ввода после поиска
     }
   };
 
@@ -60,15 +69,13 @@ const Search = () => {
   const handleGroupChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setGroup(e.target.value);
     if (e.target.value.trim()) {
-      setError(null); // Сбрасываем ошибку, если категория выбрана
+      props.setError(null);  // Сбрасываем ошибку, если категория выбрана
     }
   };
 
-  // Обработчик нажатия клавиши Enter
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       handleSearch();
-      setQuery(''); // Переносим сюда, чтобы очистить поле сразу после поиска
     }
   };
 
@@ -98,33 +105,31 @@ const Search = () => {
             </option>
           ))}
         </select>
-      <input
-        type="text"
-        value={query}
-        onChange={handleInputChange}
-        onKeyPress={handleKeyPress} // Обработчик нажатия Enter
-        placeholder="Введите запрос для поиска"
-        className={styles.searchInput}
-      />
-    </div>
-      
+        <input
+          type="text"
+          value={query}
+          onChange={handleInputChange}
+          onKeyPress={handleKeyPress}
+          placeholder="Введите запрос для поиска"
+          className={styles.searchInput}
+        />
+      </div>
 
-      {error && <p className={styles.errorText}>{error}</p>}
-
+      {/* Результаты поиска */}
       {/* <div className={styles.resultsContainer}>
         {isSearching ? (
           <p>Идет поиск...</p>
-        ) : results.length > 0 ? (
+        ) : hasSearched && results.length === 0 ? (
+          <p>Нет результатов для отображения.</p>
+        ) : (
           results.map((item) => (
             <div key={item.id} className={styles.resultItem}>
               <h4>{item.title}</h4>
               <p>{item.description}</p>
             </div>
           ))
-        ) : !isSearching && query && group ? (
-          <p>Нет результатов для отображения.</p>
-        ) : null}
-      </div> */}
+        )}
+      </div>*/}
     </div>
   );
 };
