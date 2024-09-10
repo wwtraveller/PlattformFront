@@ -1,20 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru"> <!-- Устанавливаем начальный язык страницы, можно менять динамически через JavaScript -->
+<head>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="" />
+    <meta name="theme-color" content="#000000" /> <!-- Цвет темы под бренд -->
+
+     <!-- Описание для SEO -->
+    <meta name="description" content="Plattform - Your gateway to expert knowledge and resources. Enhance your skills with our expert-driven content." />
+
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+
+    <!-- Ссылка на файл манифеста -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>Plattform</title>
+
+    <!-- Мета-теги и заголовок могут изменяться динамически через React -->
+    <meta name="description" content="Plattform - ваш доступ к экспертным знаниям и ресурсам." />
+    <title>Plattform - Экспертные знания и ресурсы</title>
+
+    <!-- Open Graph мета-теги для социальных сетей -->
+    <meta property="og:title" content="Plattform - Экспертные знания и ресурсы" />
+    <meta property="og:description" content="Повышайте свои навыки с экспертным контентом на Plattform." />
+    <meta property="og:image" content="%PUBLIC_URL%/logo512.png" />
+    <meta property="og:url" content="https://example.com" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card мета-теги -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Plattform - Экспертные знания и ресурсы" />
+    <meta name="twitter:description" content="Повышайте свои навыки с экспертным контентом на Plattform." />
+    <meta name="twitter:image" content="%PUBLIC_URL%/logo512.png" />
+
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root"></div> <!-- Основная точка входа для React-приложения -->
   </body>
 </html>
