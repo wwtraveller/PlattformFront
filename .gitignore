@@ -1,23 +1,70 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
+# Node.js dependencies
 /node_modules
 /.pnp
 .pnp.js
 
-# testing
+# testing /Coverage reports
 /coverage
 
-# production
+# production /Build output
 /build
+/dist
+/dist-ssr
 
-# misc
+# Miscellaneous
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+*.local
 
+# Environment variables
+.env
+.env.*
+# .env.local
+# .env.development.local
+# .env.test.local
+# .env.production.local
+!.env.example  # Исключает шаблонный файл .env.example, если такой есть
+
+# Logs
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-specific directories and files
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.sublime-project
+.sublime-workspace
+.project
+.classpath
+.settings/
+
+# System files
+Thumbs.db
+
+# Cache files
+.eslintcache
+.cache/
+
+# Docker
+docker-compose.override.yml
+.docker/
+
+# Testing
+.nyc_output/
+.next/
+
+# SSH Keys
+*.pem
+*.key
