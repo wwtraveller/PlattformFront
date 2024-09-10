@@ -1,5 +1,5 @@
 {
-  "workbench.activityBar.location": "default",
+  "workbench.activityBar.location": "side",
   "editor.renderWhitespace": "selection",
   "editor.insertSpaces": true,
   "editor.wordWrap": "off",
