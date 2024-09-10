@@ -2,28 +2,24 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from './searchResultsPage.module.css';
 
-interface SearchResult {
+interface SearchItem {
   id: number;
   title: string;
   description: string;
+  group: string;
 }
 
 const SearchResultsPage = () => {
   const location = useLocation();
-  const { results, isSearching, hasSearched } = location.state || {
-    results: [],
-    isSearching: false,
-    hasSearched: false
-  };
+  const state = location.state as { searchResults: SearchItem[] } | undefined;
+  const results = state?.searchResults || []; 
 
   return (
     <div className={styles.resultsContainer}>
-      {isSearching ? (
-        <p>Идет поиск...</p>
-      ) : hasSearched && results.length === 0 ? (
+      {results.length === 0 ? (
         <p>Нет результатов для отображения.</p>
       ) : (
-        results.map((item: SearchResult) => (
+        results.map((item) => (
           <div key={item.id} className={styles.resultItem}>
             <h4>{item.title}</h4>
             <p>{item.description}</p>

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styles from './search.module.css';
+import SearchResultsPage from './SearchResultsPage'
+import SearchData from '../data/SearchData.json';
 
 interface SearchItem {
   id: number;
@@ -13,6 +14,7 @@ interface SearchItem {
 interface SearchProps {
   setError: (message: string | null) => void;
   setSearchResults: (results: SearchItem[]) => void;
+  //results: SearchItem[]; 
 }
 
 const Search = (props: SearchProps) => {
@@ -27,7 +29,7 @@ const Search = (props: SearchProps) => {
 
   const validateSearch = () => {
     if (!query.trim()) {
-      props.setError('Пожалуйста, введите строку поиска.');
+      props.setError('');
       navigate('/search-error', { state: { error: 'Пожалуйста, введите строку поиска.' } });
       return false;
     }
@@ -42,27 +44,31 @@ const Search = (props: SearchProps) => {
 
   const handleSearch = async () => {
     if (!validateSearch()) {
+      setQuery(''); // Очистка запроса при ошибке
+      setGroup('');
       return;
     }
-    setIsSearching(true);
-    
-
+    setIsSearching(true); 
     try {
-      const response = await axios.get<SearchItem[]>('https://api.example.com/search', {
-        params: {
-          q: query,
-          group: group,
-        },
-      });
+      // Фильтрация данных из SearchData по введенному запросу и выбранной категории
+      const filteredResults = SearchData.filter(
+        (item) =>
+          item.title.toLowerCase().includes(query.toLowerCase()) &&
+          (group ? item.group === group : true)  // Если категория выбрана, фильтруем по ней
+      );
+
+      props.setSearchResults(filteredResults); // Сохраняем результаты поиска
+      setHasSearched(true);
+      navigate('/search-results', { state: { searchResults: filteredResults } });
 
 
-      props.setSearchResults(response.data);
     } catch (error) {
       props.setError('');
       navigate('/search-error', { state: { error: 'Ошибка при выполнении поиска. Попробуйте снова.'}});   {/*error: 'Ошибка при выполнении поиска. Попробуйте снова.' */}
     } finally {
       setIsSearching(false);
       setQuery('');
+      setGroup('');
     }
   };
 
