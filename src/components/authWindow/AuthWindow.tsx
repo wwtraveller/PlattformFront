@@ -3,7 +3,6 @@ import styles from './authWindow.module.css';
 import Login from '../login/Login';
 import Registration from '../registration/Registration';
 
-
 export default function AuthWindow() {
   return (
     <div className={styles.authContainer}>
@@ -21,3 +20,4 @@ export default function AuthWindow() {
     </div>
   );
 }
+
