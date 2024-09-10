@@ -10,7 +10,8 @@
   
   /* стили сработают при наведении мышкой на кнопку */
   .myButton:hover {
-    background-color: rgb(223, 223, 252);
+    background-color: #6788f3;
+    color: white;
   }
   
   /* стили сработают при нажатии на кнопку */
