@@ -5,6 +5,8 @@ import { useState } from 'react';
 import AuthWindow from '../authWindow/AuthWindow';
 import Button from 'components/button/Button';
 import Search from 'components/search/Search';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { logoutUser } from 'features/auth/authSlice';
 
 interface SearchItem {
   id: number;
@@ -52,6 +54,20 @@ const handleCloseLoginWindow = () => {
   // Здесь можно добавить логику для выполнения поиска, например, сделать запрос к API
   //};
 
+
+  // забираем данные по user
+  const { user } = useAppSelector(state => state.user);
+
+  const dispatch = useAppDispatch()
+  // const locationLogName = useLocation();
+
+  const handleLogout = () => {
+    // чистим браузерное хранилище данных
+    localStorage.removeItem('user-token')
+    // чистим state, выносим 'мусор' данных за пользователем
+    dispatch(logoutUser())
+  }
+
   return (
     <header className={styles.header}>
       <div className={styles.navMenu}>
@@ -65,25 +81,32 @@ const handleCloseLoginWindow = () => {
       </div>
       <div className={styles.navLeft}>
         <Search setError={setError} setSearchResults={setSearchResults}/> {/* Вставка компонента поиска */}
-        <div>
-            <Button name='Войти' onClick={handleOpenLoginWindow} />
+       {/* Если пользователь авторизован, показываем кнопку "Выйти", если нет — "Войти" */}
+       {user.username ? (
+          <>
+            <span>{user.username}</span>
+            <Button name="Выйти" onClick={handleLogout} />
+          </>
+        ) : (
+          <>
+            <Button name="Войти" onClick={handleOpenLoginWindow} />
             {isLoginWindowOpen && (
-              <div className={styles.loginWindow}
-                onClick={handleCloseLoginWindow}>  
-                <div className={styles.loginWindowContent}
-                onClick={(e) => e.stopPropagation()}>
-                <button className={styles.closeButton} onClick={handleCloseLoginWindow}>❌</button>
+              <div className={styles.loginWindow} onClick={handleCloseLoginWindow}>
+                <div
+                  className={styles.loginWindowContent}
+                  onClick={(e) => e.stopPropagation()}>
+                  <button
+                    className={styles.closeButton}
+                    onClick={handleCloseLoginWindow}>
+                    ❌
+                  </button>
                   <AuthWindow />
                 </div>
               </div>
             )}
-        </div>
-
-        {/* <Link to={'/signup'} className={styles.signupButton}><Button name='Зарегистрироваться' /></Link> */}
-
-        
+          </>
+        )}
       </div>
-
     </header>
   );
 }

@@ -5,48 +5,66 @@ import styles from "./login.module.css"
 import { useAppDispatch } from '../../redux/hooks';
 import { loginUser } from '../../features/auth/authAction';
 import Button from '../button/Button';
+import * as Yup from 'yup';
 
 
 export interface ILoginFormValues {
     username: string
     password: string
   }
+  export default function Login() {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+  
 
-
-export default function Login() {
-
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-
-  const formik = useFormik({
-    initialValues: {
-      username: '',
-      password: ''
-    } as ILoginFormValues,
-    onSubmit: (values: ILoginFormValues, {resetForm}) => {
-      dispatch(loginUser(values))
-      .then(()=> {
-        navigate ('/')
-       resetForm()
-      })
-    }
-  })
-
-
-
-  return (
-    <div>
-      <form onSubmit={formik.handleSubmit} className={styles.loginForm}>
-
-        <input value={formik.values.username} name='username' onChange={formik.handleChange} type="text" placeholder='Ваше имя' />
-
-        <input value={formik.values.password} name='password' onChange={formik.handleChange} type="password" placeholder='Пароль' />
-
-        <Button type='submit' name="Войти" />
-
+     // Валидационная схема Yup для формы
+  const schema = Yup.object().shape({
+    username: Yup.string()
+      .required('Введите имя пользователя')
+      .min(2, 'Минимум 2 символа')
+      .max(15, 'Максимум 15 символов'),
+    password: Yup.string()
+      .required('Введите пароль')
+      .min(6, 'Пароль должен содержать минимум 6 символов'),
+  });
+    const formik = useFormik({
+      initialValues: {
+        username: 'emilys',
+        password: 'emilyspass'
+      } as ILoginFormValues,
+      validationSchema: schema,
+      onSubmit: (values: ILoginFormValues) => {
+        // Диспатчим экшен для логина
+        dispatch(loginUser(values))
+          .unwrap()
+          .then((response) => {
+            // Если авторизация успешна, делаем редирект
+            navigate('/');
+          })
+          .catch((error) => {
+            console.error('Ошибка авторизации:', error);
+          });
+      },
+    });
+  
+    return (
+      <form onSubmit={formik.handleSubmit}>
+        <input
+          name="username"
+          value={formik.values.username}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          placeholder="Имя пользователя"
+        />
+        <input
+          name="password"
+          type="password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          placeholder="Пароль"
+        />
+        <Button type="submit" name="Войти" />
       </form>
-    </div>
-  )
-}
-
-
+    );
+  }
