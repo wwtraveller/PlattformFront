@@ -19,6 +19,7 @@ interface HeaderProps {
 }
 
 export default function Header({ setError, setSearchResults }: HeaderProps) {
+
   const location = useLocation();
   // const [searchQuery, setSearchQuery] = useState(''); // Состояние для хранения запроса
   const [isLoginWindowOpen, setIsLoginWindowOpen] = useState(false);
@@ -78,8 +79,6 @@ const handleCloseLoginWindow = () => {
             )}
         </div>
 
-        
-        
         {/* <Link to={'/signup'} className={styles.signupButton}><Button name='Зарегистрироваться' /></Link> */}
 
         

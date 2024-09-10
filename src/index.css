@@ -1,25 +1,52 @@
+/* Глобальные стили для всего приложения */
 * {
-  /* чтобы padding у всех контейнеров не увеличивал размер элемента */
-  box-sizing: border-box;
+  box-sizing: border-box; /* Учитывает padding и border в общую ширину элемента */
+  margin: 0;
+  padding: 0;
   text-decoration: none;
 }
 
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f9fa; /* Светлый фон для всей страницы */
+  color: #212529; /* Основной цвет текста */
+  line-height: 1.6;
+}
+
+a {
+  color: inherit; /* Наследует цвет от родителя */
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #007bff; /* Цвет ссылок при наведении */
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-/* header > a {
-  text-decoration: none !important;
-  color: white;
-  margin-right: 20px;
-} */
+button {
+  font-family: inherit; /* Наследует шрифт от родителя */
+  cursor: pointer; /* Указатель мыши меняется на указатель */
+  border: none;
+  background: none;
+}
+
+ul,
+ol {
+  list-style: none; /* Убирает маркеры у списков */
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+

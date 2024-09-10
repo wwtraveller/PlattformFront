@@ -1,9 +1,7 @@
 import React from 'react';
 import styles from './authWindow.module.css';
 import Login from '../login/Login';
-import Registration from 'components/registration/Registration';
-
-
+import Registration from '../registration/Registration';
 
 export default function AuthWindow() {
   return (
@@ -22,3 +20,4 @@ export default function AuthWindow() {
     </div>
   );
 }
+
