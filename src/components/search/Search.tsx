@@ -20,6 +20,7 @@ const Search = (props: SearchProps) => {
   const [group, setGroup] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false); // Флаг, что был выполнен поиск
+  
 
   const groups = ['продукт', 'маркетинг', 'блог'];
   const navigate = useNavigate(); // Хук для навигации
@@ -53,6 +54,8 @@ const Search = (props: SearchProps) => {
           group: group,
         },
       });
+
+
       props.setSearchResults(response.data);
     } catch (error) {
       props.setError('');
