@@ -16,6 +16,6 @@
   
   /* стили сработают при нажатии на кнопку */
   .myButton:active {
-    background-color: #5b7ff5;
+    background-color: #1d1d5e;
     color: white;
   }

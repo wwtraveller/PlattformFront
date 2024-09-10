@@ -2,10 +2,9 @@ import { Link, useLocation } from 'react-router-dom';
 import styles from './header.module.css';
 import { links } from './links';
 import { useState } from 'react';
-import Login from '../login/Login';
-import Button from '../button/Button';
+import AuthWindow from '../authWindow/AuthWindow';
+import Button from 'components/button/Button';
 import Search from 'components/search/Search';
-
 
 
 export default function Header() {
@@ -57,16 +56,21 @@ const handleCloseLoginWindow = () => {
         <div>
             <Button name='Войти' onClick={handleOpenLoginWindow} />
             {isLoginWindowOpen && (
-              <div className={styles.loginWindow}>
-                <div className={styles.loginWindowContent}>
-                   <button className={styles.closeButton} onClick={handleCloseLoginWindow}>Закрыть</button>
-                  <Login />
+              <div className={styles.loginWindow}
+                onClick={handleCloseLoginWindow}>  
+                <div className={styles.loginWindowContent}
+                onClick={(e) => e.stopPropagation()}>
+                <button className={styles.closeButton} onClick={handleCloseLoginWindow}>❌</button>
+                  <AuthWindow />
                 </div>
               </div>
             )}
         </div>
+
         
-        <Link to={'/signup'} className={styles.signupButton}><Button name='Зарегистрироваться' /></Link>
+        
+        {/* <Link to={'/signup'} className={styles.signupButton}><Button name='Зарегистрироваться' /></Link> */}
+
         
       </div>
 
