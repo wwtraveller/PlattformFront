@@ -26,7 +26,11 @@ export interface ILoginFormValues {
       .max(15, 'Максимум 15 символов'),
     password: Yup.string()
       .required('Введите пароль')
-      .min(6, 'Пароль должен содержать минимум 6 символов'),
+      .min(8, 'Пароль должен содержать минимум 6 символов')
+      // .matches(/[A-Z]/, 'Пароль должен содержать хотя бы одну заглавную букву')
+      .matches(/[a-z]/, 'Пароль должен содержать хотя бы одну строчную букву')
+      // .matches(/\d/, 'Пароль должен содержать хотя бы одну цифру')
+      // .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Пароль должен содержать хотя бы один специальный символ'),
   });
     const formik = useFormik({
       initialValues: {
@@ -77,7 +81,7 @@ export interface ILoginFormValues {
           <div className={styles.error}>{formik.errors.password}</div>
         )}
 
-        <p className={styles.p} >Если у вас нет еще аккаунта, перейдите к регистрации справа!</p>
+        <p className={styles.p} >Если у вас нет еще аккаунта, перейдите к регистрации слева!</p>
         <Button type="submit" name="Войти" />
       </form>
     );
