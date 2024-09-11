@@ -1,9 +1,9 @@
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
-import Marketing from '../components/marketing/Marketing';
+import Marketing from '../components/categories/marketing/Marketing';
 import About from '../components/about/About';
-import Product from '../components/product/Product';
-import Blog from '../components/blog/Blog';
+import Product from '../components/categories/product/Product';
+import Blog from '../components/categories/blog/Blog';
 import './App.css'; // Сохраняем подключение стилей
 import SearchErrorPage from 'components/search/SearchErrorPage';
 import SearchResultsPage from 'components/search/SearchResultsPage';
