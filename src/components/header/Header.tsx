@@ -1,12 +1,13 @@
 import { Link, useLocation } from 'react-router-dom';
 import styles from './header.module.css';
-import { links } from './links';
+import { guestLinks } from './links'; // Используем только guestLinks для незарегистрированных пользователей
 import { useState } from 'react';
 import AuthWindow from '../authWindow/AuthWindow';
 import Button from 'components/button/Button';
 import Search from 'components/search/Search';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { logoutUser } from 'features/auth/authSlice';
+import UserMenu from '../user/UserMenu'; // Правильное подключение UserMenu
 
 interface SearchItem {
   id: number;
@@ -25,6 +26,9 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
   const location = useLocation();
   // const [searchQuery, setSearchQuery] = useState(''); // Состояние для хранения запроса
   const [isLoginWindowOpen, setIsLoginWindowOpen] = useState(false);
+  const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
 
 const handleOpenLoginWindow = () => {
   setIsLoginWindowOpen(true);
@@ -56,38 +60,44 @@ const handleCloseLoginWindow = () => {
 
 
   // забираем данные по user
-  const { user } = useAppSelector(state => state.user);
+  // const { user } = useAppSelector((state) => state.user); // Достаем пользователя из состояния
+  // const { user } = useAppSelector(state => state.user);
+  // const dispatch = useAppDispatch();
 
-  const dispatch = useAppDispatch()
   // const locationLogName = useLocation();
 
   const handleLogout = () => {
     // чистим браузерное хранилище данных
     localStorage.removeItem('user-token')
     // чистим state, выносим 'мусор' данных за пользователем
-    dispatch(logoutUser())
+    dispatch(logoutUser());
   }
 
   return (
     <header className={styles.header}>
       <div className={styles.navMenu}>
-      {links.map((el, index) => (
-        <Link
-          key={index}
-          className={`${styles.navLink} ${
-            location.pathname === el.pathname ? styles.active : ''}`}
-          to={el.pathname}>{el.title}</Link>
-      ))}
+        {/* Отображение ссылок для незарегистрированных пользователей */}
+        {!user.username &&
+          guestLinks.map((el, index) => (
+            <Link
+              key={index}
+              className={`${styles.navLink} ${
+                location.pathname === el.pathname ? styles.active : ''
+              }`}
+              to={el.pathname}
+            >
+              {el.title}
+            </Link>
+          ))}
       </div>
       <div className={styles.navLeft}>
-        <Search setError={setError} setSearchResults={setSearchResults}/> {/* Вставка компонента поиска */}
-       {/* Если пользователь авторизован, показываем кнопку "Выйти", если нет — "Войти" */}
-       {user.username ? (
+        <Search setError={setError} setSearchResults={setSearchResults} />
+        {/* Если пользователь авторизован, показываем меню пользователя, если нет — "Войти" */}
+        {user.username ? (
           <>
+            <UserMenu /> {/* Отображаем UserMenu для авторизованного пользователя */}
             <span>{user.username}</span>
-            <div onClick={handleCloseLoginWindow}>
             <Button name="Выйти" onClick={handleLogout} />
-            </div>
           </>
         ) : (
           <>
