@@ -16,7 +16,17 @@
     border: none;
   }
   
-  .errors {
-    color: red;
+  
+  .inputError {
+    border: 1px solid red;
   }
   
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+
+  .p{
+    font-size: 10px;
+  }
