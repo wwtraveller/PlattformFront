@@ -1,23 +1,17 @@
 import React from 'react';
 import styles from './authWindow.module.css';
-import Login from '../login/Login';
-import Registration from '../registration/Registration';
+import LoginForm from 'components/loginForm/LoginForm';
 
-export default function AuthWindow() {
-    
+interface AuthWindowProps {
+  onClose: () => void;
+}
+
+export default function AuthWindow({ onClose }: AuthWindowProps) {
   return (
     <div className={styles.authContainer}>
-      <div className={styles.authSectionLog}>
-        <h2>Войти</h2>
-        <p>Добро пожаловать вновь, Друг!</p>
-        <Login />  {/* Форма логина */}
-      </div>
-      <div className={styles.authSectionSign}>
-        <h2>Регистрация</h2>
-        <p>Привет, Друг!</p>
-        <Registration />  {/* Форма регистрации */}
-      </div>
+      <LoginForm onClose={onClose} /> {/* Вызов компонента LoginForm */}
     </div>
   );
 }
+
 

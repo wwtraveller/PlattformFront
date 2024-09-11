@@ -1,0 +1,188 @@
+/* Обертка для модального окна */
+.modal-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Основной контейнер для всей формы */
+.container {
+  position: relative;
+  width: 900px;
+  height: 500px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  overflow: hidden;
+  transition: transform 0.6s ease-in-out;
+}
+
+/* Контейнер для формы */
+.forms-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  transition: transform 0.6s ease-in-out;
+}
+
+/* Логин и регистрация формы */
+.signin-signup {
+  display: flex;
+  width: 200%;
+  transition: transform 0.6s ease-in-out;
+}
+
+/* Форма логина */
+.sign-in-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  padding: 0 50px;
+}
+
+/* Форма регистрации */
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  padding: 0 50px;
+}
+
+/* Анимация переключения формы */
+.container.sign-up-mode .signin-signup {
+  transform: translateX(-50%);
+}
+
+/* Панели */
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 50%;
+  transition: transform 0.6s ease-in-out;
+  overflow: hidden;
+}
+
+/* Левая панель с фоном */
+.left-panel {
+  background: url('left-panel-bg.jpg') no-repeat center center;
+  background-size: cover;
+  position: relative;
+}
+
+/* Правая панель с фоном */
+.right-panel {
+  background: url('right-panel-bg.jpg') no-repeat center center;
+  background-size: cover;
+  position: relative;
+}
+
+/* Анимация переключения панели */
+.container.sign-up-mode .left-panel {
+  transform: translateX(100%);
+}
+
+.container.sign-up-mode .right-panel {
+  transform: translateX(-100%);
+}
+
+/* Стили текста и кнопок */
+.title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.input-field {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.input-field input {
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 5px;
+  background: #f0f0f0;
+  outline: none;
+}
+
+.btn {
+  background-color: #ff4b2b;
+  border: none;
+  padding: 10px 20px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 20px;
+}
+
+.btn.transparent {
+  background: none;
+  border: 2px solid #fff;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.btn.transparent:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  color: #fff;
+  text-align: center;
+  max-width: 80%;
+  padding: 20px;
+}
+
+h3 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+/* Скрытие неактивных элементов */
+.container.sign-in-mode .sign-up-form,
+.container.sign-up-mode .sign-in-form {
+  display: none;
+}

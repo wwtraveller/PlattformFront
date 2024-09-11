@@ -1,43 +1,21 @@
-import { Outlet, useLocation } from 'react-router-dom';
-import Footer from '../footer/Footer';
+import React from 'react';
+
 import styles from './layout.module.css';
-import Header from '../header/Header';
-import { useEffect, useState } from 'react';
+import Header from 'components/header/Header';
+import Footer from 'components/footer/Footer';
 
-
-interface SearchItem {
-  id: number;
-  title: string;
-  description: string;
-  group: string;
-}
-
-function Layout() {
-  const [error, setError] = useState<string | null>(null);
-  const location = useLocation();
-
-  useEffect(() => {
-  //обновление страницы, чтобы ошибка уходила при переходе на главную страницу
-    if (location.pathname === '/') {
-      setError(null);
-    }
-  }, [location.pathname]);
-
-
+const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-
-    <div className={styles.page}>
-      
-      <Header setError={setError} setSearchResults={()=>{}}  />
-      <main className={styles.main}>
-        {/* сюда вместо outlet приходят все компоненты из вложенных route */}
-        <Outlet />
-        {/* Показ ошибок поиска как отдельной страницы */}
-        {error && <div style={{ color: 'red', marginBottom: '20px' }}>{error}</div>}
-      </main>
+    <div className={styles.layout}>
+      <Header setError={function (message: string | null): void {
+        throw new Error('Function not implemented.');
+      } } setSearchResults={function (results: SearchItem[]): void {
+        throw new Error('Function not implemented.');
+      } } />
+      <main className={styles.main}>{children}</main>
       <Footer />
     </div>
   );
-}
+};
 
 export default Layout;
