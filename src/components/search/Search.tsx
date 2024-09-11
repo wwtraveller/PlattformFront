@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './search.module.css';
 import SearchResultsPage from './SearchResultsPage'
 import SearchData from '../data/SearchData.json';
+import CategoryManager from 'components/categories/CategoryManager';
 
 interface SearchItem {
   id: number;
@@ -14,6 +15,7 @@ interface SearchItem {
 interface SearchProps {
   setError: (message: string | null) => void;
   setSearchResults: (results: SearchItem[]) => void;
+  categories: string[];
   //results: SearchItem[]; 
 }
 
@@ -23,8 +25,8 @@ const Search = (props: SearchProps) => {
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false); // Флаг, что был выполнен поиск
   
-
-  const groups = ['продукт', 'маркетинг', 'блог'];
+  const groups = props.categories;
+  //const groups = ['продукт', 'маркетинг', 'блог'];
   const navigate = useNavigate(); // Хук для навигации
 
   const validateSearch = () => {
@@ -109,11 +111,12 @@ const Search = (props: SearchProps) => {
           className={styles.searchSelect}
         >
           <option value="">Выберите категорию</option>
+          
           {groups.map((group) => (
             <option key={group} value={group}>
               {group.charAt(0).toUpperCase() + group.slice(1)}
             </option>
-          ))}
+          ))} 
         </select>
         <input
           type="text"

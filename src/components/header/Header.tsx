@@ -67,7 +67,7 @@ const handleCloseLoginWindow = () => {
     // чистим state, выносим 'мусор' данных за пользователем
     dispatch(logoutUser())
   }
-
+const [categories, setCategories] = useState<string[]>([]);
   return (
     <header className={styles.header}>
       <div className={styles.navMenu}>
@@ -80,7 +80,9 @@ const handleCloseLoginWindow = () => {
       ))}
       </div>
       <div className={styles.navLeft}>
-        <Search setError={setError} setSearchResults={setSearchResults}/> {/* Вставка компонента поиска */}
+        <Search setError={setError}
+          setSearchResults={setSearchResults}
+          categories={categories} /> {/* Вставка компонента поиска */}
        {/* Если пользователь авторизован, показываем кнопку "Выйти", если нет — "Войти" */}
        {user.username ? (
           <>
