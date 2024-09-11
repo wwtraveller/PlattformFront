@@ -1,4 +1,3 @@
-// src/components/articles/Articles.tsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ArticleForm from './ArticleForm';
