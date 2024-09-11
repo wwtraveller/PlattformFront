@@ -7,8 +7,20 @@ import Blog from '../components/blog/Blog';
 import './App.css'; // Сохраняем подключение стилей
 import SearchErrorPage from 'components/search/SearchErrorPage';
 import SearchResultsPage from 'components/search/SearchResultsPage';
+import { useState } from 'react';
+import Articles from 'components/articles/Articles';
 
+
+interface SearchItem {
+  id: number;
+  title: string;
+  description: string;
+  group: string;
+}
 function App() {
+
+  const [error, setError] = useState<string | null>(null);
+  const [searchResults, setSearchResults] = useState<SearchItem[]>([]);
   return (
     <div className="App">
       {/* Приветственное сообщение здесь или перенести его лучше в компонент About? */}
@@ -24,6 +36,7 @@ function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/search-results" element={<SearchResultsPage />} />
             <Route path="/search-error" element={<SearchErrorPage />} />
+            <Route path="/articles" element={<Articles />} />
             <Route path="*" element={<h1>Ошибка 404</h1>} />
           </Route>
         </Routes>

@@ -21,4 +21,8 @@ interface ILinks {
       pathname: '/blog',
       title: 'Блог'
     },
+    {
+      pathname: '/articles',
+      title: 'Статьи'
+    },
   ];
