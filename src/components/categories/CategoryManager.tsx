@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Button from '../button/Button';
 import categoryData from '../data/CategoriesData.json'
+import axios from 'axios';
 
 interface Category {
   id: number;
@@ -19,7 +20,7 @@ const Modal = ({ show, onClose, children }: ModalProps) => {
   }
 
   return (
-    <div className="modal-backdrop">
+    <div className="modalBackdrop">
       <div className="modal-content">
         {children}
         <Button onClick={onClose} name="Закрыть" />
@@ -36,15 +37,28 @@ interface CategoryProps {
 
 const CategoryManager = ({ onCategorySelect, onCategoriesChange }: CategoryProps) => {
   const [categories, setCategories] = useState<Category[]>(categoryData);
-
-  useEffect(() => {
-    onCategoriesChange(categories.map(category => category.name)); // Передаем только названия категорий
-  }, [categories, onCategoriesChange]);
-
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [newCategoryName, setNewCategoryName] = useState('');
+
+useEffect(() => {
+    onCategoriesChange(categories.map(category => category.name)); // Передаем только названия категорий
+  }, [categories, onCategoriesChange]);
+
+  useEffect(() => {
+    // Функция для загрузки категорий из API
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get('/api/categories');
+        setCategories(response.data);
+      } catch (error) {
+        console.error('Ошибка при загрузке категорий', error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleEdit = (category: Category) => {
     setEditingCategory(category);
@@ -52,32 +66,45 @@ const CategoryManager = ({ onCategorySelect, onCategoriesChange }: CategoryProps
     setShowEditModal(true);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (editingCategory) {
-      setCategories(
-        categories.map((cat) =>
-          cat.id === editingCategory.id ? { ...cat, name: newCategoryName } : cat
-        )
-      );
+      try {
+        await axios.put(`/api/categories/${editingCategory.id}`, { name: newCategoryName });  //!изменить ентпоинт
+        setCategories(
+          categories.map((cat) =>
+            cat.id === editingCategory.id ? { ...cat, name: newCategoryName } : cat
+          )
+        );
+      } catch (error) {
+        console.error('Ошибка при сохранении категории', error);
+      }
     }
     setShowEditModal(false);
   };
+
 
   const handleDelete = (category: Category) => {
     setEditingCategory(category);
     setShowDeleteModal(true);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (editingCategory) {
-      setCategories(categories.filter((cat) => cat.id !== editingCategory.id));
+      try {
+        await axios.delete(`/api/categories/${editingCategory.id}`);
+        setCategories(categories.filter((cat) => cat.id !== editingCategory.id));
+      } catch (error) {
+        console.error('Ошибка при удалении категории', error);
+      }
     }
     setShowDeleteModal(false);
   };
+
   const handleCategoryClick = (category: Category) => {
     onCategorySelect(category.name);  // Передаем название выбранной категории
   };
   console.log(categories);
+  
   return (
     <div>
       <h2>Управление категориями</h2>

@@ -25,4 +25,8 @@ interface ILinks {
       pathname: '/articles',
       title: 'Статьи'
     },
+    {
+      pathname: '/categories',
+      title: 'уп.категории'
+    }
   ];

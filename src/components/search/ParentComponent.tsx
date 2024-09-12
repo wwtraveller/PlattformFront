@@ -25,10 +25,10 @@ const ParentComponent = () => {
   return (
     <div>
       {/* Компонент для управления категориями */}
-      <CategoryManager 
+      {/*<CategoryManager 
         onCategorySelect={handleCategorySelect} 
         onCategoriesChange={handleCategoriesChange} 
-      />
+      />*/}
 
       {/* Компонент поиска, в который передаются категории */}
       <Search

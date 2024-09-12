@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CategoryManager from "./CategoryManager";
 import CreateCategoryForm from "./CreateCategoryForm";
+import Button from "components/button/Button";
 
 const CategoryManagementPage = () => {
     const [isCreating, setIsCreating] = useState(false);
@@ -29,7 +30,7 @@ const CategoryManagementPage = () => {
     return (
       <div>
         <h1>Управление категориями</h1>
-        <button onClick={handleCreateNewCategory}>Создать новую категорию</button>
+        <Button onClick={handleCreateNewCategory} name="Создать новую категорию" />
         {isCreating && <CreateCategoryForm onCancel={handleCancelCreation} />}
         <CategoryManager
           onCategorySelect={handleCategorySelect}

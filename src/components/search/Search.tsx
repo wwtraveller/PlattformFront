@@ -30,9 +30,9 @@ const Search = (props: SearchProps) => {
   const groups = props.categories;
   //const groups = ['продукт', 'маркетинг', 'блог'];
   const navigate = useNavigate(); // Хук для навигации
-  console.log('Props Categories:', props.categories); //!!!!!
-  console.log('Local Categories:', categories);     //!!!!!!
-  console.log('Groups:', groups);  //!!!!!!!!
+  //console.log('Props Categories:', props.categories); //!!!!!
+  //console.log('Local Categories:', categories);     //!!!!!!
+  //console.log('Groups:', groups);  //!!!!!!!!
 
   const validateSearch = () => {
     if (!query.trim()) {
@@ -97,7 +97,7 @@ const Search = (props: SearchProps) => {
 
   const handleCategoryChange = (updatedCategories: string[]) => {
     setCategories(updatedCategories);  // Обновляем локальные категории
-    console.log('Updated Categories:', updatedCategories);
+    //console.log('Updated Categories:', updatedCategories);
   };
 
 
@@ -120,7 +120,7 @@ const Search = (props: SearchProps) => {
           onChange={handleGroupChange}
           className={styles.searchSelect}
         >
-          <option value="">Выберите категорию</option>
+          <option value="">Все категории</option>
           
           {groups.map((group) => (
             <option key={group} value={group}>
