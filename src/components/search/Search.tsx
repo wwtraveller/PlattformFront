@@ -21,9 +21,11 @@ interface SearchProps {
 
 const Search = (props: SearchProps) => {
   const [query, setQuery] = useState('');
-  const [group, setGroup] = useState('');
+  const [group, setGroup] = useState(''); 
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false); // Флаг, что был выполнен поиск
+  const [categories, setCategories] = useState<string[]>([]);
+  
   
   const groups = props.categories;
   //const groups = ['продукт', 'маркетинг', 'блог'];
@@ -63,7 +65,6 @@ const Search = (props: SearchProps) => {
       setHasSearched(true);
       navigate('/search-results', { state: { searchResults: filteredResults } });
 
-
     } catch (error) {
       props.setError('');
       navigate('/search-error', { state: { error: 'Ошибка при выполнении поиска. Попробуйте снова.'}});   {/*error: 'Ошибка при выполнении поиска. Попробуйте снова.' */}
@@ -89,6 +90,10 @@ const Search = (props: SearchProps) => {
     if (event.key === 'Enter') {
       handleSearch();
     }
+  };
+
+  const handleCategoryChange = (updatedCategories: string[]) => {
+    setCategories(updatedCategories);  // Обновляем локальные категории
   };
 
   return (

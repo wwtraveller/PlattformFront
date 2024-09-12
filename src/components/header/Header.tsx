@@ -81,8 +81,7 @@ const [categories, setCategories] = useState<string[]>([]);
       </div>
       <div className={styles.navLeft}>
         <Search setError={setError}
-          setSearchResults={setSearchResults}
-          categories={categories} /> {/* Вставка компонента поиска */}
+          setSearchResults={setSearchResults} categories={categories}/> {/* Вставка компонента поиска */}
        {/* Если пользователь авторизован, показываем кнопку "Выйти", если нет — "Войти" */}
        {user.username ? (
           <>
