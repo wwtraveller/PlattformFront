@@ -30,7 +30,7 @@ function App() {
   const { user } = useAppSelector((state) => state.user); // Получаем данные о пользователе
 
   return (
-    <div className="App">
+    <div className="App"> 
       {/* Приветственное сообщение здесь или перенести его лучше в компонент About? */}
       {/* <h1>Hello</h1> */}
       
