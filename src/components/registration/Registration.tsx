@@ -18,8 +18,9 @@ export interface IRegisterFormValues {
   }
 
 export default function Registration() {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const [showPassword, setShowPassword] = useState(false); // Состояние для отображения пароля
     
@@ -37,15 +38,12 @@ export default function Registration() {
       .required('Введите email')
       .email('не корректный формат email'),
     password: Yup.string()
-      .required("Введите пароль")
-      .min(8, "Пароль должен содержать минимум 6 символов")
-      .matches(/[A-Z]/, "Пароль должен содержать хотя бы одну заглавную букву")
-      .matches(/[a-z]/, "Пароль должен содержать хотя бы одну строчную букву")
-      .matches(/\d/, "Пароль должен содержать хотя бы одну цифру")
-      .matches(
-        /[!@#$%^&*(),.?":{}|<>]/,
-        "Пароль должен содержать хотя бы один специальный символ"
-      ),
+      .required('Введите пароль')
+      .min(8, 'Пароль должен содержать минимум 6 символов')
+      .matches(/[A-Z]/, 'Пароль должен содержать хотя бы одну заглавную букву')
+      .matches(/[a-z]/, 'Пароль должен содержать хотя бы одну строчную букву')
+      .matches(/\d/, 'Пароль должен содержать хотя бы одну цифру')
+      .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Пароль должен содержать хотя бы один специальный символ'),
   });
   const formik = useFormik({
     initialValues: {
@@ -55,20 +53,22 @@ export default function Registration() {
       email: '',
       password: ''
     } as IRegisterFormValues,
-    validationSchema: schema,
-    validateOnChange: false,
-    onSubmit: (values: IRegisterFormValues, { resetForm }) => {
-      console.log("1234")
-      dispatch(registerUser(values))
-        .then(() => {
-          navigate("/");
-          resetForm();
+        validationSchema: schema,
+        validateOnChange: false,
+    onSubmit: (values: IRegisterFormValues, {resetForm}) => {
+        dispatch(registerUser(values))
+        .then(()=> {
+          navigate ('/')
+         resetForm()
         })
         .catch((error) => {
-          console.error("Ошибка регистрации:", error);
+          console.error('Ошибка регистрации:', error);
         });
-    },
+   
+    }
   });
+
+
 
   return (
     <form onSubmit={formik.handleSubmit} className={styles.signupForm}>
@@ -90,9 +90,8 @@ export default function Registration() {
         placeholder="Email"
         value={formik.values.email}
         onChange={formik.handleChange}
-        className={
-          formik.touched.email && formik.errors.email ? styles.inputError : ""
-        }
+        className={formik.touched.email && formik.errors.email ? styles.inputError : ''}
+
       />
       {formik.touched.email && formik.errors.email && (
           <div className={styles.error}>{formik.errors.email}</div>
@@ -112,8 +111,8 @@ export default function Registration() {
                 </span>
       </div>
       {formik.touched.password && formik.errors.password && (
-        <div className={styles.error}>{formik.errors.password}</div>
-      )}
+          <div className={styles.error}>{formik.errors.password}</div>
+        )}
 
       <Button type="submit" name="Зарегистрироваться" />
     </form>
