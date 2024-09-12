@@ -30,6 +30,9 @@ const Search = (props: SearchProps) => {
   const groups = props.categories;
   //const groups = ['продукт', 'маркетинг', 'блог'];
   const navigate = useNavigate(); // Хук для навигации
+  console.log('Props Categories:', props.categories); //!!!!!
+  console.log('Local Categories:', categories);     //!!!!!!
+  console.log('Groups:', groups);  //!!!!!!!!
 
   const validateSearch = () => {
     if (!query.trim()) {
@@ -37,11 +40,11 @@ const Search = (props: SearchProps) => {
       navigate('/search-error', { state: { error: 'Пожалуйста, введите строку поиска.' } });
       return false;
     }
-    if (!group.trim()) {
-      props.setError('');
-      navigate('/search-error', { state: { error: 'Пожалуйста, выберите категорию для поиска.' } });
-      return false;
-    }
+   // if (!group.trim()) {
+    //  props.setError('');
+     // navigate('/search-error', { state: { error: 'Пожалуйста, выберите категорию для поиска.' } });
+     // return false;
+   // }
     props.setError(null);  // Сброс ошибки, если все условия выполнены
     return true;
   };
@@ -94,7 +97,9 @@ const Search = (props: SearchProps) => {
 
   const handleCategoryChange = (updatedCategories: string[]) => {
     setCategories(updatedCategories);  // Обновляем локальные категории
+    console.log('Updated Categories:', updatedCategories);
   };
+
 
   return (
     <div className={styles.searchContainer}>
@@ -121,7 +126,9 @@ const Search = (props: SearchProps) => {
             <option key={group} value={group}>
               {group.charAt(0).toUpperCase() + group.slice(1)}
             </option>
+
           ))} 
+          
         </select>
         <input
           type="text"
