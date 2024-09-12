@@ -102,6 +102,7 @@ const Search = (props: SearchProps) => {
           >
             <path d="M10 2a8 8 0 016.32 12.906l4.387 4.386-1.414 1.415-4.387-4.386A8 8 0 1110 2zm0 2a6 6 0 100 12A6 6 0 0010 4z" />
           </svg>
+          <p></p>
         </div>
         <select
           value={group}
