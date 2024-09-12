@@ -9,6 +9,8 @@ import SearchErrorPage from 'components/search/SearchErrorPage';
 import SearchResultsPage from 'components/search/SearchResultsPage';
 import { useState } from 'react';
 import Articles from 'components/articles/Articles';
+import AdminRoute from 'admin/AdminRoute';
+import CategoryManagementPage from 'components/categories/CategoryManagementPage';
 import Profile from 'components/user/Profile';
 import Dashboard from 'components/user/Dashboard';
 import { useAppSelector } from 'redux/hooks';
@@ -22,13 +24,14 @@ interface SearchItem {
   group: string;
 }
 function App() {
+  //! const isAdmin = true; //проверка, является ли пользователь админом. РАСКОМЕНТИРОВАТЬ КОГДА БУДЕТ ГОТОВА АДМИНКА
 
   const [error, setError] = useState<string | null>(null);
   const [searchResults, setSearchResults] = useState<SearchItem[]>([]);
   const { user } = useAppSelector((state) => state.user); // Получаем данные о пользователе
 
   return (
-    <div className="App">
+    <div className="App"> 
       {/* Приветственное сообщение здесь или перенести его лучше в компонент About? */}
       {/* <h1>Hello</h1> */}
       
@@ -43,6 +46,12 @@ function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/search-results" element={<SearchResultsPage />} />
             <Route path="/search-error" element={<SearchErrorPage />} />
+            <Route path="/articles" element={<Articles />} />
+            <Route path="/admin/categories" element={<CategoryManagementPage />} />
+            <Route path="/categories" element={<CategoryManagementPage />} />
+            {/*!!!! РАСКОМЕНТИРОВАТЬ, КОГДА БУДЕТ ГОТОВА АДМИНКА Защищённый маршрут для админов 
+            <Route path="/admin/categories" element={ <AdminRoute isAdmin={isAdmin}> <CategoryManager /> </AdminRoute>}/>*/}
+            <Route path="*" element={<h1>Ошибка 404</h1>} />
             <Route path="/login" element={<AuthWindow />} />
             
             {/* Проверка: если пользователь авторизован, показываем ему страницы личного кабинета */}

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './search.module.css';
 import SearchResultsPage from './SearchResultsPage'
 import SearchData from '../data/SearchData.json';
+import CategoryManager from 'components/categories/CategoryManager';
 
 interface SearchItem {
   id: number;
@@ -14,18 +15,24 @@ interface SearchItem {
 interface SearchProps {
   setError: (message: string | null) => void;
   setSearchResults: (results: SearchItem[]) => void;
+  categories: string[];
   //results: SearchItem[]; 
 }
 
 const Search = (props: SearchProps) => {
   const [query, setQuery] = useState('');
-  const [group, setGroup] = useState('');
+  const [group, setGroup] = useState(''); 
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false); // Флаг, что был выполнен поиск
+  const [categories, setCategories] = useState<string[]>([]);
   
-
-  const groups = ['продукт', 'маркетинг', 'блог'];
+  
+  const groups = props.categories;
+  //const groups = ['продукт', 'маркетинг', 'блог'];
   const navigate = useNavigate(); // Хук для навигации
+  //console.log('Props Categories:', props.categories); //!!!!!
+  //console.log('Local Categories:', categories);     //!!!!!!
+  //console.log('Groups:', groups);  //!!!!!!!!
 
   const validateSearch = () => {
     if (!query.trim()) {
@@ -33,11 +40,11 @@ const Search = (props: SearchProps) => {
       navigate('/search-error', { state: { error: 'Пожалуйста, введите строку поиска.' } });
       return false;
     }
-    if (!group.trim()) {
-      props.setError('');
-      navigate('/search-error', { state: { error: 'Пожалуйста, выберите категорию для поиска.' } });
-      return false;
-    }
+   // if (!group.trim()) {
+    //  props.setError('');
+     // navigate('/search-error', { state: { error: 'Пожалуйста, выберите категорию для поиска.' } });
+     // return false;
+   // }
     props.setError(null);  // Сброс ошибки, если все условия выполнены
     return true;
   };
@@ -60,7 +67,6 @@ const Search = (props: SearchProps) => {
       props.setSearchResults(filteredResults); // Сохраняем результаты поиска
       setHasSearched(true);
       navigate('/search-results', { state: { searchResults: filteredResults } });
-
 
     } catch (error) {
       props.setError('');
@@ -89,6 +95,12 @@ const Search = (props: SearchProps) => {
     }
   };
 
+  const handleCategoryChange = (updatedCategories: string[]) => {
+    setCategories(updatedCategories);  // Обновляем локальные категории
+    //console.log('Updated Categories:', updatedCategories);
+  };
+
+
   return (
     <div className={styles.searchContainer}>
       <div className={styles.searchWrapper}>
@@ -102,18 +114,22 @@ const Search = (props: SearchProps) => {
           >
             <path d="M10 2a8 8 0 016.32 12.906l4.387 4.386-1.414 1.415-4.387-4.386A8 8 0 1110 2zm0 2a6 6 0 100 12A6 6 0 0010 4z" />
           </svg>
+          <p></p>
         </div>
         <select
           value={group}
           onChange={handleGroupChange}
           className={styles.searchSelect}
         >
-          <option value="">Выберите категорию</option>
+          <option value="">Все категории</option>
+          
           {groups.map((group) => (
             <option key={group} value={group}>
               {group.charAt(0).toUpperCase() + group.slice(1)}
             </option>
-          ))}
+
+          ))} 
+          
         </select>
         <input
           type="text"

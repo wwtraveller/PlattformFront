@@ -1,9 +1,10 @@
 // src/components/header/links.ts
 
 interface ILinks {
-  pathname: string;
-  title: string;
-}
+  
+    pathname: string,
+    title: string;
+  }
 
 // Ссылки для незарегистрированных пользователей
 export const guestLinks: ILinks[] = [
@@ -39,6 +40,10 @@ export const userLinks: ILinks[] = [
     pathname: '/articles',
     title: 'Статьи',
   },
+  {
+      pathname: '/categories',
+      title: 'уп.категории'
+    },
   {
     pathname: '/favorites',
     title: 'Избранное',
