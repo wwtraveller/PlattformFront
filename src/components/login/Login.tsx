@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik';
 import styles from "./login.module.css"
@@ -7,6 +7,7 @@ import { loginUser } from '../../features/auth/authAction';
 import Button from '../button/Button';
 import * as Yup from 'yup';
 import Registration from 'components/registration/Registration';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
 export interface ILoginFormValues {
@@ -16,6 +17,12 @@ export interface ILoginFormValues {
   export default function Login() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    
+    const [showPassword, setShowPassword] = useState(false); // Состояние для отображения пароля
+    
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword); // Переключаем видимость пароля
+      };
   
 
      // Валидационная схема Yup для формы
@@ -38,6 +45,7 @@ export interface ILoginFormValues {
         password: 'emilyspass'
       } as ILoginFormValues,
       validationSchema: schema,
+      validateOnChange: false,
       onSubmit: (values: ILoginFormValues, {resetForm}) => {
         // Диспатчим экшен для логина
         dispatch(loginUser(values))
@@ -67,9 +75,11 @@ export interface ILoginFormValues {
          {formik.touched.username && formik.errors.username && (
           <div className={styles.error}>{formik.errors.username}</div>
         )}
+
+<div className={styles.passwordContainer}>
         <input
           name="password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           value={formik.values.password}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -77,6 +87,10 @@ export interface ILoginFormValues {
           className={formik.touched.password && formik.errors.password ? styles.inputError : ''}
 
         />
+        <span onClick={togglePasswordVisibility} className={styles.eyeIcon}>
+                    {showPassword ? <FaEyeSlash /> : <FaEye />} {/* Иконка для отображения/скрытия пароля */}
+                </span>
+      </div>
           {formik.touched.password && formik.errors.password && (
           <div className={styles.error}>{formik.errors.password}</div>
         )}

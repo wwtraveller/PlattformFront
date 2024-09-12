@@ -12,6 +12,7 @@ import Articles from 'components/articles/Articles';
 import Profile from 'components/user/Profile';
 import Dashboard from 'components/user/Dashboard';
 import { useAppSelector } from 'redux/hooks';
+import AuthWindow from 'components/authWindow/AuthWindow';
 
 
 interface SearchItem {
@@ -42,6 +43,7 @@ function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/search-results" element={<SearchResultsPage />} />
             <Route path="/search-error" element={<SearchErrorPage />} />
+            <Route path="/login" element={<AuthWindow />} />
             
             {/* Проверка: если пользователь авторизован, показываем ему страницы личного кабинета */}
             {user.username && (

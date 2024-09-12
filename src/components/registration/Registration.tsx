@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import Button from '../button/Button';
 import styles from './registration.module.css';
@@ -6,10 +6,13 @@ import { registerUser } from 'features/auth/authAction';
 import { useAppDispatch } from 'redux/hooks';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
 export interface IRegisterFormValues {
-    username: string
+  firstName: string;
+  lastName: string;
+    // username: string
     email: string
     password: string
   }
@@ -19,11 +22,18 @@ export default function Registration() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
+  const [showPassword, setShowPassword] = useState(false); // Состояние для отображения пароля
+    
+  const togglePasswordVisibility = () => {
+      setShowPassword(!showPassword); // Переключаем видимость пароля
+    };
+
   const schema = Yup.object().shape({
     username: Yup.string()
-      .required('Введите имя пользователя')
-      .min(2, 'Минимум 2 символа')
-      .max(15, 'Максимум 15 символов'),
+      // .required('Введите имя пользователя')
+      // .min(2, 'Минимум 2 символа')
+      // .max(15, 'Максимум 15 символов'),
+      ,
       email: Yup.string()
       .required('Введите email')
       .email('не корректный формат email'),
@@ -37,7 +47,9 @@ export default function Registration() {
   });
   const formik = useFormik({
     initialValues: {
-      username: '',
+      firstName: "",
+      lastName: "",
+      // username: '',
       email: '',
       password: ''
     } as IRegisterFormValues,
@@ -64,13 +76,13 @@ export default function Registration() {
         type="text"
         name="username"
         placeholder="Ваше имя"
-        value={formik.values.username}
+        value={formik.values.lastName}
         onChange={formik.handleChange}
-        className={formik.touched.username && formik.errors.username ? styles.inputError : ''}
+        className={formik.touched.lastName && formik.errors.lastName ? styles.inputError : ''}
 
       />
-        {formik.touched.username && formik.errors.username && (
-          <div className={styles.error}>{formik.errors.username}</div>
+        {formik.touched.lastName && formik.errors.lastName && (
+          <div className={styles.error}>{formik.errors.lastName}</div>
         )}
       <input
         type="email"
@@ -84,15 +96,20 @@ export default function Registration() {
       {formik.touched.email && formik.errors.email && (
           <div className={styles.error}>{formik.errors.email}</div>
         )}
-      <input
-        type="password"
-        name="password"
-        placeholder="Пароль"
-        value={formik.values.password}
-        onChange={formik.handleChange}
-        className={formik.touched.password && formik.errors.password ? styles.inputError : ''}
-
-      />
+      <div className={styles.passwordContainer}>
+        <input
+          name="password"
+          type={showPassword ? "text" : "password"}
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          placeholder="Пароль"
+          className={formik.touched.password && formik.errors.password ? styles.inputError : ''}
+        />
+        <span onClick={togglePasswordVisibility} className={styles.eyeIcon}>
+                    {showPassword ? <FaEyeSlash /> : <FaEye />} {/* Иконка для отображения/скрытия пароля */}
+                </span>
+      </div>
       {formik.touched.password && formik.errors.password && (
           <div className={styles.error}>{formik.errors.password}</div>
         )}

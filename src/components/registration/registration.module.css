@@ -9,3 +9,15 @@
     margin-top: -10px;
     padding: 0;
   }
+
+  .passwordContainer {
+    position: relative;
+}
+
+.eyeIcon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}

@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './header.module.css';
 import { guestLinks } from './links'; // Используем только guestLinks для незарегистрированных пользователей
 import { useState } from 'react';
@@ -28,6 +28,8 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
   const [isLoginWindowOpen, setIsLoginWindowOpen] = useState(false);
   const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate(); // Добавляем useNavigate
+
 
 
 const handleOpenLoginWindow = () => {
@@ -66,12 +68,15 @@ const handleCloseLoginWindow = () => {
 
   // const locationLogName = useLocation();
 
-  const handleLogout = () => {
-    // чистим браузерное хранилище данных
-    localStorage.removeItem('user-token')
-    // чистим state, выносим 'мусор' данных за пользователем
-    dispatch(logoutUser());
-  }
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutUser());
+      setIsLoginWindowOpen(false);
+      navigate('/');
+    } catch (error) {
+      console.error('Ошибка выхода', error);
+    }
+  };
 
   return (
     <header className={styles.header}>
