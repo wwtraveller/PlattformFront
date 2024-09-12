@@ -1,0 +1,17 @@
+.userMenu {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .userMenu a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px;
+    transition: color 0.3s, font-weight 0.3s;
+  }
+  
+  .userMenu a:hover {
+    color: var(--hover-color);
+  }
+  

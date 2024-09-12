@@ -1,16 +1,16 @@
 .myButton {
     margin: 5px;
     padding: 10px 20px;
-    background-color: white;
-    border: none;
+    background-color: var(--background-color); /* Используем общий фон */
+    border: 1px solid var(--primary-color); /* Легкая граница для выделения */
     border-radius: 10px;
     cursor: pointer;
-    transition: all 0.1s ease-in-out;
+    transition: background-color 0.3s, color 0.3s, transform 0.1s ease-in-out;
   }
   
   /* стили сработают при наведении мышкой на кнопку */
   .myButton:hover {
-    background-color: #6788f3;
+    background-color: var(--primary-color);
     color: white;
   }
   
@@ -18,4 +18,5 @@
   .myButton:active {
     background-color: #1d1d5e;
     color: white;
+    transform: scale(0.98); /* Легкое сжатие при нажатии для эффекта нажатия */
   }

@@ -1,4 +1,4 @@
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import Marketing from '../components/categories/marketing/Marketing';
 import About from '../components/about/About';
@@ -11,6 +11,9 @@ import { useState } from 'react';
 import Articles from 'components/articles/Articles';
 import AdminRoute from 'admin/AdminRoute';
 import CategoryManagementPage from 'components/categories/CategoryManagementPage';
+import Profile from 'components/user/Profile';
+import Dashboard from 'components/user/Dashboard';
+import { useAppSelector } from 'redux/hooks';
 
 
 interface SearchItem {
@@ -24,6 +27,8 @@ function App() {
 
   const [error, setError] = useState<string | null>(null);
   const [searchResults, setSearchResults] = useState<SearchItem[]>([]);
+  const { user } = useAppSelector((state) => state.user); // Получаем данные о пользователе
+
   return (
     <div className="App">
       {/* Приветственное сообщение здесь или перенести его лучше в компонент About? */}
@@ -33,6 +38,7 @@ function App() {
       <HashRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
+          {/* Незарегистрированный пользователь - доступные страницы */}
             <Route path="/about" element={<About />} />
             <Route path="/product" element={<Product />} />
             <Route path="/marketing" element={<Marketing />} />
@@ -43,9 +49,23 @@ function App() {
             <Route path="/admin/categories" element={<CategoryManagementPage />} />
             <Route path="/categories" element={<CategoryManagementPage />} />
             {/*!!!! РАСКОМЕНТИРОВАТЬ, КОГДА БУДЕТ ГОТОВА АДМИНКА Защищённый маршрут для админов 
-        <Route path="/admin/categories" element={ <AdminRoute isAdmin={isAdmin}> <CategoryManager /> </AdminRoute>}/>*/}
+            <Route path="/admin/categories" element={ <AdminRoute isAdmin={isAdmin}> <CategoryManager /> </AdminRoute>}/>*/}
             <Route path="*" element={<h1>Ошибка 404</h1>} />
+            
+            {/* Проверка: если пользователь авторизован, показываем ему страницы личного кабинета */}
+            {user.username && (
+              <>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/articles" element={<Articles />} />
+              </>
+            )}
+              {/* Если пользователь не авторизован, перенаправляем на основную страницу */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+          
           </Route>
+          {/* Обработка ошибок и страниц, которые не найдены */}
+          <Route path="*" element={<h1>Ошибка 404: Страница не найдена</h1>} />
         </Routes>
       </HashRouter>
     </div>

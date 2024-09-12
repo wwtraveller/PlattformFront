@@ -10,7 +10,7 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     height: 400px;
-    background-color: transparent;
+    /* background-color: transparent; */
     background-image: url('https://img.freepik.com/free-photo/ethereal-environment-with-cloth_23-2151113627.jpg');
     background-size: cover;
     background-position: center;
@@ -37,18 +37,19 @@
 /* Заголовки секций */
 .authSectionLog h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 
 .authSectionLog p {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .authSectionLog form {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-top: 20px;
 }
 
 .authSectionLog input {
@@ -56,6 +57,11 @@
     border: 0.5px solid #ccc;
     border-radius: 4px;
     background-color: #c4c2c2c2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 320px;
+
 }
 
 .authSectionLog button {
@@ -88,14 +94,9 @@
 }
 .authSectionLog:hover {
     cursor: pointer;
-    background-color: #ffffff82;
+    /* background-color: #ffffffc2; */
 
 }
-
-
-
-
-
 
 .authSectionSign {
     width: 50%;
@@ -112,7 +113,7 @@
 
 .authSectionSign h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 
 .authSectionSign p {
@@ -125,6 +126,8 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-top: 20px;
+
 }
 
 .authSectionSign input {
@@ -132,6 +135,10 @@
     border: 0.5px solid #ccc;
     border-radius: 4px;
     background-color: #c4c2c2c2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 320px;
 }
 
 .authSectionSign button {
@@ -166,5 +173,119 @@
 
 .authSectionSign:hover {
     cursor: pointer;
-    background-color: #ffffff82;
+    /* background-color: #ffffff82; */
 }
+
+
+
+
+/* -------------------- */
+
+.authContainer {
+    width: 800px;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .authSectionLog,
+  .authSectionSign {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    transition: transform 0.6s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f071;
+  }
+  
+  .authSectionLog {
+    left: 0;
+    transform: translateX(0);
+  }
+  
+  .authSectionSign {
+    right: 0;
+    transform: translateX(100%);
+  }
+  
+  .showLogin {
+    transform: translateX(100%);
+  } 
+  
+  .showRegistration {
+    transform: translateX(0);
+  } 
+  
+  .overlayContainer {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1725832062946-2ec9aae5c4e2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMDl8fHxlbnwwfHx8fHw%3D');
+    background-color: #007bff;
+    color: rgb(255, 255, 255);
+    transition: left 0.6s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-100%);
+
+  }
+  
+  .rightPanelActive {
+    left: 0;
+  }
+  
+  .overlay {
+    text-align: center;
+  }
+  
+  .overlayContent h2 {
+    font-size: 28px;
+  }
+  
+  .overlayContent p {
+    font-size: 16px;
+    margin: 10px 0;
+    width: 320px;
+  }
+  
+  button {
+    background-color: white;
+    color: #007bff;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 200px;
+  }
+  
+
+  .socialLogin {
+    margin-top: 20px;
+  }
+  
+  .socialIcons {
+    display: flex;
+    gap: 30px;
+    padding: 10px;
+    margin: 0px;
+  }
+  
+  .icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .icon:hover {
+    color: #007bff;
+  }
