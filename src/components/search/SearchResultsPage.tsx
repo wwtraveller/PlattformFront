@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from './searchResultsPage.module.css';
 
@@ -9,10 +9,16 @@ interface SearchItem {
   group: string;
 }
 
+
+
 const SearchResultsPage = () => {
   const location = useLocation();
   const state = location.state as { searchResults: SearchItem[] } | undefined;
   const results = state?.searchResults || []; 
+  const [categories, setCategories] = useState<string[]>([]);
+  const handleCategoriesChange = (categories: { id: number, name: string }[]) => {
+    setCategories(categories.map(cat => cat.name));
+  };
 
   return (
     <div className={styles.resultsContainer}>
@@ -24,6 +30,7 @@ const SearchResultsPage = () => {
             <h4>{item.title}</h4>
             <p>{item.description}</p>
           </div>
+          
         ))
       )}
     </div>

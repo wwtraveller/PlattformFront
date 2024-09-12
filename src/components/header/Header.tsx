@@ -7,6 +7,7 @@ import Button from 'components/button/Button';
 import Search from 'components/search/Search';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { logoutUser } from 'features/auth/authSlice';
+import ParentComponent from 'components/search/ParentComponent';
 import UserMenu from '../user/UserMenu'; // Правильное подключение UserMenu
 
 interface SearchItem {
@@ -72,7 +73,7 @@ const handleCloseLoginWindow = () => {
     // чистим state, выносим 'мусор' данных за пользователем
     dispatch(logoutUser());
   }
-
+const [categories, setCategories] = useState<string[]>([]);
   return (
     <header className={styles.header}>
       <div className={styles.navMenu}>
@@ -91,9 +92,17 @@ const handleCloseLoginWindow = () => {
           ))}
       </div>
       <div className={styles.navLeft}>
+
+       <ParentComponent/>
+       {/*  <Search setError={setError}
+          setSearchResults={setSearchResults} categories={categories}/>*/} {/* Вставка компонента поиска */}
+       {/* Если пользователь авторизован, показываем кнопку "Выйти", если нет — "Войти" */}
+       {user.username ? (
+
         <Search setError={setError} setSearchResults={setSearchResults} />
         {/* Если пользователь авторизован, показываем меню пользователя, если нет — "Войти" */}
         {user.username ? (
+
           <>
             <UserMenu /> {/* Отображаем UserMenu для авторизованного пользователя */}
             <span>{user.username}</span>
