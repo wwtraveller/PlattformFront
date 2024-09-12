@@ -20,7 +20,8 @@ const initialUser: IUserData = {
   gender: '',
   image: '',
   token: '',
-  refreshToken: ''
+  refreshToken: '',
+  role: 'admin' | 'user';
 }
 
 // создаем state и передаем начальное значение user
