@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Button from '../button/Button';
+import categoryData from '../data/CategoriesData.json'
 
 interface Category {
   id: number;
@@ -34,11 +35,7 @@ interface CategoryProps {
   
 
 const CategoryManager = ({ onCategorySelect, onCategoriesChange }: CategoryProps) => {
-  const [categories, setCategories] = useState<Category[]>([
-    { id: 1, name: 'Продукт' },
-    { id: 2, name: 'Маркетинг' },
-    { id: 3, name: 'Блог' },
-  ]);
+  const [categories, setCategories] = useState<Category[]>(categoryData);
 
   useEffect(() => {
     onCategoriesChange(categories.map(category => category.name)); // Передаем только названия категорий
@@ -80,7 +77,7 @@ const CategoryManager = ({ onCategorySelect, onCategoriesChange }: CategoryProps
   const handleCategoryClick = (category: Category) => {
     onCategorySelect(category.name);  // Передаем название выбранной категории
   };
-
+  console.log(categories);
   return (
     <div>
       <h2>Управление категориями</h2>

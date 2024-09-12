@@ -7,6 +7,7 @@ import Button from 'components/button/Button';
 import Search from 'components/search/Search';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { logoutUser } from 'features/auth/authSlice';
+import ParentComponent from 'components/search/ParentComponent';
 
 interface SearchItem {
   id: number;
@@ -80,8 +81,9 @@ const [categories, setCategories] = useState<string[]>([]);
       ))}
       </div>
       <div className={styles.navLeft}>
-        <Search setError={setError}
-          setSearchResults={setSearchResults} categories={categories}/> {/* Вставка компонента поиска */}
+       <ParentComponent/>
+       {/*  <Search setError={setError}
+          setSearchResults={setSearchResults} categories={categories}/>*/} {/* Вставка компонента поиска */}
        {/* Если пользователь авторизован, показываем кнопку "Выйти", если нет — "Войти" */}
        {user.username ? (
           <>
