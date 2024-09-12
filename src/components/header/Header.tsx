@@ -97,9 +97,10 @@ const [categories, setCategories] = useState<string[]>([]);
        {/*  <Search setError={setError}
           setSearchResults={setSearchResults} categories={categories}/>*/} {/* Вставка компонента поиска */}
        {/* Если пользователь авторизован, показываем кнопку "Выйти", если нет — "Войти" */}
-       {user.username ? (
+       {/*user.username ? (*/}
 
-        <Search setError={setError} setSearchResults={setSearchResults} />
+       {/*<Search setError={setError} setSearchResults={setSearchResults} />*/}
+
         {/* Если пользователь авторизован, показываем меню пользователя, если нет — "Войти" */}
         {user.username ? (
 
