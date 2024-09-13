@@ -41,10 +41,21 @@ const CategoryManager = ({ onCategorySelect, onCategoriesChange }: CategoryProps
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [newCategoryName, setNewCategoryName] = useState('');
+  const [prevCategories, setPrevCategories] = useState<string[]>([]);
 
-useEffect(() => {
-    onCategoriesChange(categories.map(category => category.name)); // Передаем только названия категорий
-  }, [categories, onCategoriesChange]);
+//useEffect(() => {
+  //  onCategoriesChange(categories.map(category => category.name)); // Передаем только названия категорий
+  //}, [categories, onCategoriesChange]);
+
+  useEffect(() => {
+    const currentCategoryNames = categories.map(category => category.name);
+
+    // Проверяем, изменились ли категории, чтобы избежать бесконечного цикла
+    if (JSON.stringify(currentCategoryNames) !== JSON.stringify(prevCategories)) {
+      onCategoriesChange(currentCategoryNames);
+      setPrevCategories(currentCategoryNames); // Обновляем предыдущие категории
+    }
+  }, [categories, prevCategories, onCategoriesChange]);
 
   useEffect(() => {
     // Функция для загрузки категорий из API
