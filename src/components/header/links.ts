@@ -40,6 +40,7 @@ export const userLinks: ILinks[] = [
     pathname: '/articles',
     title: 'Статьи',
   },
+  
   {
       pathname: '/categories',
       title: 'уп.категории'
@@ -47,5 +48,21 @@ export const userLinks: ILinks[] = [
   {
     pathname: '/favorites',
     title: 'Избранное',
+  },
+  {
+    pathname: '/about',
+    title: 'О нас',
+  },
+  {
+    pathname: '/marketing',
+    title: 'Маркетинг',
+  },
+  {
+    pathname: '/product',
+    title: 'Продукт',
+  },
+  {
+    pathname: '/blog',
+    title: 'Блог',
   },
 ];
