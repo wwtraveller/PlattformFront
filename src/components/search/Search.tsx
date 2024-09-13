@@ -170,7 +170,7 @@ const Search = (props: SearchProps) => {
           value={query}
           onChange={handleInputChange}
           onKeyPress={handleKeyPress}
-          placeholder="Введите запрос для поиска"
+          placeholder="Поиск"
           className={styles.searchInput}
         />
       </div>
