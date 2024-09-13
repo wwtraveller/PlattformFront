@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './search.module.css';
 import SearchResultsPage from './SearchResultsPage'
@@ -25,9 +25,31 @@ const Search = (props: SearchProps) => {
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false); // Флаг, что был выполнен поиск
   const [categories, setCategories] = useState<string[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('/api/categories');
+        if (!response.ok) {
+          throw new Error('Ошибка при загрузке категорий');
+        }
+        const data = await response.json();
+        console.log('Fetched Categories:', data);
+        // Извлекаем названия категорий из объектов
+        const categoryNames = data.map((item: { name: string }) => item.name);
+        setCategories(categoryNames);
+      } catch (error) {
+        console.error('Ошибка при получении категорий:', error);
+        setError('Не удалось загрузить категории');
+      }
+    };
+  
+    fetchCategories();
+  }, []);
   
   
-  const groups = props.categories;
+  //const groups = props.categories;
   //const groups = ['продукт', 'маркетинг', 'блог'];
   const navigate = useNavigate(); // Хук для навигации
   //console.log('Props Categories:', props.categories); //!!!!!
@@ -57,12 +79,25 @@ const Search = (props: SearchProps) => {
     }
     setIsSearching(true); 
     try {
+      // Отправка запроса на бэкенд для выполнения поиска
+      const response = await fetch(`/api/search?query=${encodeURIComponent(query)}&group=${encodeURIComponent(group)}`);
+    
+      // Проверка, что запрос завершился успешно
+      if (!response.ok) {
+        throw new Error('Ошибка при выполнении запроса к серверу');
+      }
+    
+      // Получаем данные из ответа сервера в формате JSON
+      const filteredResults = await response.json();
+
+  
+    {/*try {
       // Фильтрация данных из SearchData по введенному запросу и выбранной категории
       const filteredResults = SearchData.filter(
         (item) =>
           item.title.toLowerCase().includes(query.toLowerCase()) &&
           (group ? item.group === group : true)  // Если категория выбрана, фильтруем по ней
-      );
+      );*/}
 
       props.setSearchResults(filteredResults); // Сохраняем результаты поиска
       setHasSearched(true);
@@ -123,12 +158,11 @@ const Search = (props: SearchProps) => {
         >
           <option value="">Все категории</option>
           
-          {groups.map((group) => (
-            <option key={group} value={group}>
-              {group.charAt(0).toUpperCase() + group.slice(1)}
-            </option>
-
-          ))} 
+          {categories.map((category) => (
+          <option key={category} value={category}>
+            {category.charAt(0).toUpperCase() + category.slice(1)}
+          </option>
+        ))}
           
         </select>
         <input

@@ -10,11 +10,11 @@ import SearchResultsPage from 'components/search/SearchResultsPage';
 import { useState } from 'react';
 import Articles from 'components/articles/Articles';
 import AdminRoute from 'admin/AdminRoute';
-import CategoryManagementPage from 'components/categories/CategoryManagementPage';
 import Profile from 'components/user/Profile';
 import Dashboard from 'components/user/Dashboard';
 import { useAppSelector } from 'redux/hooks';
 import AuthWindow from 'components/authWindow/AuthWindow';
+import CategoryManager from 'components/categories/CategoryManager';
 
 
 interface SearchItem {
@@ -47,8 +47,8 @@ function App() {
             <Route path="/search-results" element={<SearchResultsPage />} />
             <Route path="/search-error" element={<SearchErrorPage />} />
             <Route path="/articles" element={<Articles />} />
-            <Route path="/admin/categories" element={<CategoryManagementPage />} />
-            <Route path="/categories" element={<CategoryManagementPage />} />
+            <Route path="/admin/categories" element={<CategoryManager/>} />
+            <Route path="/categories" element={<CategoryManager />} />
             {/*!!!! РАСКОМЕНТИРОВАТЬ, КОГДА БУДЕТ ГОТОВА АДМИНКА Защищённый маршрут для админов 
             <Route path="/admin/categories" element={ <AdminRoute isAdmin={isAdmin}> <CategoryManager /> </AdminRoute>}/>*/}
             <Route path="*" element={<h1>Ошибка 404</h1>} />
