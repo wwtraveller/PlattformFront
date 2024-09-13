@@ -49,8 +49,8 @@ function App() {
             <Route path="/articles" element={<Articles />} />
             <Route path="/admin/categories" element={<CategoryManagementPage />} />
             <Route path="/categories" element={<CategoryManagementPage />} />
-            {/*!!!! РАСКОМЕНТИРОВАТЬ, КОГДА БУДЕТ ГОТОВА АДМИНКА Защищённый маршрут для админов 
-            <Route path="/admin/categories" element={ <AdminRoute isAdmin={isAdmin}> <CategoryManager /> </AdminRoute>}/>*/}
+            {/* !!!! РАСКОМЕНТИРОВАТЬ, КОГДА БУДЕТ ГОТОВА АДМИНКА Защищённый маршрут для админов 
+            <Route path="/admin/categories" element={ <AdminRoute isAdmin={isAdmin}> <CategoryManager /> </AdminRoute>}/> */}
             <Route path="*" element={<h1>Ошибка 404</h1>} />
             <Route path="/login" element={<AuthWindow />} />
             

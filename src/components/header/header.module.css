@@ -107,8 +107,8 @@
   
   .loginWindowContent {
     position: relative;
-    background-color: rgba(255, 255, 255, 0.9);
-    /* padding: 20px; */
+    /* background-color: rgba(255, 255, 255, 0.9); */
+    padding: 20px;
     border-radius: 10px;
     max-width: 800px;
     height: 400px;

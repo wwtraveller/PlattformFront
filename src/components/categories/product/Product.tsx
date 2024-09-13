@@ -36,7 +36,7 @@ const articles: Article[] = [
     title: 'Ценообразование на инфопродукты и услуги. 8 критериев, которые влияют на цену',
     shortDescription: 'Критерий 1: Громко смейся. Критерий 2: Смотри Шаг 1.',
     imageUrl: 'https://st2.depositphotos.com/4152719/8388/i/450/depositphotos_83882536-stock-photo-competitive-pricing-concept-image-with.jpg',
-    fullText: 'Подробная информация о ценообразовании на инфопродукты...',
+    fullText: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam dicta molestias neque nostrum voluptate iure, inventore quaerat quo velit architecto quam ipsam porro laudantium. Neque delectus fuga ab obcaecati nisi.'
   },
   
 ];
@@ -61,7 +61,7 @@ export default function Products() {
             
             {/* Если пользователь авторизован, показываем полную статью */}
             {user?.username ? (
-              <Link to={`/articles/${article.id}`} className={styles.readMoreLink}>
+              <Link to={`/api/articles/${article.id}`} className={styles.readMoreLink}>
                 Читать далее
               </Link>
             ) : (
