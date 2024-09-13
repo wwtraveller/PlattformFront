@@ -5,6 +5,7 @@
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
+    padding: 0 15px;
   }
 
   .searchWrapper {
@@ -15,7 +16,11 @@
     overflow: hidden;
     background-color: #fff;
     height: 40px; /* Задает высоту для выравнивания с другими элементами */
+    transition: border-radius 0.3s ease;
   }
+  /*.searchWrapper:hover{
+    border: 40px;
+  }*/
 
   .searchIcon {
     padding: 10px;
@@ -32,7 +37,19 @@
     background: transparent;
     font-size: 14px;
     appearance: none;
+    position: relative;
+    cursor: pointer;
   }
+  /*.searchSelect::after{
+    content: '▼';
+    font-size: 10px;
+    color: #999;
+    position: absolute;
+    right: 10px;
+    pointer-events: none;
+    top: 50%;
+    transform: translateY(-50%);
+  }*/
   
   .searchInput {
     flex: 1;

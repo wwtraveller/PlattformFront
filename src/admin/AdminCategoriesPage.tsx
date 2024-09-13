@@ -15,8 +15,6 @@ const handleCategorySelect = (categoryName: string) => {
       <div>
         <h1>Админ-панель: Управление категориями</h1>
         <CategoryManager 
-          onCategorySelect={handleCategorySelect} 
-          onCategoriesChange={handleCategoriesChange} // Передаём заглушку
         />
       </div>
     );
