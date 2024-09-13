@@ -14,6 +14,7 @@ import CategoryManagementPage from 'components/categories/CategoryManagementPage
 import Profile from 'components/user/Profile';
 import Dashboard from 'components/user/Dashboard';
 import { useAppSelector } from 'redux/hooks';
+import AuthWindow from 'components/authWindow/AuthWindow';
 
 
 interface SearchItem {
@@ -51,6 +52,7 @@ function App() {
             {/*!!!! РАСКОМЕНТИРОВАТЬ, КОГДА БУДЕТ ГОТОВА АДМИНКА Защищённый маршрут для админов 
             <Route path="/admin/categories" element={ <AdminRoute isAdmin={isAdmin}> <CategoryManager /> </AdminRoute>}/>*/}
             <Route path="*" element={<h1>Ошибка 404</h1>} />
+            <Route path="/login" element={<AuthWindow />} />
             
             {/* Проверка: если пользователь авторизован, показываем ему страницы личного кабинета */}
             {user.username && (

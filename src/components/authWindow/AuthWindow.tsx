@@ -3,7 +3,13 @@ import styles from "./authWindow.module.css";
 import Login from "../login/Login";
 import Registration from "../registration/Registration";
 import Button from "components/button/Button";
-import { FaFacebook, FaGoogle, FaTwitter } from "react-icons/fa"; // Импортируем иконки
+import {
+  FaFacebook,
+  FaGoogle,
+  FaInstagram,
+  FaTwitter,
+  FaVk,
+} from "react-icons/fa"; // Импортируем иконки
 
 export default function AuthWindow() {
   const [isLoginActive, setIsLoginActive] = useState(true);
@@ -20,22 +26,49 @@ export default function AuthWindow() {
         className={`${styles.authSectionLog} ${isLoginActive ? styles.showLogin : ""}`}
       >
         <h2>Войти</h2>
-        
         {/* Социальные сети для логина */}
         <div className={styles.socialLogin}>
           <div className={styles.socialIcons}>
-            <FaGoogle
-              className={styles.icon}
-              onClick={() => handleSocialLogin("Google")}
-            />
-            <FaFacebook
-              className={styles.icon}
-              onClick={() => handleSocialLogin("Facebook")}
-            />
-            <FaTwitter
-              className={styles.icon}
-              onClick={() => handleSocialLogin("Twitter")}
-            />
+            <a
+              href="https://accounts.google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaGoogle
+                className={styles.icon}
+                onClick={() => handleSocialLogin("Google")}
+              />
+            </a>
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaFacebook
+                className={styles.icon}
+                onClick={() => handleSocialLogin("Facebook")}
+              />
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaTwitter
+                className={styles.icon}
+                onClick={() => handleSocialLogin("Twitter")}
+              />
+            </a>
+            <a
+              href="https://vk.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaVk
+                className={styles.icon}
+                onClick={() => handleSocialLogin("Vk")}
+              />
+            </a>
           </div>
         </div>
         <Login /> {/* Форма логина */}
@@ -49,7 +82,7 @@ export default function AuthWindow() {
           {isLoginActive ? (
             <div className={styles.overlayContent}>
               <h2>Нет аккаунта?</h2>
-              <p>Зарегистрируйтесь для доступа к нашим сервисам</p>
+              <p>Зарегистрируйтесь для доступа к полной информации</p>
               <Button
                 onClick={handleSwitch}
                 type="submit"
@@ -70,60 +103,53 @@ export default function AuthWindow() {
         className={`${styles.authSectionSign} ${!isLoginActive ? styles.showRegistration : ""}`}
       >
         <h2>Регистрация</h2>
-
         <div className={styles.socialLogin}>
           <div className={styles.socialIcons}>
-            <FaGoogle
-              className={styles.icon}
-              onClick={() => handleSocialLogin("Google")}
-            />
-            <FaFacebook
-              className={styles.icon}
-              onClick={() => handleSocialLogin("Facebook")}
-            />
-            <FaTwitter
-              className={styles.icon}
-              onClick={() => handleSocialLogin("Twitter")}
-            />
+            <a
+              href="https://accounts.google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaGoogle
+                className={styles.icon}
+                onClick={() => handleSocialLogin("Google")}
+              />
+            </a>
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaFacebook
+                className={styles.icon}
+                onClick={() => handleSocialLogin("Facebook")}
+              />
+            </a>
+
+            <a
+              href="https://twitter.com/oauth/authenticate"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaTwitter
+                className={styles.icon}
+                onClick={() => handleSocialLogin("Twitter")}
+              />
+            </a>
+            <a
+              href="https://vk.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaVk
+                className={styles.icon}
+                onClick={() => handleSocialLogin("Vk")}
+              />
+            </a>
           </div>
         </div>
-
         <Registration /> {/* Форма регистрации */}
-        {/* Социальные сети для регистрации */}
-        
       </div>
     </div>
   );
 }
-
-// <div className={styles.modalContainer}>
-//   {/* Левая половина — логин */}
-//   <div className={`${styles.panel} ${isLoginActive ? styles.showLogin : ''}`}>
-//     <Login />
-//   </div>
-
-//   {/* Правая половина — регистрация */}
-//   <div className={`${styles.panel} ${!isLoginActive ? styles.showRegistration : ''}`}>
-//     <Registration />
-//   </div>
-
-//   {/* Кнопка и текст для переключения */}
-//   <div className={styles.overlayContainer}>
-//     <div className={`${styles.overlay} ${isLoginActive ? styles.rightPanelActive : ''}`}>
-//       {isLoginActive ? (
-//         <div className={styles.overlayContent}>
-//           <h2>Нет аккаунта?</h2>
-//           <p>Зарегистрируйтесь для доступа к нашим сервисам</p>
-//           <button onClick={handleSwitch}>Зарегистрироваться</button>
-//         </div>
-//       ) : (
-//         <div className={styles.overlayContent}>
-//           <h2>Уже есть аккаунт?</h2>
-//           <p>Войдите, чтобы продолжить</p>
-//           <button onClick={handleSwitch}>Войти</button>
-//         </div>
-//       )}
-//     </div>
-//   </div>
-// </div>
-// );

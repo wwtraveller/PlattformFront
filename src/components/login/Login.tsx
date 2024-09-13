@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik';
 import styles from "./login.module.css"
@@ -7,6 +7,7 @@ import { loginUser } from '../../features/auth/authAction';
 import Button from '../button/Button';
 import * as Yup from 'yup';
 import Registration from 'components/registration/Registration';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
 export interface ILoginFormValues {
@@ -16,17 +17,23 @@ export interface ILoginFormValues {
   export default function Login() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    
+    const [showPassword, setShowPassword] = useState(false); // Состояние для отображения пароля
+    
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword); // Переключаем видимость пароля
+      };
   
 
      // Валидационная схема Yup для формы
   const schema = Yup.object().shape({
     username: Yup.string()
-      .required('Введите имя пользователя')
+      .required('Введите ваш Никнейм')
       .min(2, 'Минимум 2 символа')
       .max(15, 'Максимум 15 символов'),
     password: Yup.string()
       .required('Введите пароль')
-      .min(8, 'Пароль должен содержать минимум 6 символов')
+      .min(8, 'Пароль должен содержать минимум 8 символов')
       // .matches(/[A-Z]/, 'Пароль должен содержать хотя бы одну заглавную букву')
       .matches(/[a-z]/, 'Пароль должен содержать хотя бы одну строчную букву')
       // .matches(/\d/, 'Пароль должен содержать хотя бы одну цифру')
@@ -38,6 +45,7 @@ export interface ILoginFormValues {
         password: 'emilyspass'
       } as ILoginFormValues,
       validationSchema: schema,
+      validateOnChange: false,
       onSubmit: (values: ILoginFormValues, {resetForm}) => {
         // Диспатчим экшен для логина
         dispatch(loginUser(values))
@@ -60,16 +68,18 @@ export interface ILoginFormValues {
           value={formik.values.username}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          placeholder="Имя пользователя"
+          placeholder="Никнейм"
           className={formik.touched.username && formik.errors.username ? styles.inputError : ''}
 
         />
          {formik.touched.username && formik.errors.username && (
           <div className={styles.error}>{formik.errors.username}</div>
         )}
+
+<div className={styles.passwordContainer}>
         <input
           name="password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           value={formik.values.password}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -77,6 +87,10 @@ export interface ILoginFormValues {
           className={formik.touched.password && formik.errors.password ? styles.inputError : ''}
 
         />
+        <span onClick={togglePasswordVisibility} className={styles.eyeIcon}>
+                    {showPassword ? <FaEyeSlash /> : <FaEye />} {/* Иконка для отображения/скрытия пароля */}
+                </span>
+      </div>
           {formik.touched.password && formik.errors.password && (
           <div className={styles.error}>{formik.errors.password}</div>
         )}

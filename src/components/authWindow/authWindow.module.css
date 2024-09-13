@@ -228,6 +228,7 @@
     left: 50%;
     width: 50%;
     height: 100%;
+    background-position: center;
     background-image: url('https://images.unsplash.com/photo-1725832062946-2ec9aae5c4e2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMDl8fHxlbnwwfHx8fHw%3D');
     background-color: #007bff;
     color: rgb(255, 255, 255);
