@@ -28,7 +28,7 @@ export interface ILoginFormValues {
      // Валидационная схема Yup для формы
   const schema = Yup.object().shape({
     username: Yup.string()
-      .required('Введите имя пользователя')
+      .required('Введите ваш Никнейм')
       .min(2, 'Минимум 2 символа')
       .max(15, 'Максимум 15 символов'),
     password: Yup.string()
@@ -68,7 +68,7 @@ export interface ILoginFormValues {
           value={formik.values.username}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          placeholder="Имя пользователя"
+          placeholder="Никнейм"
           className={formik.touched.username && formik.errors.username ? styles.inputError : ''}
 
         />

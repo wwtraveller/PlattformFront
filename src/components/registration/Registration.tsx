@@ -75,7 +75,7 @@ export default function Registration() {
       <input
         type="text"
         name="username"
-        placeholder="Ваше имя"
+        placeholder="Никнейм"
         value={formik.values.lastName}
         onChange={formik.handleChange}
         className={formik.touched.lastName && formik.errors.lastName ? styles.inputError : ''}
