@@ -15,6 +15,7 @@ import Dashboard from 'components/user/Dashboard';
 import { useAppSelector } from 'redux/hooks';
 import AuthWindow from 'components/authWindow/AuthWindow';
 import CategoryManager from 'components/categories/CategoryManager';
+import ArticleList from 'components/articles/ArticleList';
 
 
 interface SearchItem {
@@ -57,9 +58,14 @@ function App() {
             {/* Проверка: если пользователь авторизован, показываем ему страницы личного кабинета */}
             {user.username && (
               <>
+                <Route path="/about" element={<About />} />
+                <Route path="/product" element={<Product />} />
+                <Route path="/marketing" element={<Marketing />} />
+                <Route path="/blog" element={<Blog />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/articles" element={<Articles />} />
+                <Route path="/createarticles" element={<Articles />} />
+                {/* <Route path="/articles" element={<ArticleList />} /> */}
               </>
             )}
               {/* Если пользователь не авторизован, перенаправляем на основную страницу */}
