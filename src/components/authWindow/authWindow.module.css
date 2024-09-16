@@ -14,14 +14,10 @@
   background-image: url('https://img.freepik.com/free-photo/ethereal-environment-with-cloth_23-2151113627.jpg');
   background-size: cover;
   background-position: center;
-  z-index: 1000;
   position: fixed;
-  overflow: hidden;
+  /* overflow: hidden; */
   justify-content: center;
   align-items: center;
-  top: 20px;
-  /* transform: translate(-50%, -50%); Центрирует окно относительно экрана */
-
 }
 
 
@@ -35,10 +31,6 @@
   background-color: rgb(239, 239, 239);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  /* background-image: url('https://img.freepik.com/free-photo/ethereal-environment-with-cloth_23-2151113627.jpg'); 
-    background-size: cover; 
-    background-position: center; 
-    z-index: 1000; */
 }
 
 /* Заголовки секций */
@@ -76,7 +68,7 @@
   padding: 10px;
   background-color: #4CAF50;
   color: white;
-  border: none;
+  border: 1px dashed transparent;
   border-radius: 30px;
   width: 180px;
   cursor: pointer;
@@ -101,7 +93,7 @@
 }
 
 .authSectionLog:hover {
-  cursor: pointer;
+  /* cursor: pointer; */
   background-color: #ffffff85;
 
 }
@@ -112,10 +104,6 @@
   /* background-color: rgb(239, 239, 239); */
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  /* background-image: url('https://img.freepik.com/free-photo/ethereal-environment-with-cloth_23-2151113627.jpg'); 
-    background-size: cover; 
-    background-position: center; 
-    z-index: 1000; */
 }
 
 
@@ -154,7 +142,7 @@
   padding: 10px;
   background-color: #4CAF50;
   color: white;
-  border: none;
+  border: 1px dashed transparent;
   border-radius: 30px;
   width: 180px;
   cursor: pointer;
@@ -180,7 +168,7 @@
 
 
 .authSectionSign:hover {
-  cursor: pointer;
+  /* cursor: pointer; */
   background-color: #ffffff82;
 }
 
@@ -202,24 +190,27 @@
   justify-content: center;
   align-items: center;
   background-color: #f0f0f049;
+  z-index: 1;
 }
 
 .authSectionLog {
-  left: 0;
-  transform: translateX(0);
-}
-
-.authSectionSign {
+  /* left: 0; */
   right: 0;
-  transform: translateX(100%);
+  transform: translateX(0);
 }
 
 .showLogin {
-  transform: translateX(100%);
+  transform: translateX(-100%);
 }
 
-.showRegistration {
+.authSectionSign {
+  left: 50%;
   transform: translateX(0);
+}
+
+
+.showRegistration {
+  transform: translateX(-100%);
 }
 
 .overlayContainer {
@@ -236,9 +227,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: translateX(-100%);
-
+  transform: translateX(0);
+z-index: 2;
 }
+
 
 .rightPanelActive {
   left: 0;
@@ -261,7 +253,6 @@
 button {
   background-color: white;
   color: #007bff;
-  padding: 10px 20px;
   cursor: pointer;
   border: none;
   font-size: 16px;

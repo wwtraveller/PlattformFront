@@ -1,6 +1,6 @@
 /* Глобальные стили для всего приложения */
 * {
-  box-sizing: border-box; /* Учитывает padding и border в общую ширину элемента */
+  box-sizing: border-box; /*Учитывает padding и border в общую ширину элемента*/
   margin: 0;
   padding: 0;
   text-decoration: none;
