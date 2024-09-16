@@ -1,21 +1,19 @@
 :root {
-    --primary-color: #6788f3; /* Основной синий цвет */
-    --active-color: #5b7ff5; /* Более насыщенный синий цвет для активной ссылки */
-    --text-color: #000; /* Черный текст */
-    --bg-color: #fff; /* Белый фон */
-    --hover-color: #5278f7; /* Темно-синий цвет при наведении */
-  }
+  --primary-color: #6788f3; /* Основной синий цвет */
+  --active-color: #5b7ff5; /* Более насыщенный синий цвет для активной ссылки */
+  --text-color: #333; /* Цвет текста */
+  --bg-color: #ffffff; /* Белый фон */
+  --hover-color: #5278f7; /* Темно-синий цвет при наведении */
+  --border-color: #ddd; /* Цвет для границ */
+}
 
 .header {
-    /* width: 100%;
-    background-color: #6788f3;
-    height: 80px; */
-    display: flex;
-    align-items: center; /* Центрируем элементы по вертикали */
-    justify-content: space-between;
-    padding: 10px 20px;
-    background-color: var(--bg-color);
-    border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: var(--bg-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 /* .header > a {
@@ -41,7 +39,7 @@
   .navLink {
     color: var(--text-color); /* Подстройка цвета под тему */
     text-decoration: none;
-    font-weight: 400;
+    font-weight: 500;
     /* transition: color 0.3s; */
     transition: color 0.3s, font-weight 0.3s;
     padding: 10px 0; /* Увеличивает зону клика и выравнивает элементы */
@@ -79,7 +77,8 @@
   .loginButton button {
     background-color: var(--bg-color);
     color: var(--text-color);
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s, color 0.3s;
   }
   
   .signupButton button {
@@ -108,7 +107,7 @@
   
   .loginWindowContent {
     position: relative;
-    background-color: rgba(255, 255, 255, 0.47);
+    background-color: rgba(255, 255, 255, 0.9);
     /* padding: 20px; */
     border-radius: 10px;
     max-width: 800px;
@@ -119,21 +118,23 @@
 
 /* Стиль кнопки закрытия */
 .closeButton {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    border: none;
-    border-radius: 3px;
-    background-color: transparent;
-    font-size: 5px;  /* Уменьшаем шрифт */
-         /* Уменьшаем внутренние отступы */
-    cursor: pointer;
-    color: #000000;      /* Цвет текста */
-    padding: 5px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  font-size: 16px;
+  cursor: pointer;
+  color: var(--text-color);
+  }
+
+  .closeButton:hover {
+    color: var(--primary-color);
   }
   
   .loginWindowContent button:hover {
-    color: #7531da;   /* Цвет при наведении */
+     color: #7531da;   /*Цвет при наведении */
   }
 
  

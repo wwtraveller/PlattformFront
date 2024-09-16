@@ -1,10 +1,14 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './header.module.css';
-import { links } from './links';
+import { guestLinks } from './links'; // Используем только guestLinks для незарегистрированных пользователей
 import { useState } from 'react';
 import AuthWindow from '../authWindow/AuthWindow';
 import Button from 'components/button/Button';
 import Search from 'components/search/Search';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { logoutUser } from 'features/auth/authSlice';
+import ParentComponent from 'components/search/ParentComponent';
+import UserMenu from '../user/UserMenu'; // Правильное подключение UserMenu
 
 interface SearchItem {
   id: number;
@@ -23,6 +27,11 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
   const location = useLocation();
   // const [searchQuery, setSearchQuery] = useState(''); // Состояние для хранения запроса
   const [isLoginWindowOpen, setIsLoginWindowOpen] = useState(false);
+  const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate(); // Добавляем useNavigate
+
+
 
 const handleOpenLoginWindow = () => {
   setIsLoginWindowOpen(true);
@@ -52,38 +61,70 @@ const handleCloseLoginWindow = () => {
   // Здесь можно добавить логику для выполнения поиска, например, сделать запрос к API
   //};
 
+
+  // забираем данные по user
+  // const { user } = useAppSelector((state) => state.user); // Достаем пользователя из состояния
+  // const { user } = useAppSelector(state => state.user);
+  // const dispatch = useAppDispatch();
+
+  // const locationLogName = useLocation();
+
+  const handleLogout = () => {
+    // чистим браузерное хранилище данных
+    localStorage.removeItem('user-token')
+    // чистим state, выносим 'мусор' данных за пользователем
+    dispatch(logoutUser());
+  }
+const [categories, setCategories] = useState<string[]>([]);
   return (
     <header className={styles.header}>
       <div className={styles.navMenu}>
-      {links.map((el, index) => (
-        <Link
-          key={index}
-          className={`${styles.navLink} ${
-            location.pathname === el.pathname ? styles.active : ''}`}
-          to={el.pathname}>{el.title}</Link>
-      ))}
+        {/* Отображение ссылок для незарегистрированных пользователей */}
+        {!user.username &&
+          guestLinks.map((el, index) => (
+            <Link
+              key={index}
+              className={`${styles.navLink} ${
+                location.pathname === el.pathname ? styles.active : ''
+              }`}
+              to={el.pathname}
+            >
+              {el.title}
+            </Link>
+          ))}
       </div>
       <div className={styles.navLeft}>
-        <Search setError={setError} setSearchResults={setSearchResults}/> {/* Вставка компонента поиска */}
-        <div>
-            <Button name='Войти' onClick={handleOpenLoginWindow} />
+
+       <ParentComponent/>
+
+        {/* Если пользователь авторизован, показываем меню пользователя, если нет — "Войти" */}
+        {user.username ? (
+
+          <>
+            <UserMenu /> {/* Отображаем UserMenu для авторизованного пользователя */}
+            <span>{user.username}</span>
+            <Button name="Выйти" onClick={handleLogout} />
+          </>
+        ) : (
+          <>
+            <Button name="Войти" onClick={handleOpenLoginWindow} />
             {isLoginWindowOpen && (
-              <div className={styles.loginWindow}
-                onClick={handleCloseLoginWindow}>  
-                <div className={styles.loginWindowContent}
-                onClick={(e) => e.stopPropagation()}>
-                <button className={styles.closeButton} onClick={handleCloseLoginWindow}>❌</button>
+              <div className={styles.loginWindow} onClick={handleCloseLoginWindow}>
+                <div
+                  className={styles.loginWindowContent}
+                  onClick={(e) => e.stopPropagation()}>
+                  <button
+                    className={styles.closeButton}
+                    onClick={handleCloseLoginWindow}>
+                    ❌
+                  </button>
                   <AuthWindow />
                 </div>
               </div>
             )}
-        </div>
-
-        {/* <Link to={'/signup'} className={styles.signupButton}><Button name='Зарегистрироваться' /></Link> */}
-
-        
+          </>
+        )}
       </div>
-
     </header>
   );
 }
