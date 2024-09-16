@@ -6,7 +6,7 @@ import Button from "components/button/Button";
 import {
   FaFacebook,
   FaGoogle,
-  FaInstagram,
+
   FaTwitter,
   FaVk,
 } from "react-icons/fa"; // Импортируем иконки

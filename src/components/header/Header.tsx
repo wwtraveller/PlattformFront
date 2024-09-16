@@ -75,8 +75,6 @@ const handleCloseLoginWindow = () => {
     // чистим state, выносим 'мусор' данных за пользователем
     dispatch(logoutUser());
     setIsLoginWindowOpen(false);
-    navigate('/');
-
   }
 const [categories, setCategories] = useState<string[]>([]);
   return (

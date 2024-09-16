@@ -3,6 +3,8 @@ import Footer from '../footer/Footer';
 import styles from './layout.module.css';
 import Header from '../header/Header';
 import { useEffect, useState } from 'react';
+import Products from 'components/categories/product/Product';
+import AuthWindow from 'components/authWindow/AuthWindow';
 
 
 interface SearchItem {
