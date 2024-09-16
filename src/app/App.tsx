@@ -9,13 +9,12 @@ import SearchErrorPage from 'components/search/SearchErrorPage';
 import SearchResultsPage from 'components/search/SearchResultsPage';
 import { useState } from 'react';
 import Articles from 'components/articles/Articles';
-import AdminRoute from 'admin/AdminRoute';
+// import AdminRoute from 'admin/AdminRoute';
 import Profile from 'components/user/Profile';
 import Dashboard from 'components/user/Dashboard';
 import { useAppSelector } from 'redux/hooks';
 import AuthWindow from 'components/authWindow/AuthWindow';
 import CategoryManager from 'components/categories/CategoryManager';
-import ArticleList from 'components/articles/ArticleList';
 
 
 interface SearchItem {
@@ -65,7 +64,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/createarticles" element={<Articles />} />
-                {/* <Route path="/articles" element={<ArticleList />} /> */}
+                
               </>
             )}
               {/* Если пользователь не авторизован, перенаправляем на основную страницу */}
