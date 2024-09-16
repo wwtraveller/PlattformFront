@@ -6,7 +6,7 @@ import Button from "components/button/Button";
 import {
   FaFacebook,
   FaGoogle,
-
+  FaInstagram,
   FaTwitter,
   FaVk,
 } from "react-icons/fa"; // Импортируем иконки
@@ -50,7 +50,7 @@ export default function AuthWindow() {
               />
             </a>
             <a
-              href="https://twitter.com"
+              href="https://x.com/i/flow/login"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -127,7 +127,7 @@ export default function AuthWindow() {
             </a>
 
             <a
-              href="https://twitter.com/oauth/authenticate"
+              href="https://x.com/i/flow/login"
               target="_blank"
               rel="noopener noreferrer"
             >

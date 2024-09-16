@@ -25,7 +25,7 @@ export interface ILoginFormValues {
       };
   
 
-    
+     // Валидационная схема Yup для формы
   const schema = Yup.object().shape({
     username: Yup.string()
       .required('Введите ваш Никнейм')

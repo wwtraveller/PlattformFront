@@ -74,7 +74,8 @@ const handleCloseLoginWindow = () => {
     localStorage.removeItem('user-token')
     // чистим state, выносим 'мусор' данных за пользователем
     dispatch(logoutUser());
-    setIsLoginWindowOpen(false);
+      setIsLoginWindowOpen(false);
+
   }
 const [categories, setCategories] = useState<string[]>([]);
   return (
@@ -97,6 +98,12 @@ const [categories, setCategories] = useState<string[]>([]);
       <div className={styles.navLeft}>
 
        <ParentComponent/>
+       {/*  <Search setError={setError}
+          setSearchResults={setSearchResults} categories={categories}/>*/} {/* Вставка компонента поиска */}
+       {/* Если пользователь авторизован, показываем кнопку "Выйти", если нет — "Войти" */}
+       {/*user.username ? (*/}
+
+       {/*<Search setError={setError} setSearchResults={setSearchResults} />*/}
 
         {/* Если пользователь авторизован, показываем меню пользователя, если нет — "Войти" */}
         {user.username ? (
