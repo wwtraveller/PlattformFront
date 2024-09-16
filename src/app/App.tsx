@@ -16,6 +16,7 @@ import { useAppSelector } from 'redux/hooks';
 import AuthWindow from 'components/authWindow/AuthWindow';
 import CategoryManager from 'components/categories/CategoryManager';
 import ArticleList from 'components/articles/ArticleList';
+import Comments from 'components/comment/Comment';
 
 
 interface SearchItem {

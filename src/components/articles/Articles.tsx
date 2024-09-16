@@ -3,6 +3,7 @@ import axios from 'axios';
 import ArticleForm from './ArticleForm';
 import ArticleList from './ArticleList';
 import styles from './articles.module.css';
+import Comments from 'components/comment/Comment';
 
 // Определяем интерфейс для статьи
 interface Article {
@@ -14,9 +15,12 @@ interface Article {
 
 const Articles = () => {
   const [articles, setArticles] = useState<Article[]>([]); // Используем интерфейс Article для типизации массива
+  const [selectedArticleId, setSelectedArticleId] = useState<number | null>(null); // добавила, для того чтобы привязать коментарии к статье
+  const [currentUser, setCurrentUser] = useState<string | null>(null);
 
   useEffect(() => {
     fetchArticles();
+    fetchCurrentUser(); // Получаем информацию о текущем пользователе
   }, []);
 
   // Функция для загрузки статей
@@ -26,6 +30,15 @@ const Articles = () => {
       setArticles(response.data);
     } catch (error) {
       console.error('Ошибка при загрузке статей:', error);
+    }
+  };
+
+  const fetchCurrentUser = async () => {
+    try {
+      const response = await axios.get('/api/users');
+      setCurrentUser(response.data.username); // Предполагается, что имя пользователя приходит в поле username
+    } catch (error) {
+      console.error('Ошибка при получении информации о пользователе:', error);
     }
   };
 
@@ -44,6 +57,7 @@ const Articles = () => {
     // Логика для открытия формы с данными статьи
     // Можно передавать article в ArticleForm для редактирования
     console.log('Редактировать статью:', article);
+    setSelectedArticleId(article.id);
   };
 
   // Функция для удаления статьи
@@ -60,6 +74,14 @@ const Articles = () => {
     <div className={styles.articlesContainer}>
       <ArticleForm onSubmit={handleCreate} />
       <ArticleList articles={articles} onEdit={handleEdit} onDelete={handleDelete} />
+
+      {/* Отображаем компонент комментариев только если выбрана статья */}
+      {selectedArticleId && (
+        <div className={styles.commentsContainer}>
+          <h2>Комментарии для статьи {selectedArticleId}</h2>
+         <Comments articleId={selectedArticleId} currentUser={'currenttUser'}/> {/* Передаем articleId в компонент Comments */}
+        </div>
+      )}
     </div>
   );
 };
