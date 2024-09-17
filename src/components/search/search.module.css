@@ -135,11 +135,6 @@ input::placeholder {
   justify-content: center;
 }
 
-
-
-
-
-
 .searchSelect:hover {
   background-color: #84abf8;
   border-color: #9fc3f2; /* Цвет границы при наведении */
@@ -147,10 +142,11 @@ input::placeholder {
 }
 
 input:hover {
-  background-color: #84abf8; /* Цвет фона при наведении */
+  background-color: #84abf8; /* Цвет фона при наведении */ 
   border-color: #9fc3f2; /* Цвет границы при наведении */
   border-radius: 40px; /* Радиус границ при наведении */
 }
+
 
 
 
