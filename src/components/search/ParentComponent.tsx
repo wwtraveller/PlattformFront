@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import Search from './Search'; // Путь к компоненту Search
-import CategoryManager from 'components/categories/CategoryManager';
- // Путь к компоненту CategoryManager
+import React, { useState, useEffect } from "react";
+import Search from "./Search"; // Путь к компоненту Search
+import CategoryManager from "admin/componentsAdmin/categoriesAdmin/CategoryManager";
+// Путь к компоненту CategoryManager
 
 const ParentComponent = () => {
   const [categories, setCategories] = useState<string[]>([]); // Состояние для категорий
 
   // Эффект для загрузки начальных категорий (если необходимо)
   useEffect(() => {
-    const initialCategories = ['Продукт', 'Маркетинг', 'Блог']; // Пример данных
+    const initialCategories = ["Продукт", "Маркетинг", "Блог"]; // Пример данных
     setCategories(initialCategories);
   }, []);
 
   // Функция для обновления категорий из CategoryManager
   const handleCategoriesChange = (updatedCategories: string[]) => {
     setCategories(updatedCategories);
-    console.log('Updated Categories in Parent:', updatedCategories); // Лог для проверки обновленных категорий
+    console.log("Updated Categories in Parent:", updatedCategories); // Лог для проверки обновленных категорий
   };
 
   const handleCategorySelect = (categoryName: string) => {
-    console.log('Selected Category:', categoryName); // Лог для проверки выбранной категории
+    console.log("Selected Category:", categoryName); // Лог для проверки выбранной категории
   };
 
   return (
