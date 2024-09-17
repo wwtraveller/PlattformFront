@@ -1,4 +1,4 @@
-import CategoryManager from "admin/components/categories/CategoryManager";
+import CategoryManager from "admin/componentsAdmin/categoriesAdmin/CategoryManager";
 
 // Заглушка для onCategorySelect
 const handleCategorySelect = (categoryName: string) => {

@@ -1,5 +1,6 @@
+import Button from "components/button/Button";
 import React, { useState } from "react";
-import Button from "../../../components/button/Button";
+
 
 interface CreateCategoryFormProps {
   onCancel: () => void;

@@ -8,13 +8,13 @@ import "./App.css"; // Сохраняем подключение стилей
 import SearchErrorPage from "components/search/SearchErrorPage";
 import SearchResultsPage from "components/search/SearchResultsPage";
 import { useState } from "react";
-import Articles from "admin/components/articles/Articles";
+import Articles from "admin/componentsAdmin/articlesAdmin/Articles";
 // import AdminRoute from 'admin/AdminRoute';
 import Profile from "components/user/Profile";
 import Dashboard from "components/user/Dashboard";
 import { useAppSelector } from "redux/hooks";
 import AuthWindow from "components/authWindow/AuthWindow";
-import CategoryManager from "admin/components/categories/CategoryManager";
+import CategoryManager from "admin/componentsAdmin/categoriesAdmin/CategoryManager";
 import ArticleList from "admin/components/articles/ArticleList";
 import Comments from "components/comments/Comment";
 

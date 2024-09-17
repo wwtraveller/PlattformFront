@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Search from "./Search"; // Путь к компоненту Search
-import CategoryManager from "admin/components/categories/CategoryManager";
+import CategoryManager from "admin/componentsAdmin/categoriesAdmin/CategoryManager";
 // Путь к компоненту CategoryManager
 
 const ParentComponent = () => {
