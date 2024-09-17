@@ -1,14 +1,14 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './header.module.css';
 import { guestLinks } from './links'; // Используем только guestLinks для незарегистрированных пользователей
 import { useState } from 'react';
-import AuthWindow from '../authWindow/AuthWindow';
 import Button from 'components/button/Button';
 import Search from 'components/search/Search';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { logoutUser } from 'features/auth/authSlice';
 import ParentComponent from 'components/search/ParentComponent';
 import UserMenu from '../user/UserMenu'; // Правильное подключение UserMenu
+import ButtonLogReg from 'components/button/ButtonLogReg';
 
 interface SearchItem {
   id: number;
@@ -26,20 +26,9 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
 
   const location = useLocation();
   // const [searchQuery, setSearchQuery] = useState(''); // Состояние для хранения запроса
-  const [isLoginWindowOpen, setIsLoginWindowOpen] = useState(false);
   const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate(); // Добавляем useNavigate
 
-
-
-const handleOpenLoginWindow = () => {
-  setIsLoginWindowOpen(true);
-};
-
-const handleCloseLoginWindow = () => {
-  setIsLoginWindowOpen(false);
-};
 
   // Функция обработки изменения ввода
   // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,9 +63,8 @@ const handleCloseLoginWindow = () => {
     localStorage.removeItem('user-token')
     // чистим state, выносим 'мусор' данных за пользователем
     dispatch(logoutUser());
-      setIsLoginWindowOpen(false);
+  };
 
-  }
 const [categories, setCategories] = useState<string[]>([]);
   return (
     <header className={styles.header}>
@@ -107,30 +95,13 @@ const [categories, setCategories] = useState<string[]>([]);
 
         {/* Если пользователь авторизован, показываем меню пользователя, если нет — "Войти" */}
         {user.username ? (
-
           <>
             <UserMenu /> {/* Отображаем UserMenu для авторизованного пользователя */}
             <span>{user.username}</span>
             <Button name="Выйти" onClick={handleLogout} />
           </>
         ) : (
-          <>
-            <Button name="Войти" onClick={handleOpenLoginWindow} />
-            {isLoginWindowOpen && (
-              <div className={styles.loginWindow} onClick={handleCloseLoginWindow}>
-                <div
-                  className={styles.loginWindowContent}
-                  onClick={(e) => e.stopPropagation()}>
-                  <button
-                    className={styles.closeButton}
-                    onClick={handleCloseLoginWindow}>
-                    ❌
-                  </button>
-                  <AuthWindow />
-                </div>
-              </div>
-            )}
-          </>
+          <ButtonLogReg/>
         )}
       </div>
     </header>
