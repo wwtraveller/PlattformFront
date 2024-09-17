@@ -1,20 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html,
-body {
-  height: 100%;
-}
-
-body {
-  font-family: "Poppins", sans-serif;
-  display: grid;
-  overflow: hidden;
-}
-
 .search {
   display: flex;
   flex-direction: column;
@@ -28,11 +11,12 @@ body {
   padding: 0 15px;
   transition: background-color 0.5s, opacity 0.5s; /* Плавные переходы для фона и прозрачности */
   opacity: 0.5; /* Начальная прозрачность */
+  max-width: 600px;
 }
 
 .search.expanded {
   opacity: 0.6; /* Полная непрозрачность при развернутом состоянии */
-  background-image: linear-gradient(40deg, #294172, #9fc3f2); /* Яркий фон при развернутом состоянии */
+  background-image: #fff; /* Яркий фон при развернутом состоянии */
   color: #0b09a2;
 }
 
@@ -55,7 +39,6 @@ input.expanded{
 .searchSelect{
   width: 0;
   transition: width 0.5s;
-  position: relative;
 }
 
 .searchButton {
@@ -66,8 +49,6 @@ input.expanded{
   cursor: pointer;
   transition: color 0.25s;
   background: transparent;
-  align-items: center; /* Центрировать содержимое по вертикали */
-  justify-content: center;
 }
 
 .searchButton:hover {
@@ -98,7 +79,6 @@ input::placeholder {
 
 .searchWrapper {
   display: flex;
-  align-items: center;
   overflow: hidden;
   height: 30px; 
   border-radius: 50%;
@@ -131,14 +111,8 @@ input::placeholder {
 
 .searchIcon {
   display: flex;
-  align-items: center;
-  justify-content: center;
+align-items: center;
 }
-
-
-
-
-
 
 .searchSelect:hover {
   background-color: #84abf8;
@@ -147,10 +121,11 @@ input::placeholder {
 }
 
 input:hover {
-  background-color: #84abf8; /* Цвет фона при наведении */
+  background-color: #84abf8; /* Цвет фона при наведении */ 
   border-color: #9fc3f2; /* Цвет границы при наведении */
   border-radius: 40px; /* Радиус границ при наведении */
 }
+
 
 
 

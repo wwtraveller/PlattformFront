@@ -171,8 +171,8 @@ const Search = (props: SearchProps) => {
       <i className="ri-search-2-line" >
       </i>
     </button>
-    <div className={styles.dropdown}>
-        <select
+    <div className={styles.selectContainer}>
+        <select 
           value={group}
           onChange={handleGroupChange}
           className={styles.searchSelect}
@@ -186,7 +186,8 @@ const Search = (props: SearchProps) => {
           </option>
         ))}
         
-        </select></div>
+        </select>
+        </div>
         <input
           type="text"
           value={query}
