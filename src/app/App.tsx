@@ -15,7 +15,6 @@ import Dashboard from "components/user/Dashboard";
 import { useAppSelector } from "redux/hooks";
 import AuthWindow from "components/authWindow/AuthWindow";
 import CategoryManager from "admin/componentsAdmin/categoriesAdmin/CategoryManager";
-import ArticleList from "admin/components/articles/ArticleList";
 import Comments from "components/comments/Comment";
 
 interface SearchItem {
