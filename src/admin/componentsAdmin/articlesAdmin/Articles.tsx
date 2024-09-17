@@ -3,7 +3,7 @@ import axios from 'axios';
 import ArticleForm from './ArticleForm';
 import ArticleList from './ArticleList';
 import styles from './articles.module.css';
-import Comments from 'components/comment/Comment';
+import Comments from 'components/comments/Comment';
 
 // Определяем интерфейс для статьи
 interface Article {
