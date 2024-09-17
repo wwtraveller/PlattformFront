@@ -8,11 +8,11 @@
 //   )
 // }
 
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+
+import { Link } from 'react-router-dom';
 import { useAppSelector } from 'redux/hooks'; // Хук для проверки авторизации
-import Button from 'components/button/Button'; // Компонент кнопки
 import styles from './products.module.css';
+import ButtonLogReg from 'components/button/ButtonLogReg';
 
 interface Article {
   id: number;
@@ -27,9 +27,9 @@ const articles: Article[] = [
   {
     id: 1,
     title: 'Пошаговая стратегия, как создать свой продукт или услугу',
-    shortDescription: 'Шаг 1: Громко смейся. Шаг 2: Смотри Шаг 1.',
+    shortDescription: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sequi laboriosam ab voluptate cupiditate temporibus eaque incidunt tempore alias tempora id. Quisquam perspiciatis veritatis corporis quibusdam dolorem praesentium id, illo animi, ex saepe maxime neque? Optio iste distinctio id perferendis voluptatem sunt doloribus non reprehenderit itaque maxime perspiciatis molestiae modi obcaecati ipsa eaque delectus, deleniti iure a sequi iusto similique culpa mollitia cupiditate quaerat! Ex aliquam repudiandae dolore excepturi sed nostrum architecto culpa quod doloremque, tenetur neque temporibus obcaecati fugiat ullam saepe, quo amet laborum dicta autem accusamus sit at eaque, beatae unde! Iure veniam, voluptatum beatae deserunt sapiente ab quaerat!',
     imageUrl: 'https://img.freepik.com/free-photo/group-of-business-people-having-a-meeting_53876-146155.jpg?size=626&ext=jpg&ga=GA1.1.1413502914.1726012800&semt=ais_hybrid',
-    fullText: 'Полная статья о том, как создать свой продукт, услугу...',
+    fullText: "",
   },
   {
     id: 2,
@@ -44,11 +44,6 @@ const articles: Article[] = [
 export default function Products() {
 
   const { user } = useAppSelector((state) => state.user); // Проверяем авторизован ли пользователь
-  const navigate = useNavigate();
-
-  const handleLoginRedirect = () => {
-    navigate('/login'); // Редирект на страницу логина
-  };
 
   return (
     <div className={styles.articlesContainer}>
@@ -67,7 +62,7 @@ export default function Products() {
             ) : (
               <div className={styles.authAction}>
                 <p>Для полного прочтения статьи войдите в систему</p>
-                <Button name="Войти" onClick={handleLoginRedirect} />
+                <ButtonLogReg/>
               </div>
             )}
           </div>

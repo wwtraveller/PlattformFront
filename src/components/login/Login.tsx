@@ -6,7 +6,6 @@ import { useAppDispatch } from '../../redux/hooks';
 import { loginUser } from '../../features/auth/authAction';
 import Button from '../button/Button';
 import * as Yup from 'yup';
-import Registration from 'components/registration/Registration';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 

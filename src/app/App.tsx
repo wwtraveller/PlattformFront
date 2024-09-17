@@ -31,6 +31,7 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [searchResults, setSearchResults] = useState<SearchItem[]>([]);
   const { user } = useAppSelector((state) => state.user); // Получаем данные о пользователе
+  const { isOpen } = useAppSelector((state) => state.modalWindow);
 
   return (
     <div className="App"> 
@@ -54,7 +55,7 @@ function App() {
             {/*!!!! РАСКОМЕНТИРОВАТЬ, КОГДА БУДЕТ ГОТОВА АДМИНКА Защищённый маршрут для админов 
             <Route path="/admin/categories" element={ <AdminRoute isAdmin={isAdmin}> <CategoryManager /> </AdminRoute>}/>*/}
             <Route path="*" element={<h1>Ошибка 404</h1>} />
-            <Route path="/login" element={<AuthWindow />} />
+            
             
             {/* Проверка: если пользователь авторизован, показываем ему страницы личного кабинета */}
             {user.username && (
@@ -76,6 +77,7 @@ function App() {
           {/* Обработка ошибок и страниц, которые не найдены */}
           <Route path="*" element={<h1>Ошибка 404: Страница не найдена</h1>} />
         </Routes>
+      {isOpen && <AuthWindow />} 
       </HashRouter>
     </div>
   );
