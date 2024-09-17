@@ -1,93 +1,156 @@
-.searchContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 0 15px;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .searchWrapper {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    overflow: hidden;
-    background-color: #fff;
-    height: 40px; /* Задает высоту для выравнивания с другими элементами */
-    transition: border-radius 0.3s ease;
-  }
-  /*.searchWrapper:hover{
-    border: 40px;
-  }*/
+html,
+body {
+  height: 100%;
+}
 
-  .searchIcon {
-    padding: 10px;
-    background-color: #f3f3f3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .searchSelect {
-    padding: 8px;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: 14px;
-    appearance: none;
-    position: relative;
-    cursor: pointer;
-  }
-  /*.searchSelect::after{
-    content: '▼';
-    font-size: 10px;
-    color: #999;
-    position: absolute;
-    right: 10px;
-    pointer-events: none;
-    top: 50%;
-    transform: translateY(-50%);
-  }*/
-  
-  .searchInput {
-    flex: 1;
-    padding: 8px 10px;
-    border: none;
-    outline: none;
-    font-size: 14px;
-  }
-  
-  .searchInput:focus {
-    border-color: var(--primary-color);
-  }
-  
-  .errorText {
-    color: red;
-    font-size: 12px;
-  }
-  
-  .resultsContainer {
-    margin-top: 20px;
-  }
-  
-  .resultItem {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .resultItem h4 {
-    margin: 0;
-    font-size: 16px;
-  }
-  
-  .resultItem p {
-    margin: 5px 0 0;
-    font-size: 14px;
-    color: #555;
-  }
+body {
+  font-family: "Poppins", sans-serif;
+  display: grid;
+  overflow: hidden;
+}
 
-  .button {
-    margin-top: 80px; /* Отступ сверху, чтобы кнопка была ниже текста */
-  }
+.search {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  background-image: #fff;
+  color: #0b09a2;
+  padding: 10px;
+  border-radius: 40px;
+  border: 1px solid #0b09a2;
+  padding: 0 15px;
+  transition: background-color 0.5s, opacity 0.5s; /* Плавные переходы для фона и прозрачности */
+  opacity: 0.5; /* Начальная прозрачность */
+}
+
+.search.expanded {
+  opacity: 0.6; /* Полная непрозрачность при развернутом состоянии */
+  background-image: linear-gradient(40deg, #294172, #9fc3f2); /* Яркий фон при развернутом состоянии */
+  color: #0b09a2;
+}
+
+input.expanded{
+  color: #0b09a2;
+}
+
+.search :is(input, button) {
+  background: transparent;
+  color: inherit;
+  border: none;
+  outline: none;
+}
+
+.searchInput {
+  width: 0;
+  transition: width 0.5s;
+}
+
+.searchSelect{
+  width: 0;
+  transition: width 0.5s;
+  position: relative;
+}
+
+.searchButton {
+  display: flex;
+  place-items: center;
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+  transition: color 0.25s;
+  background: transparent;
+  align-items: center; /* Центрировать содержимое по вертикали */
+  justify-content: center;
+}
+
+.searchButton:hover {
+  color: #0b09a2;
+}
+
+.search:focus-within .searchInput {
+  width: 150px;
+}
+
+.search:focus-within .searchSelect {
+  width: 110px;
+}
+
+
+input::placeholder {
+  font: inherit;
+  color: #0b09a2;
+}
+
+.search select {
+  border: none; 
+  background: transparent; 
+  color: inherit; 
+  margin-right: 10px; 
+}
+
+
+.searchWrapper {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  height: 30px; 
+  border-radius: 50%;
+}
+
+.errorText {
+  color: red;
+  font-size: 17px;
+}
+
+.resultsContainer {
+  margin-top: 20px;
+}
+
+.resultItem {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.resultItem h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.resultItem p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.searchIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+
+
+
+.searchSelect:hover {
+  background-color: #84abf8;
+  border-color: #9fc3f2; /* Цвет границы при наведении */
+  border-radius: 40px;
+}
+
+input:hover {
+  background-color: #84abf8; /* Цвет фона при наведении */
+  border-color: #9fc3f2; /* Цвет границы при наведении */
+  border-radius: 40px; /* Радиус границ при наведении */
+}
+
+
+
