@@ -79,7 +79,7 @@ const Articles = () => {
       {selectedArticleId && (
         <div className={styles.commentsContainer}>
           <h2>Комментарии для статьи {selectedArticleId}</h2>
-         <Comments articleId={selectedArticleId} currentUser={'currentUser'}/> {/* Передаем articleId в компонент Comments */}
+         <Comments articleId={selectedArticleId} currentUser={'currenttUser'}/> {/* Передаем articleId в компонент Comments */}
         </div>
       )}
     </div>

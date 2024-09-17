@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import Button from '../button/Button';
+import Button from "components/button/Button";
+import React, { useState } from "react";
+
 
 interface CreateCategoryFormProps {
   onCancel: () => void;
 }
 
 const CreateCategoryForm = ({ onCancel }: CreateCategoryFormProps) => {
-  const [newCategoryName, setNewCategoryName] = useState('');
+  const [newCategoryName, setNewCategoryName] = useState("");
 
   const handleCreate = () => {
     // Логика для создания новой категории
-    console.log('Создать категорию:', newCategoryName);
+    console.log("Создать категорию:", newCategoryName);
     // Добавьте код для обновления состояния категорий в вашем бэкенде или родительском компоненте
     onCancel();
   };
@@ -30,4 +31,3 @@ const CreateCategoryForm = ({ onCancel }: CreateCategoryFormProps) => {
 };
 
 export default CreateCategoryForm;
-

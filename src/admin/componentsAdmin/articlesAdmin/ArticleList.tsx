@@ -15,7 +15,9 @@ interface ArticleListProps {
   onDelete: (id: number) => void;
 }
 
-const ArticleList: React.FC<ArticleListProps> = ({ articles, onEdit, onDelete }) => {
+const ArticleList = (props: ArticleListProps) => {
+  const { articles, onEdit, onDelete } = props; // Деструктуризация пропсов
+
   return (
     <ul className={styles.articleList}>
       {articles.map((article) => (
