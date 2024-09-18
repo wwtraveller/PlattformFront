@@ -24,6 +24,10 @@ export const guestLinks: ILinks[] = [
     pathname: '/blog',
     title: 'Блог',
   },
+  {
+    pathname: '/catlinks',
+    title: 'категории'
+    }
 ];
 
 // Ссылки для зарегистрированных пользователей
@@ -64,5 +68,9 @@ export const userLinks: ILinks[] = [
   {
     pathname: '/blog',
     title: 'Блог',
-  },
+  }, 
+  {
+    pathname: '/catlinks',
+    title: 'категории'
+    }
 ];
