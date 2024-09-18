@@ -15,6 +15,7 @@ import Dashboard from "components/user/Dashboard";
 import { useAppSelector } from "redux/hooks";
 import AuthWindow from "components/authWindow/AuthWindow";
 import CategoryManager from "admin/componentsAdmin/categoriesAdmin/CategoryManager";
+//import ArticleList from "admin/components/articles/ArticleList";
 import Comments from "components/comments/Comment";
 import ArticleUser from "components/articles/ArticleUser";
 import CategoryLinks from "components/categories/CategoryLink";
@@ -32,6 +33,7 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [searchResults, setSearchResults] = useState<SearchItem[]>([]);
   const { user } = useAppSelector((state) => state.user); // Получаем данные о пользователе
+  const { isOpen } = useAppSelector((state) => state.modalWindow);
 
   return (
     <div className="App">
@@ -54,6 +56,7 @@ function App() {
             <Route path="/categories" element={<CategoryManager />} />
             {/*!!!! РАСКОМЕНТИРОВАТЬ, КОГДА БУДЕТ ГОТОВА АДМИНКА Защищённый маршрут для админов 
             <Route path="/admin/categories" element={ <AdminRoute isAdmin={isAdmin}> <CategoryManager /> </AdminRoute>}/>*/}
+
             <Route path="/login" element={<AuthWindow />} />
             <Route path="/catlinks" element={<CategoryLinks />} />
             <Route path="/category/:category" element={<ArticleUser />} />
@@ -80,6 +83,7 @@ function App() {
           {/* Обработка ошибок и страниц, которые не найдены */}
           <Route path="*" element={<h1>Ошибка 404: Страница не найдена</h1>} />
         </Routes>
+      {isOpen && <AuthWindow />} 
       </HashRouter>
     </div>
   );
