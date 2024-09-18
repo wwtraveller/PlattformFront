@@ -53,7 +53,7 @@ function App() {
             <Route path="/categories" element={<CategoryManager />} />
             {/*!!!! РАСКОМЕНТИРОВАТЬ, КОГДА БУДЕТ ГОТОВА АДМИНКА Защищённый маршрут для админов 
             <Route path="/admin/categories" element={ <AdminRoute isAdmin={isAdmin}> <CategoryManager /> </AdminRoute>}/>*/}
-            <Route path="*" element={<h1>Ошибка 404</h1>} />
+            
             
             
             {/* Проверка: если пользователь авторизован, показываем ему страницы личного кабинета */}

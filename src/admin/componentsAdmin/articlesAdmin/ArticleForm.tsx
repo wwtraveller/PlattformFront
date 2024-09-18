@@ -1,54 +1,49 @@
-// src/components/articles/ArticleForm.tsx
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import styles from './articles.module.css'; // Импортируем общий CSS файл
+import React, { useState } from 'react';
+import styles from './articleForm.module.css';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
+// Интерфейс для пропсов
 interface ArticleFormProps {
   onSubmit: (data: { title: string; content: string; categoryId: number }) => void;
-  initialData?: { title: string; content: string; categoryId: number };
+  categories: { id: number; name: string }[];
 }
 
-const ArticleForm: React.FC<ArticleFormProps> = ({ onSubmit, initialData }) => {
-  const [title, setTitle] = useState(initialData?.title || '');
-  const [content, setContent] = useState(initialData?.content || '');
-  const [categoryId, setCategoryId] = useState<number>(initialData?.categoryId || 0);
-  const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
+const ArticleForm: React.FC<ArticleFormProps> = ({ onSubmit, categories }) => {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [categoryId, setCategoryId] = useState<number | ''>('');
 
-  useEffect(() => {
-    axios.get('/api/categories').then((response) => {
-      setCategories(response.data);
-    });
-  }, []);
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit({ title, content, categoryId });
-    setTitle('');
-    setContent('');
-    setCategoryId(0);
+    
+    // Преобразуем categoryId в число перед отправкой
+    const numericCategoryId = Number(categoryId);
+    if (!isNaN(numericCategoryId)) {
+      onSubmit({ title, content, categoryId: numericCategoryId });
+    } else {
+      console.error('Некорректная категория');
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <input
         type="text"
+        placeholder="Заголовок"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        placeholder="Заголовок статьи"
-        required
         className={styles.input}
       />
-      <textarea
+      <ReactQuill
         value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder="Содержание статьи"
-        required
+        onChange={setContent}
         className={styles.textarea}
-      ></textarea>
+        placeholder="Содержание"
+      />
       <select
         value={categoryId}
         onChange={(e) => setCategoryId(Number(e.target.value))}
-        required
         className={styles.select}
       >
         <option value="">Выберите категорию</option>
@@ -59,7 +54,7 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ onSubmit, initialData }) => {
         ))}
       </select>
       <button type="submit" className={styles.submitButton}>
-        {initialData ? 'Сохранить изменения' : 'Создать статью'}
+        Создать статью
       </button>
     </form>
   );

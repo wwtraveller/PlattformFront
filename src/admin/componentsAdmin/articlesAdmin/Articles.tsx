@@ -3,47 +3,47 @@ import axios from 'axios';
 import ArticleForm from './ArticleForm';
 import ArticleList from './ArticleList';
 import styles from './articles.module.css';
-import Comments from 'components/comments/Comment';
 
 // Определяем интерфейс для статьи
 interface Article {
   id: number;
   title: string;
   content: string;
-  categoryId: number;
+  category: { id: number; name: string };
+}
+
+interface Category {
+  id: number;
+  name: string;
 }
 
 const Articles = () => {
-  const [articles, setArticles] = useState<Article[]>([]); // Используем интерфейс Article для типизации массива
-  const [selectedArticleId, setSelectedArticleId] = useState<number | null>(null); // добавила, для того чтобы привязать коментарии к статье
-  const [currentUser, setCurrentUser] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetchArticles();
-    fetchCurrentUser(); // Получаем информацию о текущем пользователе
-  }, []);
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingArticle, setEditingArticle] = useState<Article | null>(null);
 
   // Функция для загрузки статей
   const fetchArticles = async () => {
     try {
-      const response = await axios.get<Article[]>('/api/articles');
+      const response = await axios.get('/api/articles');
       setArticles(response.data);
     } catch (error) {
       console.error('Ошибка при загрузке статей:', error);
     }
   };
 
-  const fetchCurrentUser = async () => {
+  const fetchCategories = async () => {
     try {
-      const response = await axios.get('/api/users');
-      setCurrentUser(response.data.username); // Предполагается, что имя пользователя приходит в поле username
+      const response = await axios.get('/api/categories');
+      setCategories(response.data);
     } catch (error) {
-      console.error('Ошибка при получении информации о пользователе:', error);
+      console.error('Ошибка при загрузке категорий:', error);
     }
   };
 
   // Функция для создания статьи
-  const handleCreate = async (data: { title: string; content: string; categoryId: number }) => {
+  const handleCreateArticle = async (data: { title: string; content: string; categoryId: number }) => {
     try {
       await axios.post('/api/articles', data);
       fetchArticles();
@@ -53,15 +53,13 @@ const Articles = () => {
   };
 
   // Функция для редактирования статьи
-  const handleEdit = (article: Article) => {
-    // Логика для открытия формы с данными статьи
-    // Можно передавать article в ArticleForm для редактирования
-    console.log('Редактировать статью:', article);
-    setSelectedArticleId(article.id);
+  const handleEditArticle = (article: Article) => {
+    setIsEditing(true);
+    setEditingArticle(article);
   };
 
   // Функция для удаления статьи
-  const handleDelete = async (id: number) => {
+  const handleDeleteArticle = async (id: number) => {
     try {
       await axios.delete(`/api/articles/${id}`);
       fetchArticles();
@@ -70,18 +68,21 @@ const Articles = () => {
     }
   };
 
+  useEffect(() => {
+    fetchArticles();
+    fetchCategories();
+  }, []);
+
   return (
     <div className={styles.articlesContainer}>
-      <ArticleForm onSubmit={handleCreate} />
-      <ArticleList articles={articles} onEdit={handleEdit} onDelete={handleDelete} />
-
-      {/* Отображаем компонент комментариев только если выбрана статья */}
-      {selectedArticleId && (
-        <div className={styles.commentsContainer}>
-          <h2>Комментарии для статьи {selectedArticleId}</h2>
-         <Comments articleId={selectedArticleId} currentUser={'currenttUser'}/> {/* Передаем articleId в компонент Comments */}
-        </div>
-      )}
+      <h2>Управление статьями</h2>
+      <ArticleForm onSubmit={handleCreateArticle} categories={categories} />
+      <ArticleList
+        articles={articles}
+        onEdit={handleEditArticle}
+        onDelete={handleDeleteArticle}
+        fetchArticles={fetchArticles}
+      />
     </div>
   );
 };
