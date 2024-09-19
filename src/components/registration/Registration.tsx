@@ -61,9 +61,11 @@ export default function Registration({ onRegisterSuccess }: RegistrationProps) {
         validateOnChange: false,
     onSubmit: (values: IRegisterFormValues, {resetForm}) => {
         dispatch(registerUser(values))
+        .unwrap()
         .then(()=> {
+          onRegisterSuccess();
+          resetForm()
           navigate ('/')
-         resetForm()
         })
         .catch((error) => {
           console.error('Ошибка регистрации:', error);
