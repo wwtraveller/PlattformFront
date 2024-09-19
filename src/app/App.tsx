@@ -23,7 +23,6 @@ import ArticleUser from "components/articles/ArticleUser";
 import CategoryLinks from "components/categories/CategoryLink";
 import ArticlePage from "components/articles/ArticlePageUser";
 import AdminRoute from "admin/AdminRoute";
-import AdminRoute from "admin/AdminRoute";
 
 interface SearchItem {
   id: number;
@@ -84,15 +83,16 @@ function App() {
             {/* Проверка: если пользователь авторизован, показываем ему страницы личного кабинета */}
             {user?.username && (
               <>
-                <Route path="/about" element={<About />} />
+                {/* <Route path="/about" element={<About />} /> */}
                 {/* <Route path="/product" element={<Product />} />
                 <Route path="/marketing" element={<Marketing />} />
                 <Route path="/blog" element={<Blog />} /> */}
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/catLinks" element={<CategoryLinks />} />
+                {/* <Route path="/catLinks" element={<CategoryLinks />} />
                 <Route path="/category/:category" element={<ArticleUser />} />
-                <Route path="/article/:id" element={<ArticlePage />} />
+                <Route path="/article/:id" element={<ArticlePage />} /> */}
+                {/* <Route path="/favorites" element={<ArticlePage />} /> */}
               </>
             )}
             {/* Если пользователь не авторизован, перенаправляем на основную страницу */}
@@ -100,8 +100,12 @@ function App() {
 
 
             {/* Защищенные маршруты для админа */}
-            <Route path="/admin/createCategories" element={<AdminRoute><CategoryManager /></AdminRoute>} />
-            <Route path="/admin/createArticles" element={<AdminRoute><Articles /></AdminRoute>} />
+            {user?.roles?.some(role => role.authority === "ROLE_ADMIN") && (
+              <>
+                <Route path="/admin/createArticles" element={<AdminRoute><Articles /></AdminRoute>} />
+                <Route path="/admin/createCategories" element={<AdminRoute><CategoryManager /></AdminRoute>} />
+              </>
+            )}
             {/*!!!! РАСКОМЕНТИРОВАТЬ, КОГДА БУДЕТ ГОТОВА АДМИНКА Защищённый маршрут для админов 
             <Route path="/admin/categories" element={ <AdminRoute isAdmin={isAdmin}> <CategoryManager /> </AdminRoute>}/>*/}
           </Route>

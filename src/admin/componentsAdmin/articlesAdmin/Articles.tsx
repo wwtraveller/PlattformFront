@@ -67,9 +67,18 @@ export default function Articles() {
   }, []);
 
   return (
-    <div className={styles.articlesContainer}>
-      <ArticleForm onSubmit={handleCreate} />
-      <ArticleList articles={articles} onEdit={handleEdit} onDelete={handleDelete} />
-    </div>
+    <div></div>
+    // <div className={styles.articlesContainer}>
+    //   <ArticleForm onSubmit={handleCreate} />
+    //   <ArticleList articles={articles} onEdit={handleEdit} onDelete={handleDelete} />
+
+    //   {/* Отображаем компонент комментариев только если выбрана статья */}
+    //   {selectedArticleId && (
+    //     <div className={styles.commentsContainer}>
+    //       <h2>Комментарии для статьи {selectedArticleId}</h2>
+    //      <Comments articleId={selectedArticleId} currentUser={'currenttUser'}/> {/* Передаем articleId в компонент Comments */}
+    //     </div>
+    //   )}
+    // </div>
   );
 }

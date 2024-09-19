@@ -1,11 +1,9 @@
-// UserMenu.tsx
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { userLinks } from '../header/links'; // Подключаем ссылки
 import styles from './userMenu.module.css';
 
-const UserMenu: React.FC = () => {
+const UserMenu = () => {
   return (
     <nav className={styles.userMenu}>
       {userLinks.map((link, index) => (

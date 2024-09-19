@@ -6,7 +6,7 @@ interface AdminRouteProps {
 const AdminRoute = ({ children }: AdminRouteProps) => {
   const { user } = useAppSelector((state) => state.user);
   // Проверка, есть ли у пользователя роль "ADMIN"
-  const isAdmin = user?.roles.some((role) => role.name === "ADMIN");
+  const isAdmin = user?.roles.some((role) => role.authority === "ROLE_ADMIN");
   return isAdmin ? children : <Navigate to="/" replace />;
 };
 export default AdminRoute;
