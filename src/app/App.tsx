@@ -19,6 +19,9 @@ import CategoryManager from "admin/componentsAdmin/categoriesAdmin/CategoryManag
 import Comments from "components/comments/Comment";
 import { hideModal } from "features/auth/modalWindowSlice";
 import { getUserWithToken } from "features/auth/authAction";
+import ArticleUser from "components/articles/ArticleUser";
+import CategoryLinks from "components/categories/CategoryLink";
+import ArticlePage from "components/articles/ArticlePageUser";
 
 interface SearchItem {
   id: number;
@@ -67,7 +70,7 @@ function App() {
             {/* Незарегистрированный пользователь - доступные страницы */}
             <Route path="/about" element={<About />} />
             <Route path="/product" element={<Product />} />
-            <Route path="/marketing" element={<Marketing />} />
+            <Route path="/catlinks" element={<CategoryLinks />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/search-results" element={<SearchResultsPage />} />
             <Route path="/search-error" element={<SearchErrorPage />} />
@@ -76,8 +79,11 @@ function App() {
             <Route path="/categories" element={<CategoryManager />} />
             {/*!!!! РАСКОМЕНТИРОВАТЬ, КОГДА БУДЕТ ГОТОВА АДМИНКА Защищённый маршрут для админов 
             <Route path="/admin/categories" element={ <AdminRoute isAdmin={isAdmin}> <CategoryManager /> </AdminRoute>}/>*/}
-            
-            
+
+            <Route path="/catlinks" element={<CategoryLinks />} />
+            <Route path="/category/:category" element={<ArticleUser />} />
+            <Route path="/article/:id" element={<ArticlePage />} />
+
             {/* Проверка: если пользователь авторизован, показываем ему страницы личного кабинета */}
             {user?.username && (
               <>
@@ -88,6 +94,9 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/createarticles" element={<Articles />} />
+                {/*<Route path="/catlinks" element={<CategoryLinks />} />
+                <Route path="/category/:category" element={<ArticleUser />} />
+                <Route path="/article/:id" element={<ArticlePage />} />*/}
               </>
             )}
             {/* Если пользователь не авторизован, перенаправляем на основную страницу */}

@@ -15,12 +15,12 @@ interface Article {
 
 const Articles = () => {
   const [articles, setArticles] = useState<Article[]>([]); // Используем интерфейс Article для типизации массива
-  const [selectedArticleId, setSelectedArticleId] = useState<number | null>(null); // добавила, для того чтобы привязать коментарии к статье
+  // const [selectedArticleId, setSelectedArticleId] = useState<number | null>(null); // добавила, для того чтобы привязать коментарии к статье
   const [currentUser, setCurrentUser] = useState<string | null>(null);
 
   useEffect(() => {
     fetchArticles();
-    fetchCurrentUser(); // Получаем информацию о текущем пользователе
+    //fetchCurrentUser(); // Получаем информацию о текущем пользователе
   }, []);
 
   // Функция для загрузки статей
@@ -33,14 +33,14 @@ const Articles = () => {
     }
   };
 
-  const fetchCurrentUser = async () => {
+  /*const fetchCurrentUser = async () => {
     try {
       const response = await axios.get('/api/users');
       setCurrentUser(response.data.username); // Предполагается, что имя пользователя приходит в поле username
     } catch (error) {
       console.error('Ошибка при получении информации о пользователе:', error);
     }
-  };
+  };*/
 
   // Функция для создания статьи
   const handleCreate = async (data: { title: string; content: string; categoryId: number }) => {
@@ -56,8 +56,9 @@ const Articles = () => {
   const handleEdit = (article: Article) => {
     // Логика для открытия формы с данными статьи
     // Можно передавать article в ArticleForm для редактирования
-    console.log('Редактировать статью:', article);
-    setSelectedArticleId(article.id);
+    console.log("Редактировать статью:", article);
+    //setSelectedArticleId(article.id);
+
   };
 
   // Функция для удаления статьи
