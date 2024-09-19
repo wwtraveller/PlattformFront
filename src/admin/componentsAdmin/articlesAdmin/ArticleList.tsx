@@ -1,44 +1,34 @@
-// src/components/articles/ArticleList.tsx
-import React from 'react';
-import { useEffect } from 'react';
-import styles from './articles.module.css'; // Импортируем общий CSS файл
+import styles from './articleList.module.css';
 
 interface Article {
   id: number;
   title: string;
   content: string;
-  category: { id: number; name: string };
+  category: { id: number; name: string } | null;
 }
 
 interface ArticleListProps {
   articles: Article[];
   onEdit: (article: Article) => void;
   onDelete: (id: number) => void;
-  fetchArticles: () => void;
 }
 
-const ArticleList = ({ articles, onEdit, onDelete, fetchArticles }: ArticleListProps) => {
-  useEffect(() => {
-    fetchArticles();
-  }, [fetchArticles]);
-
+export default function ArticleList({ articles, onEdit, onDelete }: ArticleListProps) {
   return (
-    <div className={styles.list}>
+    <ul className={styles.articleList}>
       {articles.map((article) => (
-        <div key={article.id} className={styles.article}>
-          <h3>{article.title}</h3>
-          <p>{article.content}</p>
-          <p>Категория: {article.category.name}</p>
-          <button onClick={() => onEdit(article)} className={styles.editButton}>
-            Редактировать
-          </button>
-          <button onClick={() => onDelete(article.id)} className={styles.deleteButton}>
-            Удалить
-          </button>
-        </div>
+        <li key={article.id} className={styles.articleItem}>
+          <div>
+            <h4>{article.title}</h4>
+            <p>{article.content}</p>
+            <p>{article.category ? article.category.name : 'Без категории'}</p>
+          </div>
+          <div>
+            <button className={styles.editButton} onClick={() => onEdit(article)}>Редактировать</button>
+            <button className={styles.deleteButton} onClick={() => onDelete(article.id)}>Удалить</button>
+          </div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
-};
-
-export default ArticleList;
+}

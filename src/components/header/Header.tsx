@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './header.module.css';
 import { guestLinks } from './links'; // Используем только guestLinks для незарегистрированных пользователей
 import { useState } from 'react';
@@ -28,6 +28,7 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
   // const [searchQuery, setSearchQuery] = useState(''); // Состояние для хранения запроса
   const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
 
   // Функция обработки изменения ввода
@@ -60,9 +61,15 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
 
   const handleLogout = () => {
     // чистим браузерное хранилище данных
-    localStorage.removeItem('user-token')
+    localStorage.removeItem('user-accessToken')
     // чистим state, выносим 'мусор' данных за пользователем
     dispatch(logoutUser());
+    navigate('/');
+  };
+
+
+  const handleLoginSuccess = () => {
+ // Здесь можно обновить состояние или сделать перенаправление
   };
 
 const [categories, setCategories] = useState<string[]>([]);
@@ -70,7 +77,7 @@ const [categories, setCategories] = useState<string[]>([]);
     <header className={styles.header}>
       <div className={styles.navMenu}>
         {/* Отображение ссылок для незарегистрированных пользователей */}
-        {!user.username &&
+        {!user?.username &&
           guestLinks.map((el, index) => (
             <Link
               key={index}
@@ -94,14 +101,28 @@ const [categories, setCategories] = useState<string[]>([]);
        {/*<Search setError={setError} setSearchResults={setSearchResults} />*/}
 
         {/* Если пользователь авторизован, показываем меню пользователя, если нет — "Войти" */}
-        {user.username ? (
+        {user?.username ? (
           <>
             <UserMenu /> {/* Отображаем UserMenu для авторизованного пользователя */}
+            <Link to="/profile">
+              <div className={styles.userInfo}>
+                {user.photo ? (
+                  <img
+                    src={user.photo || '/default-avatar.png'}
+                    alt="avatar"
+                    className={styles.avatar}
+                    width="40"
+                    height="40"
+                  />
+                ) : (
             <span>{user.username}</span>
+                )}
+                  </div>
+            </Link>
             <Button name="Выйти" onClick={handleLogout} />
           </>
         ) : (
-          <ButtonLogReg/>
+          <ButtonLogReg onLoginSuccess={handleLoginSuccess}/>
         )}
       </div>
     </header>

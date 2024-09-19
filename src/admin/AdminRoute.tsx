@@ -1,18 +1,17 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
+import { useAppSelector } from "redux/hooks";
 
 interface AdminRouteProps {
-  children: React.ReactNode;
-  isAdmin: boolean; 
+  children: JSX.Element;
 }
 
-const AdminRoute: React.FC<AdminRouteProps> = ({ children, isAdmin }) => {
-  if (!isAdmin) {
+const AdminRoute = ({ children }: AdminRouteProps) => {
+  const { user } = useAppSelector((state) => state.user);
 
-    return <Navigate to="/login" />;
-  }
+  // Проверка, есть ли у пользователя роль "ADMIN"
+  const isAdmin = user?.roles.some((role) => role.name === "ADMIN");
 
-  return <>{children}</>;
+  return isAdmin ? children : <Navigate to="/" replace />;
 };
 
 export default AdminRoute;

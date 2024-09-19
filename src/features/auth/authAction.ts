@@ -5,37 +5,39 @@ import { IUserData } from './types/authType';
 import { IRegisterFormValues } from 'components/registration/Registration';
 
 export const loginUser = createAsyncThunk(
-  'loginUser',
+  'auth/loginUser',
   // ! заместо data придут данные из формы
   async (data: ILoginFormValues, thunkAPI) => {
     try {
       // в post запрос мы можем передать данные не в строке, а в отдельной переменной
       // в данном случае в data лежать данные из формы, мы их передаем в api
-      const response: AxiosResponse<IUserData> = await axios.post('https://dummyjson.com/auth/login', data);
+      const response: AxiosResponse<IUserData> = await axios.post('/api/login', data); //'api/login'
       // здесь мы сохраняем токен во внутреннее хранилище в браузере local storage
       // данные сохраненные в нем не будут стираться при перезагрузке страницы
-      localStorage.setItem("user-token", response.data.token)
+      localStorage.setItem("user-accessToken", response.data.accessToken)
+      thunkAPI.dispatch(getUserWithToken(response.data.accessToken));
+      console.log(localStorage.getItem('user-accessToken'));
       return response.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
 
 // запрос за данными юзера использующий сохраненный в браузере token
 export const getUserWithToken = createAsyncThunk(
-  'getUserWithToken',
-  async (token: string, thunkAPI) => {
+  'auth/getUserWithToken',
+  async (accessToken: string, thunkAPI) => {
     try {
-      const response: AxiosResponse<IUserData> = await axios.get('https://dummyjson.com/auth/me', {
+      const response: AxiosResponse<IUserData> = await axios.get('/api/auth/me', {   //'api/users'
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${accessToken}`,
         },
       });
       console.log(response.data);
       return response.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
@@ -48,7 +50,7 @@ export const registerUser = createAsyncThunk(
       const response = await axios.post('/api/users', data);
       return response.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );

@@ -20,6 +20,7 @@ import Comments from "components/comments/Comment";
 import ArticleUser from "components/articles/ArticleUser";
 import CategoryLinks from "components/categories/CategoryLink";
 import ArticlePage from "components/articles/ArticlePageUser";
+import AdminRoute from "admin/AdminRoute";
 
 interface SearchItem {
   id: number;
@@ -52,7 +53,8 @@ function App() {
             <Route path="/search-results" element={<SearchResultsPage />} />
             <Route path="/search-error" element={<SearchErrorPage />} />
             <Route path="/articles" element={<Articles />} />
-            <Route path="/admin/categories" element={<CategoryManager />} />
+            <Route path="/article/:id" element={<ArticlePage />} />
+            {/* <Route path="/admin/categories" element={<CategoryManager />} /> */}
             <Route path="/categories" element={<CategoryManager />} />
             {/*!!!! РАСКОМЕНТИРОВАТЬ, КОГДА БУДЕТ ГОТОВА АДМИНКА Защищённый маршрут для админов 
             <Route path="/admin/categories" element={ <AdminRoute isAdmin={isAdmin}> <CategoryManager /> </AdminRoute>}/>*/}
@@ -79,6 +81,11 @@ function App() {
             )}
             {/* Если пользователь не авторизован, перенаправляем на основную страницу */}
             <Route path="*" element={<Navigate to="/" replace />} />
+
+            {/* Защищенные маршруты для админа */}
+            <Route path="/admin/categories" element={<AdminRoute><CategoryManager /></AdminRoute>} />
+            <Route path="/admin/articles" element={<AdminRoute><Articles /></AdminRoute>} />
+
           </Route>
           {/* Обработка ошибок и страниц, которые не найдены */}
           <Route path="*" element={<h1>Ошибка 404: Страница не найдена</h1>} />

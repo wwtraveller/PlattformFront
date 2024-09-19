@@ -1,19 +1,27 @@
 // components/auth/buttonLogReg.tsx
-import React, { useState } from 'react';
-import Button from 'components/button/Button';
-import AuthWindow from 'components/authWindow/AuthWindow';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { showModal, hideModal } from 'features/auth/modalWindowSlice';
-import { logoutUser } from 'features/auth/authSlice';
-import styles from './buttonLogReg.module.css';
+import React, { useState } from "react";
+import Button from "components/button/Button";
+import AuthWindow from "components/authWindow/AuthWindow";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { showModal, hideModal } from "features/auth/modalWindowSlice";
+import styles from "./buttonLogReg.module.css";
+import { useNavigate } from "react-router-dom";
 
-export default function ButtonLogReg() {
-    const dispatch = useAppDispatch();
-    const { isOpen, type } = useAppSelector((state) => state.modalWindow);
-    const [isLoginWindowOpen, setIsLoginWindowOpen] = useState(false);
+interface ButtonLogRegProps {
+  className?: string; // Добавляем возможность передать className
+  onLoginSuccess: () => void;
+}
+
+export default function ButtonLogReg({
+  className,
+  onLoginSuccess,
+}: ButtonLogRegProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [isLoginWindowOpen, setIsLoginWindowOpen] = useState(false);
 
   const handleOpenLoginWindow = () => {
-    dispatch(showModal('/login'));
+    dispatch(showModal("/login"));
     setIsLoginWindowOpen(true);
   };
 
@@ -22,26 +30,37 @@ export default function ButtonLogReg() {
     setIsLoginWindowOpen(false);
   };
 
+  const handleLoginSuccess = () => {
+    handleCloseLoginWindow();
+    onLoginSuccess();
+    setTimeout(() => {
+      navigate("/");
+    }, 0);
+  };
 
   return (
-        <>
-          <Button name="Войти" onClick={handleOpenLoginWindow} />
-          {isLoginWindowOpen && (
-            <div className={styles.loginWindow} onClick={handleCloseLoginWindow}>
-              <div
-                className={styles.loginWindowContent}
-                onClick={(e) => e.stopPropagation()}>
-                <button
-                  className={styles.closeButton}
-                  onClick={handleCloseLoginWindow}>
-                  ❌
-                </button>
-                <AuthWindow />
-              </div>
-            </div>
-          )}
-        </>
+    <>
+      <Button
+        name="Войти"
+        onClick={handleOpenLoginWindow}
+        className={className}
+      />
+      {isLoginWindowOpen && (
+        <div className={styles.loginWindow} onClick={handleCloseLoginWindow}>
+          <div
+            className={styles.loginWindowContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className={styles.closeButton}
+              onClick={handleCloseLoginWindow}
+            >
+              ❌
+            </button>
+            <AuthWindow onLoginSuccess={handleLoginSuccess} />
+          </div>
+        </div>
+      )}
+    </>
   );
-};
-
-
+}

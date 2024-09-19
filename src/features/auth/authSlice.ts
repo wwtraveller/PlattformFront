@@ -17,10 +17,10 @@ const initialUser: IUserData = {
   email: "",
   firstName: "",
   lastName: "",
-  gender: "",
-  image: "",
-  token: "",
+  photo: "",
+  accessToken: "",
   refreshToken: "",
+  roles: [], // Роли в виде массива строк
 };
 
 // создаем state и передаем начальное значение user

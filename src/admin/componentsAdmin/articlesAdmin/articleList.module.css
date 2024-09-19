@@ -1,0 +1,46 @@
+.articleList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .articleItem {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .articleItem h4 {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .articleItem p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .editButton, .deleteButton {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    border-radius: 4px;
+  }
+  
+  .editButton {
+    background-color: #f0ad4e;
+    color: white;
+  }
+  
+  .deleteButton {
+    background-color: #d9534f;
+    color: white;
+  }
+  
