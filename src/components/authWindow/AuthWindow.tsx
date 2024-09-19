@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./authWindow.module.css";
-import Login from "../login/Login";
+import Login, { ILoginFormValues } from "../login/Login";
 import Registration from "../registration/Registration";
 import Button from "components/button/Button";
 import {
@@ -10,8 +10,16 @@ import {
   FaTwitter,
   FaVk,
 } from "react-icons/fa"; // Импортируем иконки
+import { useAppDispatch } from "redux/hooks";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "features/auth/authAction";
 
-export default function AuthWindow() {
+
+interface AuthWindowProps {
+  onLoginSuccess: () => void;
+}
+
+export default function AuthWindow({ onLoginSuccess }:AuthWindowProps) {
   const [isLoginActive, setIsLoginActive] = useState(true);
 
   const handleSwitch = () => setIsLoginActive(!isLoginActive);
@@ -71,7 +79,7 @@ export default function AuthWindow() {
             </a>
           </div>
         </div>
-        <Login /> {/* Форма логина */}
+        <Login onLoginSuccess={onLoginSuccess}/> {/* Форма логина */}
       </div>
 
       {/* Кнопка и текст для переключения */}
@@ -86,13 +94,13 @@ export default function AuthWindow() {
               <Button
                 onClick={handleSwitch}
                 type="submit"
-                name="Зарегистрироваться"
+                name="Регистрация"
               />
             </div>
           ) : (
             <div className={styles.overlayContent}>
               <h2>Уже есть аккаунт?</h2>
-              <p>Войдите, чтобы продолжить</p>
+              <p>Войдите, чтобы продолжить просматривать контент</p>
               <Button onClick={handleSwitch} type="submit" name="Войти" />
             </div>
           )}
@@ -148,7 +156,7 @@ export default function AuthWindow() {
             </a>
           </div>
         </div>
-        <Registration /> {/* Форма регистрации */}
+        <Registration onRegisterSuccess={onLoginSuccess}  /> {/* Форма регистрации */}
       </div>
     </div>
   );

@@ -15,7 +15,7 @@
   background-size: cover;
   background-position: center;
   position: fixed;
-  /* overflow: hidden; */
+  overflow: hidden;
   justify-content: center;
   align-items: center;
 }
@@ -93,7 +93,6 @@
 }
 
 .authSectionLog:hover {
-  /* cursor: pointer; */
   background-color: #ffffff85;
 
 }
@@ -168,7 +167,6 @@
 
 
 .authSectionSign:hover {
-  /* cursor: pointer; */
   background-color: #ffffff82;
 }
 
@@ -194,7 +192,6 @@
 }
 
 .authSectionLog {
-  /* left: 0; */
   right: 0;
   transform: translateX(0);
 }
@@ -228,7 +225,7 @@
   justify-content: center;
   align-items: center;
   transform: translateX(0);
-z-index: 2;
+  z-index: 2;
 }
 
 
@@ -253,11 +250,11 @@ z-index: 2;
 button {
   background-color: white;
   color: #007bff;
-  cursor: pointer;
   border: none;
   font-size: 16px;
   border-radius: 5px;
   width: 200px;
+  cursor: pointer;
 }
 
 

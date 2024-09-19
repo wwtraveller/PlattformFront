@@ -36,10 +36,10 @@ export const userLinks: ILinks[] = [
     pathname: '/dashboard',
     title: 'Главная',
   },
-  {
-    pathname: '/profile',
-    title: 'Профиль',
-  },
+  // {
+  //   pathname: '/profile',
+  //   title: 'Профиль',
+  // },
   {
     pathname: '/articles',
     title: 'Статьи',

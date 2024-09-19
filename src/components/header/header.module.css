@@ -11,9 +11,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 10px 5%;
   background-color: var(--bg-color);
   border-bottom: 1px solid var(--border-color);
+  width: 100%;
+  height: 70px;
+  box-sizing: border-box; /* Включает padding и border в ширину */
+  position: fixed; /* Убедись, что элемент фиксирован, если это нужно */
+  top: 0; /* Чтобы header находился вверху страницы */
+  left: 0; /* Чтобы header начинался с левого края */
+  z-index: 1000;
+}
+
+.content {
+  padding-top: 60px; /* Добавляем отступ, равный высоте хедера */
 }
 
 /* .header > a {
@@ -33,7 +44,7 @@
 
 .navMenu {
     display: flex;
-    gap: 20px;
+    gap: 15%;
   }
 
   .navLink {
@@ -42,7 +53,7 @@
     font-weight: 500;
     /* transition: color 0.3s; */
     transition: color 0.3s, font-weight 0.3s;
-    padding: 10px 0; /* Увеличивает зону клика и выравнивает элементы */
+    padding: 1% 0;
   }
   
   .navLink:hover {
@@ -70,7 +81,125 @@
 
 .navLeft {
   display: flex;
-  align-items: center; /* Центрирует элементы по вертикали */
+  /* align-items: center;  */
+  
   gap: 15px;
   }
     
+
+
+
+  /* -----------------------------*/
+
+
+  /* Адаптация для мобильных устройств (макс. ширина 480px) */
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 10px;
+  }
+
+  .navMenu {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .navLink {
+    padding: 8px 0;
+  }
+}
+
+/* Адаптация для планшетов (макс. ширина 768px) */
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 3%;
+    flex-direction: column; /* Элементы располагаются вертикально */
+    align-items: flex-start;
+  }
+
+  .navMenu {
+    flex-direction: column; /* Навигация становится вертикальной */
+    gap: 10px; /* Увеличиваем промежутки */
+  }
+
+  .navLink {
+    padding: 8px 0; /* Увеличиваем клик-зону */
+  }
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 480px) {
+  .userInfo {
+    flex-direction: column; /* Структура для мобильных */
+  }
+}
+
+/* Адаптация для обычных десктопов (мин. ширина 1024px) */
+@media (min-width: 1024px) {
+  .header {
+    padding: 20px 5%;
+  }
+}
+
+/* Адаптация для широких мониторов (мин. ширина 1440px) */
+@media (min-width: 1440px) {
+  .header {
+    padding: 25px 6%;
+  }
+}
+
+/* Адаптация для ультрашироких экранов (мин. ширина 1920px) */
+@media (min-width: 1920px) {
+  .header {
+    max-width: 1800px;
+    padding: 30px 60px;
+  }
+}
+
+/* Для MacBook (разрешения 2560x1600 и 2880x1800) */
+@media (min-width: 2560px) and (max-width: 2880px) {
+  .header {
+    max-width: 2500px;
+    padding: 20px 40px;
+  }
+}
+
+/* Для iMac с разрешением 4K (3840x2160) */
+@media (min-width: 3840px) and (max-width: 4096px) {
+  .header {
+    max-width: 3700px;
+    padding: 25px 50px;
+  }
+}
+
+/* Для iMac с разрешением 5K (5120x2880) */
+@media (min-width: 5120px) {
+  .header {
+    max-width: 5000px;
+    padding: 30px 60px;
+
+  }
+}
+
+
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userName {
+  font-size: 16px;
+  color: #333;
+  /* margin-left: 10px; */
+  cursor: pointer;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}

@@ -1,4 +1,4 @@
-import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Layout from "../components/layout/Layout";
 import Marketing from "../components/categories/marketing/Marketing";
 import About from "../components/about/About";
@@ -7,16 +7,18 @@ import Blog from "../components/categories/blog/Blog";
 import "./App.css"; // Сохраняем подключение стилей
 import SearchErrorPage from "components/search/SearchErrorPage";
 import SearchResultsPage from "components/search/SearchResultsPage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Articles from "admin/componentsAdmin/articlesAdmin/Articles";
 // import AdminRoute from 'admin/AdminRoute';
 import Profile from "components/user/Profile";
 import Dashboard from "components/user/Dashboard";
-import { useAppSelector } from "redux/hooks";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import AuthWindow from "components/authWindow/AuthWindow";
 import CategoryManager from "admin/componentsAdmin/categoriesAdmin/CategoryManager";
 //import ArticleList from "admin/components/articles/ArticleList";
 import Comments from "components/comments/Comment";
+import { hideModal } from "features/auth/modalWindowSlice";
+import { getUserWithToken } from "features/auth/authAction";
 import ArticleUser from "components/articles/ArticleUser";
 import CategoryLinks from "components/categories/CategoryLink";
 import ArticlePage from "components/articles/ArticlePageUser";
@@ -32,8 +34,29 @@ function App() {
 
   const [error, setError] = useState<string | null>(null);
   const [searchResults, setSearchResults] = useState<SearchItem[]>([]);
-  const { user } = useAppSelector((state) => state.user); // Получаем данные о пользователе
+  const { user } = useAppSelector((state) => state.user); 
   const { isOpen } = useAppSelector((state) => state.modalWindow);
+  const dispatch = useAppDispatch();
+  const handleLoginSuccess = (): void => {
+    dispatch(hideModal());
+  };
+
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('user-accessToken');
+    if (accessToken) {
+      dispatch(getUserWithToken(accessToken))
+        .unwrap()
+        .then(() => {
+          console.log('User data loaded:', user); 
+        })
+        .catch((error) => {
+          console.error('Error loading user data:', error);
+          localStorage.removeItem('user-accessToken');
+        });
+    }
+  }, [dispatch]);
+
 
   return (
     <div className="App">
@@ -57,13 +80,12 @@ function App() {
             {/*!!!! РАСКОМЕНТИРОВАТЬ, КОГДА БУДЕТ ГОТОВА АДМИНКА Защищённый маршрут для админов 
             <Route path="/admin/categories" element={ <AdminRoute isAdmin={isAdmin}> <CategoryManager /> </AdminRoute>}/>*/}
 
-            <Route path="/login" element={<AuthWindow />} />
             <Route path="/catlinks" element={<CategoryLinks />} />
             <Route path="/category/:category" element={<ArticleUser />} />
             <Route path="/article/:id" element={<ArticlePage />} />
 
             {/* Проверка: если пользователь авторизован, показываем ему страницы личного кабинета */}
-            {user.username && (
+            {user?.username && (
               <>
                 <Route path="/about" element={<About />} />
                 <Route path="/product" element={<Product />} />
@@ -83,7 +105,7 @@ function App() {
           {/* Обработка ошибок и страниц, которые не найдены */}
           <Route path="*" element={<h1>Ошибка 404: Страница не найдена</h1>} />
         </Routes>
-      {isOpen && <AuthWindow />} 
+      {isOpen && <AuthWindow onLoginSuccess={handleLoginSuccess} />}
       </HashRouter>
     </div>
   );

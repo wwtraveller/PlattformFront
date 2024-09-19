@@ -4,7 +4,15 @@
   margin: 0;
   padding: 0;
   text-decoration: none;
-  
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; 
+  box-sizing: border-box;
 }
 
 body {
@@ -16,7 +24,7 @@ body {
   background-color: #f8f9fa; /* Светлый фон для всей страницы */
   color: #212529; /* Основной цвет текста */
   line-height: 1.6;
-  
+ 
 }
 
 a {
@@ -35,7 +43,7 @@ code {
 
 button {
   font-family: inherit; /* Наследует шрифт от родителя */
-  cursor: pointer; /* Указатель мыши меняется на указатель */
+  /* cursor: pointer;  Указатель мыши меняется на указатель  */
   border: none;
   background: none;
 }
