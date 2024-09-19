@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Button from 'components/button/Button';
 import React, { useState, useEffect } from 'react';
 
@@ -78,17 +79,37 @@ interface CommentData {
 const Comments = ({ articleId, currentUser }: CommentsProps) => {
   const [comments, setComments] = useState<CommentData[]>([]); // Инициализация пустым массивом
   const [newComment, setNewComment] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch(`/api/articles/${articleId}/comments`)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Комментарии с сервера:', data); // Проверьте формат данных
-        setComments(data);
-      })
-      .catch(error => console.error('Ошибка при загрузке комментариев:', error));
+    const fetchComments = async () => {
+      try {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+          throw new Error('Отсутствует токен авторизации');
+        }
+        const response = await axios.get(`/api/articles/${articleId}/comments`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          }
+        });
+        console.log('Comments data:', response.data);
+        setComments(response.data);
+      } catch (error) {
+        console.error("Ошибка при загрузке комментариев:", error);
+        setError("Ошибка при загрузке комментариев.");
+      }
+    };
+
+    if (articleId) {
+      fetchComments();
+    }
   }, [articleId]);
-  
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
 
   const handleAddComment = () => {
     const commentData = {
