@@ -2,9 +2,9 @@
 .page {
   display: flex;
   flex-direction: column;
-  /* 100 относительных единиц */
-  /* высчитываются от видимой области по высоте */
   min-height: 200vh;
+  width: 100%;
+
 }
 
 .main {
@@ -16,4 +16,5 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 80px;
 }

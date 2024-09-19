@@ -20,7 +20,7 @@ const initialUser: IUserData = {
   photo: "",
   accessToken: "",
   refreshToken: "",
-  roles: [], // Роли в виде массива строк
+  roles: []
 };
 
 // создаем state и передаем начальное значение user

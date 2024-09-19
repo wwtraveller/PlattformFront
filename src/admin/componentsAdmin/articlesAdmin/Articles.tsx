@@ -68,13 +68,8 @@ export default function Articles() {
 
   return (
     <div className={styles.articlesContainer}>
-      <h2>Управление статьями</h2>
-      <ArticleForm onSubmit={handleCreateArticle} categories={categories} />
-      <ArticleList
-        articles={articles}
-        onEdit={handleEditArticle}
-        onDelete={handleDeleteArticle}
-      />
+      <ArticleForm onSubmit={handleCreate} />
+      <ArticleList articles={articles} onEdit={handleEdit} onDelete={handleDelete} />
     </div>
   );
 }

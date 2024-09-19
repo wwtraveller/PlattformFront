@@ -108,8 +108,8 @@ const [categories, setCategories] = useState<string[]>([]);
               <div className={styles.userInfo}>
                 {user.photo ? (
                   <img
-                    src={user.photo || '/default-avatar.png'}
-                    alt="avatar"
+                    src={user.photo || "/default-avatar.png"}
+                    alt="Default Avatar"
                     className={styles.avatar}
                     width="40"
                     height="40"
