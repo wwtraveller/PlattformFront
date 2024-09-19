@@ -1,12 +1,10 @@
-// src/components/articles/ArticleList.tsx
-import React from 'react';
-import styles from './articles.module.css'; // Импортируем общий CSS файл
+import styles from './articleList.module.css';
 
 interface Article {
   id: number;
   title: string;
   content: string;
-  categoryId: number;
+  category: { id: number; name: string } | null;
 }
 
 interface ArticleListProps {
@@ -15,25 +13,22 @@ interface ArticleListProps {
   onDelete: (id: number) => void;
 }
 
-const ArticleList = (props: ArticleListProps) => {
-  const { articles, onEdit, onDelete } = props; // Деструктуризация пропсов
-
+export default function ArticleList({ articles, onEdit, onDelete }: ArticleListProps) {
   return (
     <ul className={styles.articleList}>
       {articles.map((article) => (
         <li key={article.id} className={styles.articleItem}>
-          <h4>{article.title}</h4>
-          <p>{article.content.substring(0, 100)}...</p>
-          <button onClick={() => onEdit(article)} className={styles.editButton}>
-            Редактировать
-          </button>
-          <button onClick={() => onDelete(article.id)} className={styles.deleteButton}>
-            Удалить
-          </button>
+          <div>
+            <h4>{article.title}</h4>
+            <p>{article.content}</p>
+            <p>{article.category ? article.category.name : 'Без категории'}</p>
+          </div>
+          <div>
+            <button className={styles.editButton} onClick={() => onEdit(article)}>Редактировать</button>
+            <button className={styles.deleteButton} onClick={() => onDelete(article.id)}>Удалить</button>
+          </div>
         </li>
       ))}
     </ul>
   );
-};
-
-export default ArticleList;
+}
