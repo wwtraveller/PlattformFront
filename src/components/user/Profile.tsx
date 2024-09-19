@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './profile.module.css';
 
+
 const Profile: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -25,8 +26,10 @@ const Profile: React.FC = () => {
         {avatarPreview ? (
           <img src={avatarPreview} alt="Avatar Preview" className={styles.profileAvatar} />
         ) : (
-          <div className={styles.profileAvatar}>Фото</div>
-        )}
+<img src="/default-avatar.png" alt="Default Avatar" className={styles.profileAvatar} />
+          )}
+
+          {/* <div className={styles.profileAvatar}>Фото</div> */}
         <div className={styles.profileDetails}>
           <h2 className={styles.profileName}>Редактировать профиль</h2>
           <p className={styles.profileEmail}>Ваш email: {email || 'example@mail.com'}</p>
