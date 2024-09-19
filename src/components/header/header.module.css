@@ -68,20 +68,10 @@
     text-decoration: none !important; /* Убираем подчеркивание полностью */
 }
 
-/* Добавляем специфичные стили, чтобы не конфликтовали с глобальными */
-/* .header a {
-  margin: 0;
-  padding: 0; Обнуляем стили, если глобальные заданы иначе
-  color: var(--text-color);
-} */
-
-/* .navleft {
-    margin-left: 400px;  
-} */
 
 .navLeft {
   display: flex;
-  /* align-items: center;  */
+  align-items: center; 
   
   gap: 15px;
   }
@@ -187,7 +177,7 @@
 .userInfo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap:10px;
 }
 
 .userName {
@@ -201,5 +191,4 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  object-fit: cover;
-}
+  object-fit: cover;}

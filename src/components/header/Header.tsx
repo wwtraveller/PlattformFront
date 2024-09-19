@@ -1,14 +1,14 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import styles from './header.module.css';
-import { guestLinks } from './links'; // Используем только guestLinks для незарегистрированных пользователей
-import { useState } from 'react';
-import Button from 'components/button/Button';
-import Search from 'components/search/Search';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { logoutUser } from 'features/auth/authSlice';
-import ParentComponent from 'components/search/ParentComponent';
-import UserMenu from '../user/UserMenu'; // Правильное подключение UserMenu
-import ButtonLogReg from 'components/button/ButtonLogReg';
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import styles from "./header.module.css";
+import { guestLinks } from "./links"; // Используем только guestLinks для незарегистрированных пользователей
+import { useState } from "react";
+import Button from "components/button/Button";
+import Search from "components/search/Search";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { logoutUser } from "features/auth/authSlice";
+import ParentComponent from "components/search/ParentComponent";
+import UserMenu from "../user/UserMenu"; // Правильное подключение UserMenu
+import ButtonLogReg from "components/button/ButtonLogReg";
 
 interface SearchItem {
   id: number;
@@ -23,13 +23,11 @@ interface HeaderProps {
 }
 
 export default function Header({ setError, setSearchResults }: HeaderProps) {
-
   const location = useLocation();
   // const [searchQuery, setSearchQuery] = useState(''); // Состояние для хранения запроса
   const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
 
   // Функция обработки изменения ввода
   // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +49,6 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
   // Здесь можно добавить логику для выполнения поиска, например, сделать запрос к API
   //};
 
-
   // забираем данные по user
   // const { user } = useAppSelector((state) => state.user); // Достаем пользователя из состояния
   // const { user } = useAppSelector(state => state.user);
@@ -61,18 +58,17 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
 
   const handleLogout = () => {
     // чистим браузерное хранилище данных
-    localStorage.removeItem('user-accessToken')
+    localStorage.removeItem("user-accessToken");
     // чистим state, выносим 'мусор' данных за пользователем
     dispatch(logoutUser());
-    navigate('/');
+    navigate("/");
   };
-
 
   const handleLoginSuccess = () => {
- // Здесь можно обновить состояние или сделать перенаправление
+    // Здесь можно обновить состояние или сделать перенаправление
   };
 
-const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   return (
     <header className={styles.header}>
       <div className={styles.navMenu}>
@@ -82,7 +78,7 @@ const [categories, setCategories] = useState<string[]>([]);
             <Link
               key={index}
               className={`${styles.navLink} ${
-                location.pathname === el.pathname ? styles.active : ''
+                location.pathname === el.pathname ? styles.active : ""
               }`}
               to={el.pathname}
             >
@@ -91,38 +87,32 @@ const [categories, setCategories] = useState<string[]>([]);
           ))}
       </div>
       <div className={styles.navLeft}>
-
-       <ParentComponent/>
-       {/*  <Search setError={setError}
-          setSearchResults={setSearchResults} categories={categories}/>*/} {/* Вставка компонента поиска */}
-       {/* Если пользователь авторизован, показываем кнопку "Выйти", если нет — "Войти" */}
-       {/*user.username ? (*/}
-
-       {/*<Search setError={setError} setSearchResults={setSearchResults} />*/}
-
+        <ParentComponent />
+        {/*  <Search setError={setError}
+          setSearchResults={setSearchResults} categories={categories}/>*/}{" "}
+        {/* Вставка компонента поиска */}
+        {/* Если пользователь авторизован, показываем кнопку "Выйти", если нет — "Войти" */}
+        {/*user.username ? (*/}
+        {/*<Search setError={setError} setSearchResults={setSearchResults} />*/}
         {/* Если пользователь авторизован, показываем меню пользователя, если нет — "Войти" */}
         {user?.username ? (
           <>
-            <UserMenu /> {/* Отображаем UserMenu для авторизованного пользователя */}
+            <UserMenu />{" "}
+            {/* Отображаем UserMenu для авторизованного пользователя */}
             <Link to="/profile">
               <div className={styles.userInfo}>
-                {user.photo ? (
-                  <img
-                    src={user.photo || "/default-avatar.png"}
-                    alt="Default Avatar"
-                    className={styles.avatar}
-                    width="40"
-                    height="40"
+
+                <img
+                  src={user.photo ? `/path-to-images/${user.photo}.png` : '/default-FFA-avatar.png'}  alt="User Avatar"
+                  className={styles.avatar}
                   />
-                ) : (
-            <span>{user.username}</span>
-                )}
-                  </div>
+              </div>
             </Link>
+                  {console.log("User photo path:", user.photo)}
             <Button name="Выйти" onClick={handleLogout} />
           </>
         ) : (
-          <ButtonLogReg onLoginSuccess={handleLoginSuccess}/>
+          <ButtonLogReg onLoginSuccess={handleLoginSuccess} />
         )}
       </div>
     </header>

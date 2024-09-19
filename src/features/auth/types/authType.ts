@@ -10,7 +10,7 @@ export interface IUserData {
     email: string
     firstName:string
     lastName:string
-    photo:string
+    photo:string | null
     accessToken: string
     refreshToken: string
     roles: Role[];

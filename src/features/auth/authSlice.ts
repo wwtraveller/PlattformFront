@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 // импортируем типизацию данных по user из отдельного файла
 import { IUserData } from "../../features/auth/types/authType";
 import { getUserWithToken, loginUser } from "../../features/auth/authAction";
@@ -17,7 +17,7 @@ const initialUser: IUserData = {
   email: "",
   firstName: "",
   lastName: "",
-  photo: "",
+  photo: null,
   accessToken: "",
   refreshToken: "",
   roles: []
@@ -32,15 +32,16 @@ const initialState: IUserState = {
 
 // создаем slice
 export const authSlice = createSlice({
-  // указываем имя slice
   name: "authSlice",
-  // передаем начальный state
   initialState,
   reducers: {
     // создаем синхронный action для очистки state
     logoutUser: (state) => {
       state.user = initialUser;
     },
+    setUserAvatar: (state, action: PayloadAction<string | null>) => {
+      state.user.photo = action.payload;
+  },
   },
   // ! логика работы с асинхронными действиями
   extraReducers: (builder) => {
@@ -67,6 +68,6 @@ export const authSlice = createSlice({
   },
 });
 
-export default authSlice;
+export default authSlice.reducer;
 // экспортируем синхронные actions из slice
-export const { logoutUser } = authSlice.actions;
+export const { logoutUser, setUserAvatar } = authSlice.actions;

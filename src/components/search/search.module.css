@@ -32,7 +32,7 @@ input.expanded{
 }
 
 .searchInput {
-  width: 0;
+  width: 50px;
   transition: width 0.5s;
 }
 
@@ -43,12 +43,15 @@ input.expanded{
 
 .searchButton {
   display: flex;
-  place-items: center;
+  flex-direction: column;
+  /* place-items: center; */
+  align-items: center;
   width: 10px;
   height: 10px;
   cursor: pointer;
   transition: color 0.25s;
   background: transparent;
+  margin: 4px;
 }
 
 .searchButton:hover {
