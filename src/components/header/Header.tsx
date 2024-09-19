@@ -106,10 +106,10 @@ const [categories, setCategories] = useState<string[]>([]);
             <UserMenu /> {/* Отображаем UserMenu для авторизованного пользователя */}
             <Link to="/profile">
               <div className={styles.userInfo}>
-                {user.image ? (
+                {user.photo ? (
                   <img
-                    src={user.image || '/default-avatar.png'}
-                    alt="avatar"
+                    src={user.photo || "/default-avatar.png"}
+                    alt="Default Avatar"
                     className={styles.avatar}
                     width="40"
                     height="40"

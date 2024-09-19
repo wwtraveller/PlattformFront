@@ -22,6 +22,7 @@ import { getUserWithToken } from "features/auth/authAction";
 import ArticleUser from "components/articles/ArticleUser";
 import CategoryLinks from "components/categories/CategoryLink";
 import ArticlePage from "components/articles/ArticlePageUser";
+import AdminRoute from "admin/AdminRoute";
 
 interface SearchItem {
   id: number;
@@ -70,41 +71,46 @@ function App() {
             {/* Незарегистрированный пользователь - доступные страницы */}
             <Route path="/about" element={<About />} />
             <Route path="/product" element={<Product />} />
-            <Route path="/catlinks" element={<CategoryLinks />} />
-            <Route path="/blog" element={<Blog />} />
+            {/* <Route path="/blog" element={<Blog />} /> */}
             <Route path="/search-results" element={<SearchResultsPage />} />
             <Route path="/search-error" element={<SearchErrorPage />} />
-            <Route path="/articles" element={<Articles />} />
-            <Route path="/admin/categories" element={<CategoryManager />} />
-            <Route path="/categories" element={<CategoryManager />} />
-            {/*!!!! РАСКОМЕНТИРОВАТЬ, КОГДА БУДЕТ ГОТОВА АДМИНКА Защищённый маршрут для админов 
-            <Route path="/admin/categories" element={ <AdminRoute isAdmin={isAdmin}> <CategoryManager /> </AdminRoute>}/>*/}
-
-            <Route path="/catlinks" element={<CategoryLinks />} />
+            <Route path="/catLinks" element={<CategoryLinks />} />
             <Route path="/category/:category" element={<ArticleUser />} />
             <Route path="/article/:id" element={<ArticlePage />} />
+            
+
 
             {/* Проверка: если пользователь авторизован, показываем ему страницы личного кабинета */}
             {user?.username && (
               <>
                 <Route path="/about" element={<About />} />
-                <Route path="/product" element={<Product />} />
+                {/* <Route path="/product" element={<Product />} />
                 <Route path="/marketing" element={<Marketing />} />
-                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog" element={<Blog />} /> */}
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/createarticles" element={<Articles />} />
-                {/*<Route path="/catlinks" element={<CategoryLinks />} />
+                <Route path="/catLinks" element={<CategoryLinks />} />
                 <Route path="/category/:category" element={<ArticleUser />} />
-                <Route path="/article/:id" element={<ArticlePage />} />*/}
+                <Route path="/article/:id" element={<ArticlePage />} />
               </>
             )}
             {/* Если пользователь не авторизован, перенаправляем на основную страницу */}
             <Route path="*" element={<Navigate to="/" replace />} />
+
+
+            {/* Защищенные маршруты для админа */}
+            <Route path="/admin/createCategories" element={<AdminRoute><CategoryManager /></AdminRoute>} />
+            <Route path="/admin/createArticles" element={<AdminRoute><Articles /></AdminRoute>} />
+            {/*!!!! РАСКОМЕНТИРОВАТЬ, КОГДА БУДЕТ ГОТОВА АДМИНКА Защищённый маршрут для админов 
+            <Route path="/admin/categories" element={ <AdminRoute isAdmin={isAdmin}> <CategoryManager /> </AdminRoute>}/>*/}
           </Route>
+
+
           {/* Обработка ошибок и страниц, которые не найдены */}
           <Route path="*" element={<h1>Ошибка 404: Страница не найдена</h1>} />
+
         </Routes>
+
       {isOpen && <AuthWindow onLoginSuccess={handleLoginSuccess} />}
       </HashRouter>
     </div>
