@@ -4,14 +4,13 @@
     background-color: var(--background-color); /* Используем общий фон */
     border: 1px solid var(--primary-color); /* Легкая граница для выделения */
     border-radius: 10px;
-    cursor: pointer;
     transition: background-color 0.3s, color 0.3s, transform 0.1s ease-in-out;
+    width: 130px;
   }
   
   /* стили сработают при наведении мышкой на кнопку */
   .myButton:hover {
     background-color: var(--primary-color);
-    color: white;
   }
   
   /* стили сработают при нажатии на кнопку */

@@ -12,7 +12,6 @@ body {
 body {
   font-family: "Poppins", sans-serif;
   display: grid;
-  overflow: hidden;
 }
 
 .search {
@@ -99,7 +98,7 @@ input::placeholder {
 .searchWrapper {
   display: flex;
   align-items: center;
-  overflow: hidden;
+  /* overflow: hidden; */
   height: 30px; 
   border-radius: 50%;
 }

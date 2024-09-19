@@ -17,9 +17,8 @@ const initialUser: IUserData = {
   email: "",
   firstName: "",
   lastName: "",
-  gender: "",
   image: "",
-  token: "",
+  accessToken: "",
   refreshToken: "",
 };
 

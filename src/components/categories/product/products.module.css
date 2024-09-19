@@ -1,16 +1,24 @@
 .articlesContainer {
-    display: flex;
+    display: grid;
     flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 20px;
+    width: 1500px;
+    padding: 20px;
+  max-width: 100%;
   }
   
   .article {
     display: flex;
-    align-items: center;
-    gap: 15px;
-    border: 1px solid #ccc;
-    padding: 15px;
+    flex-direction: column;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
     border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+
+    /* align-items: center;
+    gap: 15px; */
   }
   
   .articleImage {
@@ -21,19 +29,25 @@
   }
   
   .articleContent {
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
+    padding: 10px;
+
   }
   
   .articleTitle {
     font-size: 1.5rem;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin: 10px 0;
+    color: var(--text-color);
+
+    /* margin-bottom: 10px; */
   }
   
   .shortDescription {
     font-size: 1rem;
     margin-bottom: 10px;
+    text-align: left;
   }
   
   .authAction {
@@ -42,7 +56,8 @@
     align-items: start;
   }
   .authAction p{
-    font-size: 10px;
+    font-size: 12px;
+    margin-left: auto; 
   }
   
   .readMoreLink {
@@ -51,3 +66,107 @@
     cursor: pointer;
   }
   
+  .buttonRight {
+    margin-left: auto; /* Смещаем кнопку вправо */
+    position:relative;
+  }
+
+
+
+
+
+
+/*==================================*/
+
+
+/* Для мобильных устройств (до 768px) */
+@media (max-width: 768px) {
+  .articlesContainer {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+
+  .articleTitle {
+    font-size: 1.2rem;
+  }
+
+  .shortDescription {
+    font-size: 0.9rem;
+  }
+
+  .authAction {
+    font-size: 0.9rem;
+  }
+}
+
+/* Для планшетов (от 768px до 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .articlesContainer {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  .article {
+    flex-direction: column;
+  }
+
+  .articleTitle {
+    font-size: 1.4rem;
+  }
+
+  .shortDescription {
+    font-size: 1rem;
+  }
+}
+
+/* Для больших экранов (от 1024px и выше) */
+/* @media (min-width: 1024px) {
+  .articlesContainer {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .article {
+    flex-direction: row;
+    padding: 20px;
+  }
+
+  .articleImage {
+    width: 30%;
+    margin-right: 20px;
+  }
+
+  .articleContent {
+    padding: 0 15px;
+  }
+
+  .articleTitle {
+    font-size: 1.6rem;
+  }
+
+  .shortDescription {
+    font-size: 1.1rem;
+  }
+
+  .authAction {
+    font-size: 1rem;
+  }
+} */
+
+/* Для очень больших экранов (от 1440px и выше) */
+/* @media (min-width: 1440px) {
+  .articlesContainer {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 50px;
+  }
+
+  .articleTitle {
+    font-size: 1.8rem;
+  }
+
+  .shortDescription {
+    font-size: 1.2rem;
+  }
+} */
