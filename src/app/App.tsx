@@ -45,7 +45,7 @@ function App() {
 
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('user-accessToken');
+    const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
       dispatch(getUserWithToken(accessToken))
         .unwrap()
@@ -54,7 +54,7 @@ function App() {
         })
         .catch((error) => {
           console.error('Error loading user data:', error);
-          localStorage.removeItem('user-accessToken');
+          localStorage.removeItem('accessToken');
         });
     }
   }, [dispatch]);

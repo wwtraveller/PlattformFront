@@ -32,7 +32,7 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
 
   const handleLogout = () => {
     // чистим браузерное хранилище данных
-    localStorage.removeItem("user-accessToken");
+    localStorage.removeItem("accessToken");
     // чистим state, выносим 'мусор' данных за пользователем
     dispatch(logoutUser());
     navigate("/");
@@ -82,16 +82,13 @@ const [categories, setCategories] = useState<string[]>([]);
             <>
               <Link to="/profile">
                 <div className={styles.userInfo}>
-                  {user.photo ? (
                     <img
                     src={user.photo || '/default-FFA-avatar.png'}  
                     alt="User Avatar"
                     className={styles.avatar}
                      
                     />
-                  ) : (
-                    <span>{user.username}</span>
-                  )}
+                 
                 </div>
               </Link>
               <Button name="Выйти" onClick={handleLogout} />
