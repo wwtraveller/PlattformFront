@@ -44,6 +44,7 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
  // Здесь можно обновить состояние или сделать перенаправление при успешной авторизации
   };
 
+
   return (
     <header className={styles.header}>
       <div className={styles.navMenu}>
@@ -83,15 +84,14 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
             <>
               <Link to="/profile">
                 <div className={styles.userInfo}>
-                  {user.photo ? (
+            
                     <img
                       src={user.photo || '/default-avatar.png'}
                       alt="User Avatar"
                       className={styles.avatar}
+                      
                     />
-                  ) : (
-                    <span>{user.username}</span>
-                  )}
+                  
                 </div>
               </Link>
               <Button name="Выйти" onClick={handleLogout} />
