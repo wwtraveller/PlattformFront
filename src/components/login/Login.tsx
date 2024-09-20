@@ -46,7 +46,7 @@ export interface ILoginFormValues {
     const formik = useFormik({
       initialValues: {
         username: 'taras',
-        password: 'alisa56'
+        password: 'Qwerty123?@'
       } as ILoginFormValues,
       validationSchema: schema,
       validateOnChange: false,

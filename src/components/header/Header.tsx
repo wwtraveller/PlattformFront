@@ -4,7 +4,6 @@ import { guestLinks } from './links'; // Используем только guest
 import { useState } from 'react';
 import UserMenu from '../user/UserMenu'; // Подключаем меню пользователя
 import AdminMenu from 'admin/AdminMenu'; // Подключаем меню админа
-import Search from 'components/search/Search';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { logoutUser } from 'features/auth/authSlice';
 import ParentComponent from 'components/search/ParentComponent';
