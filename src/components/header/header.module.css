@@ -23,9 +23,9 @@
   z-index: 1000;
 }
 
-.content {
-  padding-top: 60px; /* Добавляем отступ, равный высоте хедера */
-}
+/* .content {
+  padding-top: 60px;  Добавляем отступ, равный высоте хедера 
+} */
 
 /* .header > a {
     color: white;
@@ -43,17 +43,23 @@
 } */
 
 .navMenu {
+  display: flex;
+  align-items: center; /* Выравнивание по вертикали */
+  justify-content: space-between; /* Разделение на лево и право */
+  width: 100%; /* Растягивание на всю ширину */
+  }
+
+  .navLeft, .navRight {
     display: flex;
-    gap: 15%;
+    align-items: center; 
+    gap: 15px;
   }
 
   .navLink {
-    color: var(--text-color); /* Подстройка цвета под тему */
-    text-decoration: none;
-    font-weight: 500;
-    /* transition: color 0.3s; */
-    transition: color 0.3s, font-weight 0.3s;
-    padding: 1% 0;
+    color: var(--text-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s, font-weight 0.3s;
   }
   
   .navLink:hover {
@@ -68,14 +74,17 @@
     text-decoration: none !important; /* Убираем подчеркивание полностью */
 }
 
+/* Добавляем специфичные стили, чтобы не конфликтовали с глобальными */
+/* .header a {
+  margin: 0;
+  padding: 0; Обнуляем стили, если глобальные заданы иначе
+  color: var(--text-color);
+} */
 
-.navLeft {
-  display: flex;
-  align-items: center; 
-  
-  gap: 15px;
-  }
-    
+/* .navleft {
+    margin-left: 400px;  
+} */
+
 
 
 

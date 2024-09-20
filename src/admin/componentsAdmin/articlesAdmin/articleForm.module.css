@@ -1,0 +1,45 @@
+.articleForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.textarea {
+  height: 200px; /* Увеличиваем высоту для более комфортного ввода */
+}
+
+.categoryBlock {
+  margin-top: 15px; /* Отделяем выбор категории от других элементов */
+}
+
+.select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.submitButton {
+  padding: 10px 20px;
+  background-color: #6788f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submitButton:hover {
+  background-color: #5678e0;
+}
