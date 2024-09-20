@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // импортируем типизацию данных по user из отдельного файла
 import { IUserData } from "../../features/auth/types/authType";
 import { getUserWithToken, loginUser } from "../../features/auth/authAction";
@@ -41,6 +41,9 @@ export const authSlice = createSlice({
     logoutUser: (state) => {
       state.user = initialUser;
     },
+    setUserAvatar: (state, action: PayloadAction<string | null>) => {
+      state.user.photo = action.payload;
+  },
   },
   // ! логика работы с асинхронными действиями
   extraReducers: (builder) => {

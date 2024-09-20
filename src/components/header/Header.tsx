@@ -44,7 +44,6 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
  // Здесь можно обновить состояние или сделать перенаправление при успешной авторизации
   };
 
-const [categories, setCategories] = useState<string[]>([]);
   return (
     <header className={styles.header}>
       <div className={styles.navMenu}>
@@ -87,10 +86,8 @@ const [categories, setCategories] = useState<string[]>([]);
                   {user.photo ? (
                     <img
                       src={user.photo || '/default-avatar.png'}
-                      alt="Default Avatar"
+                      alt="User Avatar"
                       className={styles.avatar}
-                      width="40"
-                      height="40"
                     />
                   ) : (
                     <span>{user.username}</span>
