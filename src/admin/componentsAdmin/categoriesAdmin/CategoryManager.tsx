@@ -38,9 +38,12 @@ const CategoryManager = () => {
   // Создание новой категории
   const handleCreate = async () => {
     try {
+      const token = localStorage.getItem('accessToken'); // Получение токена
       const response = await fetch('/api/categories', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // Передача токена
+        },
         body: JSON.stringify({ name: newCategoryName }),
       });
       if (!response.ok) throw new Error('Ошибка создания категории');
@@ -56,9 +59,12 @@ const CategoryManager = () => {
   const handleSave = async () => {
     if (editingCategory) {
       try {
+        const token = localStorage.getItem('accessToken'); // Получение токена
         const response = await fetch(`/api/categories/${editingCategory.id}`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Передача токена 
+            },
           body: JSON.stringify({ name: newCategoryName }),
         });
         if (!response.ok) throw new Error('Ошибка обновления категории');
@@ -79,8 +85,12 @@ const CategoryManager = () => {
   const handleDelete = async () => {
     if (editingCategory) {
       try {
+        const token = localStorage.getItem('accessToken'); // Получение токена
         const response = await fetch(`/api/categories/${editingCategory.id}`, {
           method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}` // Передача токена
+          },
         });
         if (!response.ok) throw new Error('Ошибка удаления категории');
         setCategories(categories.filter((cat) => cat.id !== editingCategory.id));

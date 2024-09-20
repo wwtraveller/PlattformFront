@@ -12,57 +12,70 @@ export const guestLinks: ILinks[] = [
     pathname: '/about',
     title: 'О нас',
   },
-  {
-    pathname: '/marketing',
-    title: 'Маркетинг',
-  },
+  // {
+  //   pathname: '/marketing',
+  //   title: 'Маркетинг',
+  // },
   {
     pathname: '/product',
     title: 'Продукт',
   },
+  // {
+  //   pathname: '/blog',
+  //   title: 'Блог',
+  // },
   {
-    pathname: '/blog',
-    title: 'Блог',
-  },
+    pathname: '/catLinks',
+    title: 'Категории'
+    }
 ];
 
 // Ссылки для зарегистрированных пользователей
 export const userLinks: ILinks[] = [
   {
-    pathname: '/dashboard',
-    title: 'Главная',
-  },
-  {
-    pathname: '/profile',
-    title: 'Профиль',
-  },
-  {
-    pathname: '/articles',
-    title: 'Статьи',
-  },
-  
-  {
-      pathname: '/categories',
-      title: 'уп.категории'
-    },
-  {
-    pathname: '/favorites',
-    title: 'Избранное',
-  },
-  {
     pathname: '/about',
     title: 'О нас',
   },
   {
-    pathname: '/marketing',
-    title: 'Маркетинг',
+    pathname: '/dashboard',
+    title: 'Главная',
   },
+  {
+    pathname: '/catLinks',
+    title: 'Категории'
+    },
+    
   {
     pathname: '/product',
     title: 'Продукт',
   },
+
   {
-    pathname: '/blog',
-    title: 'Блог',
+    pathname: '/favorites',
+    title: 'Избранное',
   },
-];
+  ];
+
+  // Ссылки для зарегистрированных пользователей
+export const adminLinks: ILinks[] = [
+  {
+    pathname: '/dashboard',
+    title: 'Главная',
+  },
+  {
+    pathname: '/catLinks',
+    title: 'Категории'
+    },
+    {
+      pathname: '/product',
+      title: 'Продукт',
+    },
+    {
+      pathname: '/admin/createArticles',
+      title: 'Создание статьи',
+    },
+    {
+        pathname: '/admin/createCategories',
+        title: 'Управление категориями'
+      },
+  ];

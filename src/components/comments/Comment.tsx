@@ -76,15 +76,19 @@ interface CommentData {
 }
 
 const Comments = ({ articleId, currentUser }: CommentsProps) => {
-  const [comments, setComments] = useState<CommentData[]>([]);
+  const [comments, setComments] = useState<CommentData[]>([]); // Инициализация пустым массивом
   const [newComment, setNewComment] = useState('');
 
   useEffect(() => {
     fetch(`/api/articles/${articleId}/comments`)
       .then(response => response.json())
-      .then(data => setComments(data))
+      .then(data => {
+        console.log('Комментарии с сервера:', data); // Проверьте формат данных
+        setComments(data);
+      })
       .catch(error => console.error('Ошибка при загрузке комментариев:', error));
   }, [articleId]);
+  
 
   const handleAddComment = () => {
     const commentData = {
@@ -93,18 +97,31 @@ const Comments = ({ articleId, currentUser }: CommentsProps) => {
       author: currentUser,
       date: new Date(),
     };
-
+  
     fetch(`/api/articles/${articleId}/comments`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(commentData)
+      body: JSON.stringify(commentData),
     })
-    .then(response => response.json())
-    .then(newComment => {
-      setComments([...comments, newComment]);
-      setNewComment('');
-    })
-    .catch(error => console.error('Ошибка при добавлении комментария:', error));
+      .then(response => {
+        if (!response.ok) {
+          // Если статус ответа не OK, выбросим ошибку
+          throw new Error(`Ошибка: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(newComment => {
+        // Проверяем, что возвращаемые данные - это массив комментариев
+        if (!Array.isArray(comments)) {
+          throw new Error('Комментарии должны быть массивом');
+        }
+        setComments([...comments, newComment]);
+        setNewComment('');
+      })
+      .catch(error => {
+        console.error('Ошибка при добавлении комментария:', error);
+        alert('Не удалось добавить комментарий. Проверьте сервер или маршрут.');
+      });
   };
 
   const handleLikeComment = (commentId: number) => {
@@ -115,6 +132,7 @@ const Comments = ({ articleId, currentUser }: CommentsProps) => {
       })
       .catch(error => console.error('Ошибка при лайке комментария:', error));
   };
+
 
   const handleDislikeComment = (commentId: number) => {
     fetch(`/api/comments/${commentId}/dislike`, { method: 'POST' })
@@ -184,17 +202,18 @@ const Comments = ({ articleId, currentUser }: CommentsProps) => {
       />
       <Button onClick={handleAddComment} name='Добавить комментарий'/>
 
-      {comments.map(comment => (
-        <Comment 
-          key={comment.id} 
-          comment={comment} 
-          onLike={handleLikeComment} 
-          onDislike={handleDislikeComment}
-          onReply={handleReplyComment}
-          onEdit={handleEditComment}
-          onDelete={handleDeleteComment}
-        />
-      ))}
+      {Array.isArray(comments) && comments.map(comment => (
+  <Comment 
+    key={comment.id} 
+    comment={comment} 
+    onLike={handleLikeComment} 
+    onDislike={handleDislikeComment}
+    onReply={handleReplyComment}
+    onEdit={handleEditComment}
+    onDelete={handleDeleteComment}
+  />
+))}
+
     </div>
   );
 };

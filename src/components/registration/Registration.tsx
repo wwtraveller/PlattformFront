@@ -12,12 +12,16 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 export interface IRegisterFormValues {
   firstName: string;
   lastName: string;
-    // username: string
+    username: string
     email: string
     password: string
   }
 
-export default function Registration() {
+  interface RegistrationProps {
+    onRegisterSuccess: () => void;
+  }
+
+export default function Registration({ onRegisterSuccess }: RegistrationProps) {
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -30,10 +34,10 @@ export default function Registration() {
 
   const schema = Yup.object().shape({
     username: Yup.string()
-      // .required('Введите имя пользователя')
-      // .min(2, 'Минимум 2 символа')
-      // .max(15, 'Максимум 15 символов'),
-      ,
+      .required('Введите имя пользователя')
+      .min(2, 'Минимум 2 символа')
+      .max(15, 'Максимум 15 символов'),
+      
       email: Yup.string()
       .required('Введите email')
       .email('не корректный формат email'),
@@ -49,7 +53,7 @@ export default function Registration() {
     initialValues: {
       firstName: "",
       lastName: "",
-      // username: '',
+      username: '',
       email: '',
       password: ''
     } as IRegisterFormValues,
@@ -57,9 +61,11 @@ export default function Registration() {
         validateOnChange: false,
     onSubmit: (values: IRegisterFormValues, {resetForm}) => {
         dispatch(registerUser(values))
+        .unwrap()
         .then(()=> {
+          onRegisterSuccess();
+          resetForm()
           navigate ('/')
-         resetForm()
         })
         .catch((error) => {
           console.error('Ошибка регистрации:', error);
@@ -76,9 +82,9 @@ export default function Registration() {
         type="text"
         name="username"
         placeholder="Никнейм"
-        value={formik.values.lastName}
+        value={formik.values.username}
         onChange={formik.handleChange}
-        className={formik.touched.lastName && formik.errors.lastName ? styles.inputError : ''}
+        className={formik.touched.username && formik.errors.username ? styles.inputError : ''}
 
       />
         {formik.touched.lastName && formik.errors.lastName && (

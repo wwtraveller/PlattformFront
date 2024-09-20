@@ -2,13 +2,14 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './header.module.css';
 import { guestLinks } from './links'; // Используем только guestLinks для незарегистрированных пользователей
 import { useState } from 'react';
-import AuthWindow from '../authWindow/AuthWindow';
-import Button from 'components/button/Button';
-import Search from 'components/search/Search';
+import UserMenu from '../user/UserMenu'; // Подключаем меню пользователя
+import AdminMenu from 'admin/AdminMenu'; // Подключаем меню админа
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { logoutUser } from 'features/auth/authSlice';
 import ParentComponent from 'components/search/ParentComponent';
-import UserMenu from '../user/UserMenu'; // Правильное подключение UserMenu
+import Button from 'components/button/Button';
+import ButtonLogReg from 'components/button/ButtonLogReg';
+
 
 interface SearchItem {
   id: number;
@@ -23,107 +24,79 @@ interface HeaderProps {
 }
 
 export default function Header({ setError, setSearchResults }: HeaderProps) {
-
   const location = useLocation();
   // const [searchQuery, setSearchQuery] = useState(''); // Состояние для хранения запроса
-  const [isLoginWindowOpen, setIsLoginWindowOpen] = useState(false);
   const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate(); // Добавляем useNavigate
-
-
-
-const handleOpenLoginWindow = () => {
-  setIsLoginWindowOpen(true);
-};
-
-const handleCloseLoginWindow = () => {
-  setIsLoginWindowOpen(false);
-};
-
-  // Функция обработки изменения ввода
-  // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  // setSearchQuery(event.target.value);
-  // };
-
-  // Функция запуска поиска по нажатию Enter
-  // const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (event.key === 'Enter') {
-  //     console.log(`Поиск по запросу: ${searchQuery}`);
-  //     // Добавить логику для выполнения поиска, запрос к API
-  //     setSearchQuery(''); // Очистка поля поиска после запуска
-  //   }
-  // };
-
-  // Функция, которая будет вызвана при нажатии на кнопку поиска
-  // const handleSearch = () => {
-  // console.log(`Поиск по запросу: ${searchQuery}`);
-  // Здесь можно добавить логику для выполнения поиска, например, сделать запрос к API
-  //};
-
-
-  // забираем данные по user
-  // const { user } = useAppSelector((state) => state.user); // Достаем пользователя из состояния
-  // const { user } = useAppSelector(state => state.user);
-  // const dispatch = useAppDispatch();
-
-  // const locationLogName = useLocation();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     // чистим браузерное хранилище данных
-    localStorage.removeItem('user-token')
+    localStorage.removeItem("accessToken");
     // чистим state, выносим 'мусор' данных за пользователем
     dispatch(logoutUser());
-  }
+    navigate("/");
+  };
+
+  const handleLoginSuccess = () => {
+ // Здесь можно обновить состояние или сделать перенаправление при успешной авторизации
+  };
+
 const [categories, setCategories] = useState<string[]>([]);
   return (
     <header className={styles.header}>
       <div className={styles.navMenu}>
-        {/* Отображение ссылок для незарегистрированных пользователей */}
-        {!user.username &&
-          guestLinks.map((el, index) => (
-            <Link
-              key={index}
-              className={`${styles.navLink} ${
-                location.pathname === el.pathname ? styles.active : ''
-              }`}
-              to={el.pathname}
-            >
-              {el.title}
-            </Link>
-          ))}
-      </div>
-      <div className={styles.navLeft}>
+        <div className={styles.navLeft}>
+          {/* Отображение ссылок для незарегистрированных пользователей */}
+          {!user?.username &&
+            guestLinks.map((el, index) => (
+              <Link
+                key={index}
+                className={`${styles.navLink} ${
+                  location.pathname === el.pathname ? styles.active : ''
+                }`}
+                to={el.pathname}
+              >
+                {el.title}
+              </Link>
+            ))}
+            
+          {/* Если пользователь авторизован, отображаем меню в зависимости от роли */}
+          {user?.username && (
+            <>
+              {user.roles.some((role) => role.authority === 'ROLE_ADMIN') ? (
+                <AdminMenu /> // Для админов
+              ) : (
+                <UserMenu /> // Для зарегистрированных пользователей
+              )}
+            </>
+          )}
+        </div>
 
-       <ParentComponent/>
-
-        {/* Если пользователь авторизован, показываем меню пользователя, если нет — "Войти" */}
-        {user.username ? (
-
-          <>
-            <UserMenu /> {/* Отображаем UserMenu для авторизованного пользователя */}
-            <span>{user.username}</span>
-            <Button name="Выйти" onClick={handleLogout} />
-          </>
-        ) : (
-          <>
-            <Button name="Войти" onClick={handleOpenLoginWindow} />
-            {isLoginWindowOpen && (
-              <div className={styles.loginWindow} onClick={handleCloseLoginWindow}>
-                <div
-                  className={styles.loginWindowContent}
-                  onClick={(e) => e.stopPropagation()}>
-                  <button
-                    className={styles.closeButton}
-                    onClick={handleCloseLoginWindow}>
-                    ❌
-                  </button>
-                  <AuthWindow />
+        {/* Справа: Поиск, имя пользователя и кнопка Войти/Выйти */}
+        <div className={styles.navRight}>
+          <ParentComponent /> {/* Компонент поиска */}
+          
+          {/* Если пользователь авторизован, показываем его имя и кнопку "Выйти" */}
+          {user?.username ? (
+            <>
+              <Link to="/profile">
+                <div className={styles.userInfo}>
+                    <img
+                    src={user.photo || '/default-FFA-avatar.png'}  
+                    alt="User Avatar"
+                    className={styles.avatar}
+                     
+                    />
+                 
                 </div>
-              </div>
-            )}
-          </>
-        )}
+              </Link>
+              <Button name="Выйти" onClick={handleLogout} />
+            </>
+          ) : (
+            <ButtonLogReg onLoginSuccess={handleLoginSuccess} />
+          )}
+        </div>
       </div>
     </header>
   );

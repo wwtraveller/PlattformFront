@@ -6,7 +6,6 @@ import { useAppDispatch } from '../../redux/hooks';
 import { loginUser } from '../../features/auth/authAction';
 import Button from '../button/Button';
 import * as Yup from 'yup';
-import Registration from 'components/registration/Registration';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
@@ -14,7 +13,12 @@ export interface ILoginFormValues {
     username: string
     password: string
   }
-  export default function Login() {
+
+  interface LoginProps {
+    onLoginSuccess: () => void;
+  }
+
+  export default function Login({ onLoginSuccess }: LoginProps) {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     
@@ -33,7 +37,7 @@ export interface ILoginFormValues {
       .max(15, 'Максимум 15 символов'),
     password: Yup.string()
       .required('Введите пароль')
-      .min(8, 'Пароль должен содержать минимум 8 символов')
+      .min(5, 'Пароль должен содержать минимум 8 символов')
       // .matches(/[A-Z]/, 'Пароль должен содержать хотя бы одну заглавную букву')
       .matches(/[a-z]/, 'Пароль должен содержать хотя бы одну строчную букву')
       // .matches(/\d/, 'Пароль должен содержать хотя бы одну цифру')
@@ -41,8 +45,8 @@ export interface ILoginFormValues {
   });
     const formik = useFormik({
       initialValues: {
-        username: 'emilys',
-        password: 'emilyspass'
+        username: 'Alex123',
+        password: 'Alex12345!'
       } as ILoginFormValues,
       validationSchema: schema,
       validateOnChange: false,
@@ -51,6 +55,7 @@ export interface ILoginFormValues {
         dispatch(loginUser(values))
           .unwrap()
           .then((response) => {
+            onLoginSuccess();
             // Если авторизация успешна, делаем редирект
             navigate('/');
           //  resetForm()

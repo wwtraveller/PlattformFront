@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './search.module.css';
+import 'remixicon/fonts/remixicon.css';
+
 
 interface SearchItem {
   id: number;
@@ -15,6 +17,32 @@ interface SearchProps {
   categories: string[]; 
 }
 
+// Новый компонент SearchFilter для отображения и фильтрации результатов
+const SearchFilter = ({ items, query }: { items: SearchItem[], query: string }) => {
+  // Фильтруем элементы на основе введённого текста
+  const filteredItems = items.filter(item =>
+    item.title.toLowerCase().includes(query.toLowerCase()) ||
+    item.description.toLowerCase().includes(query.toLowerCase())
+  );
+
+  // Отображаем отфильтрованные элементы
+  return (
+    <div className={styles.filteredResults}>
+      {query.trim() && filteredItems.length === 0 ? (
+        <p></p>
+      ) : (
+        filteredItems.map(item => (
+          <div key={item.id} className={styles.searchItem}>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+          </div>
+        ))
+      )}
+    </div>
+  );
+};
+
+
 const Search = (props: SearchProps) => {
   const [query, setQuery] = useState('');
   const [group, setGroup] = useState(''); 
@@ -22,6 +50,18 @@ const Search = (props: SearchProps) => {
   const [hasSearched, setHasSearched] = useState(false); // Флаг, что был выполнен поиск
   const [categories, setCategories] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [items, setItems] = useState<SearchItem[]>([]); // Данные для фильтрации
+  const [filteredItems, setFilteredItems] = useState<SearchItem[]>([]); // Результаты live-фильтрации
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleFocus = () => {
+    setIsExpanded(true);
+  };
+  
+  const handleBlur = () => {
+    setIsExpanded(false);
+  };
+
   
   useEffect(() => {
     const fetchCategories = async () => {
@@ -66,7 +106,7 @@ const Search = (props: SearchProps) => {
     setIsSearching(true); 
     try {
       // Отправка запроса на бэкенд для выполнения поиска
-      const response = await fetch(`/api/search?query=${encodeURIComponent(query)}&group=${encodeURIComponent(group)}`);
+      const response = await fetch(`/api/search?query=${encodeURIComponent(query)}&groups=${encodeURIComponent(group)}`);
     
       // Проверка, что запрос завершился успешно
       if (!response.ok) {
@@ -77,6 +117,7 @@ const Search = (props: SearchProps) => {
       const filteredResults = await response.json();
 
       props.setSearchResults(filteredResults); // Сохраняем результаты поиска
+      setItems(filteredResults);
       setHasSearched(true);
       navigate('/search-results', { state: { searchResults: filteredResults } });
 
@@ -92,7 +133,16 @@ const Search = (props: SearchProps) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
-  };
+ // Реализуем live-фильтрацию на основе обновлённого query
+ if (items.length > 0) {
+  const filtered = items.filter(item => 
+    item.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
+    item.description.toLowerCase().includes(e.target.value.toLowerCase())
+  );
+  setFilteredItems(filtered);
+}
+};
+
 
   const handleGroupChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setGroup(e.target.value);
@@ -114,34 +164,30 @@ const Search = (props: SearchProps) => {
 
 
   return (
-    <div className={styles.searchContainer}>
+    <div className={`${styles.search} ${isExpanded ? styles.expanded : ''}`}>
       <div className={styles.searchWrapper}>
         <div className={styles.searchIcon}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="#999"
-            viewBox="0 0 24 24"
-            width="20"
-            height="20"
-          >
-            <path d="M10 2a8 8 0 016.32 12.906l4.387 4.386-1.414 1.415-4.387-4.386A8 8 0 1110 2zm0 2a6 6 0 100 12A6 6 0 0010 4z" />
-          </svg>
-          <p></p>
-        </div>
-        <select
+        <button type="button" className={styles.searchButton}>
+      <i className="ri-search-2-line" >
+      </i>
+    </button>
+    <div className={styles.selectContainer}>
+        <select 
           value={group}
           onChange={handleGroupChange}
           className={styles.searchSelect}
         >
-          <option value="">Все категории</option>
+         
+          <option  value="">Все категории</option>
           
           {categories.map((category) => (
           <option key={category} value={category}>
             {category.charAt(0).toUpperCase() + category.slice(1)}
           </option>
         ))}
-          
+        
         </select>
+        </div>
         <input
           type="text"
           value={query}
@@ -149,8 +195,13 @@ const Search = (props: SearchProps) => {
           onKeyPress={handleKeyPress}
           placeholder="Поиск"
           className={styles.searchInput}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
+        
+    </div>
       </div>
+      <SearchFilter items={items} query={query} />
     </div>
   );
 };

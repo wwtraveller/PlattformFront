@@ -11,10 +11,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 10px 5%;
   background-color: var(--bg-color);
   border-bottom: 1px solid var(--border-color);
+  width: 100%;
+  height: 70px;
+  box-sizing: border-box; /* Включает padding и border в ширину */
+  position: fixed; /* Убедись, что элемент фиксирован, если это нужно */
+  top: 0; /* Чтобы header находился вверху страницы */
+  left: 0; /* Чтобы header начинался с левого края */
+  z-index: 1000;
 }
+
+/* .content {
+  padding-top: 60px;  Добавляем отступ, равный высоте хедера 
+} */
 
 /* .header > a {
     color: white;
@@ -32,17 +43,23 @@
 } */
 
 .navMenu {
+  display: flex;
+  align-items: center; /* Выравнивание по вертикали */
+  justify-content: space-between; /* Разделение на лево и право */
+  width: 100%; /* Растягивание на всю ширину */
+  }
+
+  .navLeft, .navRight {
     display: flex;
-    gap: 20px;
+    align-items: center; 
+    gap: 15px;
   }
 
   .navLink {
-    color: var(--text-color); /* Подстройка цвета под тему */
-    text-decoration: none;
-    font-weight: 500;
-    /* transition: color 0.3s; */
-    transition: color 0.3s, font-weight 0.3s;
-    padding: 10px 0; /* Увеличивает зону клика и выравнивает элементы */
+    color: var(--text-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s, font-weight 0.3s;
   }
   
   .navLink:hover {
@@ -68,73 +85,119 @@
     margin-left: 400px;  
 } */
 
-.navLeft {
+
+
+
+  /* -----------------------------*/
+
+
+  /* Адаптация для мобильных устройств (макс. ширина 480px) */
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 10px;
+  }
+
+  .navMenu {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .navLink {
+    padding: 8px 0;
+  }
+}
+
+/* Адаптация для планшетов (макс. ширина 768px) */
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 3%;
+    flex-direction: column; /* Элементы располагаются вертикально */
+    align-items: flex-start;
+  }
+
+  .navMenu {
+    flex-direction: column; /* Навигация становится вертикальной */
+    gap: 10px; /* Увеличиваем промежутки */
+  }
+
+  .navLink {
+    padding: 8px 0; /* Увеличиваем клик-зону */
+  }
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 480px) {
+  .userInfo {
+    flex-direction: column; /* Структура для мобильных */
+  }
+}
+
+/* Адаптация для обычных десктопов (мин. ширина 1024px) */
+@media (min-width: 1024px) {
+  .header {
+    padding: 20px 5%;
+  }
+}
+
+/* Адаптация для широких мониторов (мин. ширина 1440px) */
+@media (min-width: 1440px) {
+  .header {
+    padding: 25px 6%;
+  }
+}
+
+/* Адаптация для ультрашироких экранов (мин. ширина 1920px) */
+@media (min-width: 1920px) {
+  .header {
+    max-width: 1800px;
+    padding: 30px 60px;
+  }
+}
+
+/* Для MacBook (разрешения 2560x1600 и 2880x1800) */
+@media (min-width: 2560px) and (max-width: 2880px) {
+  .header {
+    max-width: 2500px;
+    padding: 20px 40px;
+  }
+}
+
+/* Для iMac с разрешением 4K (3840x2160) */
+@media (min-width: 3840px) and (max-width: 4096px) {
+  .header {
+    max-width: 3700px;
+    padding: 25px 50px;
+  }
+}
+
+/* Для iMac с разрешением 5K (5120x2880) */
+@media (min-width: 5120px) {
+  .header {
+    max-width: 5000px;
+    padding: 30px 60px;
+
+  }
+}
+
+
+
+.userInfo {
   display: flex;
-  align-items: center; /* Центрирует элементы по вертикали */
-  gap: 15px;
-  }
-    
-  .loginButton button {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .signupButton button {
-    background-color: var(--primary-color);
-    color: #fff;
-    border: none;
-    transition: background-color 0.3s;
-  }
-  
-  .signupButton button:hover {
-    background-color: var(--hover-color);
-  }
+  align-items: center;
+  gap:10px;
+}
 
-  .loginWindow {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-  }
-  
-  .loginWindowContent {
-    position: relative;
-    background-color: rgba(255, 255, 255, 0.9);
-    /* padding: 20px; */
-    border-radius: 10px;
-    max-width: 800px;
-    height: 400px;
-    width: 100%;
-    
-  }
-
-/* Стиль кнопки закрытия */
-.closeButton {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: none;
-  border-radius: 50%;
-  background-color: transparent;
+.userName {
   font-size: 16px;
+  color: #333;
+  /* margin-left: 10px; */
   cursor: pointer;
-  color: var(--text-color);
-  }
+}
 
-  .closeButton:hover {
-    color: var(--primary-color);
-  }
-  
-  .loginWindowContent button:hover {
-     color: #7531da;   /*Цвет при наведении */
-  }
-
- 
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;}

@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import styles from './profile.module.css';
+import { setUserAvatar } from 'features/auth/authSlice';
+import { useAppDispatch } from 'redux/hooks';
+
 
 const Profile: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [avatar, setAvatar] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+const dispatch = useAppDispatch();
 
   const handleSave = () => {
     // Логика сохранения данных профиля
@@ -14,8 +18,11 @@ const Profile: React.FC = () => {
 
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      setAvatar(event.target.files[0]);
-      setAvatarPreview(URL.createObjectURL(event.target.files[0]));
+      const file = event.target.files[0];
+      const newAvatarUrl = URL.createObjectURL(file);      setAvatar(event.target.files[0]);
+      dispatch(setUserAvatar(newAvatarUrl));
+      setAvatar(file);
+      setAvatarPreview(newAvatarUrl);
     }
   };
 
@@ -25,8 +32,10 @@ const Profile: React.FC = () => {
         {avatarPreview ? (
           <img src={avatarPreview} alt="Avatar Preview" className={styles.profileAvatar} />
         ) : (
-          <div className={styles.profileAvatar}>Фото</div>
-        )}
+          <img src="/default-FFA-avatar.png" alt="Default Avatar" className={styles.profileAvatar} />
+          )}
+
+          {/* <div className={styles.profileAvatar}>Фото</div> */}
         <div className={styles.profileDetails}>
           <h2 className={styles.profileName}>Редактировать профиль</h2>
           <p className={styles.profileEmail}>Ваш email: {email || 'example@mail.com'}</p>
