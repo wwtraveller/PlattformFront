@@ -40,6 +40,9 @@ export default function ButtonLogReg({
       navigate('/'); // Перенаправляем на главную, если путь не установлен
     }
     onLoginSuccess(redirectPath);
+    onLoginSuccess();
+    console.log("Login successful");
+
     setTimeout(() => {
       navigate("/");
     }, 0);

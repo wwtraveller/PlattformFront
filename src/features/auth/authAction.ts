@@ -14,8 +14,8 @@ export const loginUser = createAsyncThunk(
       const response: AxiosResponse<IUserData> = await axios.post('/api/login', data);
       // здесь мы сохраняем токен во внутреннее хранилище в браузере local storage
       // данные сохраненные в нем не будут стираться при перезагрузке страницы
-      localStorage.setItem("user-accessToken", response.data.accessToken)
-      console.log(localStorage.getItem("user-accessToken"));
+      localStorage.setItem("accessToken", response.data.accessToken)
+      console.log(localStorage.getItem("accessToken"));
       thunkAPI.dispatch(getUserWithToken(response.data.accessToken));
       return response.data;
     } catch (error: any) {

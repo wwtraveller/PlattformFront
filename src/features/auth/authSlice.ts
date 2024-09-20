@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 // импортируем типизацию данных по user из отдельного файла
 import { IUserData } from "../../features/auth/types/authType";
 import { getUserWithToken, loginUser } from "../../features/auth/authAction";
@@ -32,9 +32,7 @@ const initialState: IUserState = {
 
 // создаем slice
 export const authSlice = createSlice({
-  // указываем имя slice
   name: "authSlice",
-  // передаем начальный state
   initialState,
   reducers: {
     // создаем синхронный action для очистки state
@@ -70,6 +68,6 @@ export const authSlice = createSlice({
   },
 });
 
-export default authSlice;
+export default authSlice.reducer;
 // экспортируем синхронные actions из slice
-export const { logoutUser } = authSlice.actions;
+export const { logoutUser, setUserAvatar } = authSlice.actions;
