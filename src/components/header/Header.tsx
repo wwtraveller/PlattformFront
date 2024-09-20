@@ -4,7 +4,6 @@ import { guestLinks } from './links'; // Используем только guest
 import { useState } from 'react';
 import UserMenu from '../user/UserMenu'; // Подключаем меню пользователя
 import AdminMenu from 'admin/AdminMenu'; // Подключаем меню админа
-import Search from 'components/search/Search';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { logoutUser } from 'features/auth/authSlice';
 import ParentComponent from 'components/search/ParentComponent';
@@ -43,7 +42,6 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
  // Здесь можно обновить состояние или сделать перенаправление при успешной авторизации
   };
 
-  const [categories, setCategories] = useState<string[]>([]);
   return (
     <header className={styles.header}>
       <div className={styles.navMenu}>
@@ -83,15 +81,15 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
             <>
               <Link to="/profile">
                 <div className={styles.userInfo}>
-                  {user.photo ? (
+                 
                     <img
-                    src={user.photo ? `/path-to-images/${user.photo}.png` : '/default-FFA-avatar.png'}  alt="User Avatar"
-                      className={styles.avatar}
+                    src={user.photo || '/default-FFA-avatar.png'}  
+                    alt="User Avatar"
+                    className={styles.avatar}
                      
                     />
-                  ) : (
-                    <span>{user.username}</span>
-                  )}
+               
+                  
                 </div>
               </Link>
               <Button name="Выйти" onClick={handleLogout} />
