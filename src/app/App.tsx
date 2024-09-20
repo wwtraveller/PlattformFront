@@ -23,6 +23,7 @@ import ArticleUser from "components/articles/ArticleUser";
 import CategoryLinks from "components/categories/CategoryLink";
 import ArticlePage from "components/articles/ArticlePageUser";
 import AdminRoute from "admin/AdminRoute";
+import UserMenu from "components/user/UserMenu";
 
 interface SearchItem {
   id: number;
@@ -44,7 +45,7 @@ function App() {
 
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('user-accessToken');
+    const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
       dispatch(getUserWithToken(accessToken))
         .unwrap()
@@ -53,7 +54,7 @@ function App() {
         })
         .catch((error) => {
           console.error('Error loading user data:', error);
-          localStorage.removeItem('user-accessToken');
+          localStorage.removeItem('accessToken');
         });
     }
   }, [dispatch]);

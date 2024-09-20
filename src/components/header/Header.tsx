@@ -24,7 +24,6 @@ interface HeaderProps {
 }
 
 export default function Header({ setError, setSearchResults }: HeaderProps) {
-
   const location = useLocation();
   // const [searchQuery, setSearchQuery] = useState(''); // Состояние для хранения запроса
   const { user } = useAppSelector((state) => state.user);
@@ -33,18 +32,17 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
 
   const handleLogout = () => {
     // чистим браузерное хранилище данных
-    localStorage.removeItem('user-accessToken')
+    localStorage.removeItem("accessToken");
     // чистим state, выносим 'мусор' данных за пользователем
     dispatch(logoutUser());
-    navigate('/');
+    navigate("/");
   };
-
 
   const handleLoginSuccess = () => {
  // Здесь можно обновить состояние или сделать перенаправление при успешной авторизации
   };
 
-
+const [categories, setCategories] = useState<string[]>([]);
   return (
     <header className={styles.header}>
       <div className={styles.navMenu}>
@@ -84,14 +82,13 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
             <>
               <Link to="/profile">
                 <div className={styles.userInfo}>
-            
                     <img
-                      src={user.photo || '/default-avatar.png'}
-                      alt="Default Avatar"
-                      className={styles.avatar}
-                      
+                    src={user.photo || '/default-FFA-avatar.png'}  
+                    alt="User Avatar"
+                    className={styles.avatar}
+                     
                     />
-                  
+                 
                 </div>
               </Link>
               <Button name="Выйти" onClick={handleLogout} />

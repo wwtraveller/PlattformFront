@@ -33,6 +33,8 @@ export default function ButtonLogReg({
   const handleLoginSuccess = () => {
     handleCloseLoginWindow();
     onLoginSuccess();
+    console.log("Login successful");
+
     setTimeout(() => {
       navigate("/");
     }, 0);
