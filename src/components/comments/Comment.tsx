@@ -84,7 +84,7 @@ const Comments = ({ articleId, currentUser }: CommentsProps) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const token = localStorage.getItem('authToken');
+        const token = localStorage.getItem('accessToken');
         if (!token) {
           throw new Error('Отсутствует токен авторизации');
         }
