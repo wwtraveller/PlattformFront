@@ -23,6 +23,8 @@ import ArticleUser from "components/articles/ArticleUser";
 import CategoryLinks from "components/categories/CategoryLink";
 import ArticlePage from "components/articles/ArticlePageUser";
 import AdminRoute from "admin/AdminRoute";
+import Login from "components/login/Login";
+import ArticlePageUser from "components/articles/ArticlePageUser";
 import UserMenu from "components/user/UserMenu";
 
 interface SearchItem {
@@ -77,7 +79,8 @@ function App() {
             <Route path="/search-error" element={<SearchErrorPage />} />
             <Route path="/catLinks" element={<CategoryLinks />} />
             <Route path="/category/:category" element={<ArticleUser />} />
-            <Route path="/article/:id" element={<ArticlePage />} />
+            <Route path="/articles" element={<ArticleUser />} />
+            <Route path="/articles/:id" element={<ArticlePageUser />} />
             
 
 

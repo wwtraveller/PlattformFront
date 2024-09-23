@@ -9,12 +9,14 @@ import { useNavigate } from "react-router-dom";
 
 interface ButtonLogRegProps {
   className?: string; // Добавляем возможность передать className
-  onLoginSuccess: () => void;
+  onLoginSuccess: (redirectPath?: string) => void;
+  redirectPath?: string;
 }
 
 export default function ButtonLogReg({
   className,
   onLoginSuccess,
+  redirectPath,
 }: ButtonLogRegProps): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -32,6 +34,12 @@ export default function ButtonLogReg({
 
   const handleLoginSuccess = () => {
     handleCloseLoginWindow();
+    if (redirectPath) {
+      navigate(redirectPath); // Перенаправляем на указанный путь
+    } else {
+      navigate('/'); // Перенаправляем на главную, если путь не установлен
+    }
+    onLoginSuccess(redirectPath);
     onLoginSuccess();
     console.log("Login successful");
 
