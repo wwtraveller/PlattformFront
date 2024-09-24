@@ -64,6 +64,10 @@ export const authSlice = createSlice({
       })
       .addCase(getUserWithToken.pending, (state, action) => {
         state.isLoading = false;
+      })
+      .addCase(getUserWithToken.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
       });
   },
 });

@@ -4,7 +4,7 @@ import modalWindowReducer from 'features/auth/modalWindowSlice';
 
 export const store = configureStore({
   reducer: {
-    user: authSlice,
+    user: authSlice,    
     modalWindow: modalWindowReducer,
   },
 });

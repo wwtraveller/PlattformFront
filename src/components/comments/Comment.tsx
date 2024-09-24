@@ -5,6 +5,8 @@ import { formatDistanceToNow } from 'date-fns';
 import styles from '../comments/coment.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { useSelector } from 'react-redux';
+import { RootState } from 'redux/store';
 
 // Интерфейсы для комментариев
 interface CommentProps {
@@ -107,10 +109,14 @@ interface CommentData {
   replies?: CommentData[];
 }
 
-const Comments = ({ article_id, currentUserId }: CommentsProps) => {
+const Comments = ({ article_id}: CommentsProps) => {
   const [comments, setComments] = useState<CommentData[]>([]);
   const [newComment, setNewComment] = useState('');
   const [error, setError] = useState<string | null>(null);
+
+    // Получение userId из глобального состояния Redux
+    const currentUser = useSelector((state: RootState) => state.user.user); // Здесь auth — это слайс аутентификации
+    const currentUserId = currentUser?.id;
 
   const fetchComments = async () => {
     try {
@@ -143,50 +149,65 @@ const Comments = ({ article_id, currentUserId }: CommentsProps) => {
   };
 
   const handleAddComment = () => {
+    // Проверка на авторизацию пользователя
+    if (!currentUserId || currentUserId === 0) {
+      alert('Пользователь не аутентифицирован');
+      return;
+    }
+  
+    // Получение токена из localStorage
     const token = localStorage.getItem('accessToken');
     if (!token) {
       alert('Отсутствует токен авторизации');
       return;
     }
-
+  
+    // Данные комментария
     const commentData = {
       text: newComment,
       user_id: currentUserId,
       article_id: article_id,
     };
-
+  
+    // Вывод данных комментария в консоль для проверки
+    console.log(commentData);
+  
+    // Отправка запроса на сервер
     fetch(`/api/comments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`, // Добавляем токен авторизации в заголовки
       },
-      body: JSON.stringify(commentData),
+      body: JSON.stringify(commentData), // Преобразуем данные в JSON
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Ошибка: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(newComment => {
-      const transformedComment = {
-        id: newComment.id,
-        author: newComment.author,
-        text: newComment.text,
-        date: newComment.date,
-        likes: newComment.likes,
-        dislikes: newComment.dislikes,
-      };
-
-      setComments([...comments, transformedComment]);
-      setNewComment('');
-    })
-    .catch(error => {
-      console.error('Ошибка при добавлении комментария:', error);
-      alert('Не удалось добавить комментарий. Проверьте сервер или маршрут.');
-    });
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Ошибка: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(newComment => {
+        // Преобразование и добавление нового комментария в состояние
+        const transformedComment = {
+          id: newComment.id,
+          author: newComment.author,
+          text: newComment.text,
+          date: newComment.date,
+          likes: newComment.likes,
+          dislikes: newComment.dislikes,
+        };
+  
+        // Обновляем список комментариев
+        setComments([...comments, transformedComment]);
+        setNewComment(''); // Очищаем текстовое поле после добавления комментария
+      })
+      .catch(error => {
+        console.error('Ошибка при добавлении комментария:', error);
+        alert('Не удалось добавить комментарий. Проверьте сервер или маршрут.');
+      });
   };
+  
 
   const handleDeleteComment = (commentId: number) => {
     const token = localStorage.getItem('accessToken');
