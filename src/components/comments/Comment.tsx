@@ -1,6 +1,12 @@
 import axios from 'axios';
 import Button from 'components/button/Button';
 import React, { useState, useEffect } from 'react';
+import { formatDistanceToNow } from 'date-fns';
+import styles from '../comments/coment.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisV, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { useSelector } from 'react-redux';
+import { RootState } from 'redux/store';
 
 // Интерфейсы для комментариев
 interface CommentProps {
@@ -28,23 +34,50 @@ const Comment = ({ comment, onLike, onDislike, onReply, onEdit, onDelete }: Comm
     onEdit(comment.id, editText);
     setIsEditing(false);
   };
+  const isShortComment = comment.text.length < 50;
+
+  // Функция форматирования даты
+  const formatDate = (dateString: string) => {
+    if (!dateString) return 'Дата недоступна'; // или другой подходящий текст
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return 'Некорректная дата'; // Проверка на валидность даты
+    return formatDistanceToNow(date, { addSuffix: true });
+  };
 
   return (
-    <div className="comment">
-      <p><strong>{comment.author}</strong> - {new Date(comment.date).toLocaleString()}</p>
+    <div className={`${styles.comment} ${isShortComment ? styles.shortComment : ''}`}>
+      <div className={styles.commentHeader}>
+      <p><strong>{comment.author}</strong> - {formatDate(comment.date)}</p></div>
       {!isEditing ? (
         <p>{comment.text}</p>
       ) : (
         <textarea value={editText} onChange={(e) => setEditText(e.target.value)} />
       )}
-      <div className="comment-actions">
-        <Button onClick={() => onLike(comment.id)} name='👍' count ={comment.likes}/>
-        <Button onClick={() => onDislike(comment.id)} name='👎' count={comment.dislikes}/>
-        <Button onClick={() => onReply(comment.id)} name='Ответить'/>
-        <Button onClick={() => setIsEditing(true)} name='Изменить'/>
-        <Button onClick={() => onDelete(comment.id)} name='Удалить'/>
-        {isEditing && <Button onClick={handleEditSubmit} name='Сохранить'/>}
-      </div>
+      <div className={styles.commentActions}>
+        <button onClick={() => onLike(comment.id)}>
+        <i className="bi bi-hand-thumbs-up" ></i> 
+        </button>
+        <button onClick={() => onDislike(comment.id)}>
+        <i className="bi bi-hand-thumbs-down"></i>
+        </button>
+        <button onClick={() => onReply(comment.id)}>
+        <i className="bi bi-reply"></i> 
+        </button>
+        <div className={styles.moreOptions} onClick={() => setIsEditing(true)}>
+        <i className="bi bi-pencil"></i> 
+        </div>
+
+            {isEditing && (
+               <div>
+            <button onClick={handleEditSubmit}>
+            <i className="bi bi-save"></i> Сохранить</button>
+            <button onClick={() => onDelete(comment.id)}>
+            <i className="bi bi-trash"></i>Удалить</button>
+          </div>
+            )}
+          </div>
+      
+
       {comment.replies && comment.replies.map(reply => (
         <Comment 
           key={reply.id} 
@@ -62,8 +95,8 @@ const Comment = ({ comment, onLike, onDislike, onReply, onEdit, onDelete }: Comm
 
 // Компонент для отображения списка комментариев
 interface CommentsProps {
-  articleId: number;
-  currentUser: string; // Имя текущего пользователя
+  article_id: number;
+  currentUserId: string;
 }
 
 interface CommentData {
@@ -76,96 +109,119 @@ interface CommentData {
   replies?: CommentData[];
 }
 
-const Comments = ({ articleId, currentUser }: CommentsProps) => {
-  const [comments, setComments] = useState<CommentData[]>([]); // Инициализация пустым массивом
+const Comments = ({ article_id}: CommentsProps) => {
+  const [comments, setComments] = useState<CommentData[]>([]);
   const [newComment, setNewComment] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const token = localStorage.getItem('accessToken');
-        if (!token) {
-          throw new Error('Отсутствует токен авторизации');
-        }
-        const response = await axios.get(`/api/articles/${articleId}/comments`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          }
-        });
-        console.log('Comments data:', response.data);
-        setComments(response.data);
-      } catch (error) {
-        console.error("Ошибка при загрузке комментариев:", error);
-        setError("Ошибка при загрузке комментариев.");
+    // Получение userId из глобального состояния Redux
+    const currentUser = useSelector((state: RootState) => state.user.user); // Здесь auth — это слайс аутентификации
+    const currentUserId = currentUser?.id;
+
+  const fetchComments = async () => {
+    try {
+      const token = localStorage.getItem('accessToken');
+      if (!token) {
+        throw new Error('Отсутствует токен авторизации');
       }
-    };
 
-    if (articleId) {
-      fetchComments();
+      const response = await axios.get(`/api/articles/${article_id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      const transformedComments = response.data.comments.map((comment: any) => ({
+        id: comment.id,
+        author: comment.author,
+        text: comment.text,
+        date: comment.date,
+        likes: comment.likes,
+        dislikes: comment.dislikes,
+        replies: comment.replies,
+      }));
+
+      setComments(transformedComments);
+    } catch (error) {
+      console.error("Ошибка при загрузке комментариев:", error);
+      setError("Ошибка при загрузке комментариев.");
     }
-  }, [articleId]);
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
+  };
 
   const handleAddComment = () => {
+    // Проверка на авторизацию пользователя
+    if (!currentUserId || currentUserId === 0) {
+      alert('Пользователь не аутентифицирован');
+      return;
+    }
+  
+    // Получение токена из localStorage
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      alert('Отсутствует токен авторизации');
+      return;
+    }
+  
+    // Данные комментария
     const commentData = {
       text: newComment,
-      articleId,
-      author: currentUser,
-      date: new Date(),
+      user_id: currentUserId,
+      article_id: article_id,
     };
   
-    fetch(`/api/articles/${articleId}/comments`, {
+    // Вывод данных комментария в консоль для проверки
+    console.log(commentData);
+  
+    // Отправка запроса на сервер
+    fetch(`/api/comments`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(commentData),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`, // Добавляем токен авторизации в заголовки
+      },
+      body: JSON.stringify(commentData), // Преобразуем данные в JSON
     })
       .then(response => {
         if (!response.ok) {
-          // Если статус ответа не OK, выбросим ошибку
           throw new Error(`Ошибка: ${response.status}`);
         }
         return response.json();
       })
       .then(newComment => {
-        // Проверяем, что возвращаемые данные - это массив комментариев
-        if (!Array.isArray(comments)) {
-          throw new Error('Комментарии должны быть массивом');
-        }
-        setComments([...comments, newComment]);
-        setNewComment('');
+        // Преобразование и добавление нового комментария в состояние
+        const transformedComment = {
+          id: newComment.id,
+          author: newComment.author,
+          text: newComment.text,
+          date: newComment.date,
+          likes: newComment.likes,
+          dislikes: newComment.dislikes,
+        };
+  
+        // Обновляем список комментариев
+        setComments([...comments, transformedComment]);
+        setNewComment(''); // Очищаем текстовое поле после добавления комментария
       })
       .catch(error => {
         console.error('Ошибка при добавлении комментария:', error);
         alert('Не удалось добавить комментарий. Проверьте сервер или маршрут.');
       });
   };
-
-  const handleLikeComment = (commentId: number) => {
-    fetch(`/api/comments/${commentId}/like`, { method: 'POST' })
-      .then(response => response.json())
-      .then(updatedComment => {
-        setComments(comments.map(c => c.id === commentId ? updatedComment : c));
-      })
-      .catch(error => console.error('Ошибка при лайке комментария:', error));
-  };
-
-
-  const handleDislikeComment = (commentId: number) => {
-    fetch(`/api/comments/${commentId}/dislike`, { method: 'POST' })
-      .then(response => response.json())
-      .then(updatedComment => {
-        setComments(comments.map(c => c.id === commentId ? updatedComment : c));
-      })
-      .catch(error => console.error('Ошибка при дизлайке комментария:', error));
-  };
+  
 
   const handleDeleteComment = (commentId: number) => {
-    fetch(`/api/comments/${commentId}`, { method: 'DELETE' })
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      alert('Отсутствует токен авторизации');
+      return;
+    }
+
+    fetch(`/api/comments/${commentId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    })
       .then(() => {
         setComments(comments.filter(c => c.id !== commentId));
       })
@@ -173,68 +229,166 @@ const Comments = ({ articleId, currentUser }: CommentsProps) => {
   };
 
   const handleEditComment = (commentId: number, newText: string) => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      alert('Отсутствует токен авторизации');
+      return;
+    }
+
     fetch(`/api/comments/${commentId}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: newText })
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ text: newText }),
     })
-    .then(response => response.json())
-    .then(updatedComment => {
-      setComments(comments.map(c => c.id === commentId ? updatedComment : c));
+      .then(response => response.json())
+      .then(updatedComment => {
+        const transformedComment = {
+          id: updatedComment.id,
+          author: updatedComment.author,
+          text: updatedComment.text,
+          date: updatedComment.date,
+          likes: updatedComment.likes,
+          dislikes: updatedComment.dislikes,
+        };
+
+        setComments(comments.map(c => c.id === commentId ? transformedComment : c));
+      })
+      .catch(error => console.error('Ошибка при редактировании комментария:', error));
+  };
+
+  const handleLikeComment = (commentId: number) => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      alert('Отсутствует токен авторизации');
+      return;
+    }
+
+    fetch(`/api/comments/${commentId}/like`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
     })
-    .catch(error => console.error('Ошибка при редактировании комментария:', error));
+      .then(response => response.json())
+      .then(updatedComment => {
+        const transformedComment = {
+          id: updatedComment.id,
+          author: updatedComment.author,
+          text: updatedComment.text,
+          date: updatedComment.date,
+          likes: updatedComment.likes,
+          dislikes: updatedComment.dislikes,
+        };
+
+        setComments(comments.map(c => c.id === commentId ? transformedComment : c));
+      })
+      .catch(error => console.error('Ошибка при лайке комментария:', error));
+  };
+
+  const handleDislikeComment = (commentId: number) => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      alert('Отсутствует токен авторизации');
+      return;
+    }
+
+    fetch(`/api/comments/${commentId}/dislike`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+      .then(response => response.json())
+      .then(updatedComment => {
+        const transformedComment = {
+          id: updatedComment.id,
+          author: updatedComment.author,
+          text: updatedComment.text,
+          date: updatedComment.date,
+          likes: updatedComment.likes,
+          dislikes: updatedComment.dislikes,
+        };
+
+        setComments(comments.map(c => c.id === commentId ? transformedComment : c));
+      })
+      .catch(error => console.error('Ошибка при дизлайке комментария:', error));
   };
 
   const handleReplyComment = (parentCommentId: number) => {
     const replyText = prompt('Введите ваш ответ:');
     if (!replyText) return;
 
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      alert('Отсутствует токен авторизации');
+      return;
+    }
+
     const replyData = {
       text: replyText,
-      articleId,
+      article_id,
       parentId: parentCommentId,
-      author: currentUser,
+      author: currentUserId,
       date: new Date(),
     };
 
     fetch(`/api/comments/${parentCommentId}/reply`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(replyData)
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(replyData),
     })
-    .then(response => response.json())
-    .then(newReply => {
-      setComments(comments.map(c =>
-        c.id === parentCommentId
-          ? { ...c, replies: c.replies ? [...c.replies, newReply] : [newReply] }
-          : c
-      ));
-    })
-    .catch(error => console.error('Ошибка при ответе на комментарий:', error));
+      .then(response => response.json())
+      .then(newReply => {
+        setComments(prevComments => {
+          const updatedComments = prevComments.map(comment => {
+            if (comment.id === parentCommentId) {
+              return {
+                ...comment,
+                replies: [...(comment.replies || []), newReply],
+              };
+            }
+            return comment;
+          });
+          return updatedComments;
+        });
+      })
+      .catch(error => console.error('Ошибка при добавлении ответа:', error));
   };
 
+  useEffect(() => {
+    fetchComments();
+  }, [article_id]);
+
   return (
-    <div className="comments">
+    <div className={styles.comments}>
       <h2>Комментарии</h2>
+      <div className={styles.commentInputContainer}>
       <textarea 
         value={newComment}
         onChange={(e) => setNewComment(e.target.value)}
         placeholder="Оставьте комментарий"
       />
-      <Button onClick={handleAddComment} name='Добавить комментарий'/>
-
+<button className={styles.addCommentButton} onClick={handleAddComment}>
+  <FontAwesomeIcon icon={faPaperPlane} /> 
+</button>
+</div>
       {Array.isArray(comments) && comments.map(comment => (
-  <Comment 
-    key={comment.id} 
-    comment={comment} 
-    onLike={handleLikeComment} 
-    onDislike={handleDislikeComment}
-    onReply={handleReplyComment}
-    onEdit={handleEditComment}
-    onDelete={handleDeleteComment}
-  />
-))}
-
+        <Comment 
+          key={comment.id} 
+          comment={comment} 
+          onLike={handleLikeComment} 
+          onDislike={handleDislikeComment}
+          onReply={handleReplyComment}
+          onEdit={handleEditComment} 
+          onDelete={handleDeleteComment}
+        />
+      ))}
     </div>
   );
 };
