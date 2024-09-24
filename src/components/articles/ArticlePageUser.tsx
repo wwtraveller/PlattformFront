@@ -90,8 +90,8 @@ const ArticlePageUser = () => {
       <img src={article.imageUrl} alt={article.title} />
       <p>{article.content}</p>
       <Comments
-        articleId={article.id}
-        currentUser={currentUser || "Guest"}
+        article_id={article.id}
+        currentUserId={currentUser || "Guest"}
       />
     </div>
   );

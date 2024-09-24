@@ -1,4 +1,3 @@
-// components/articles/ArticleUser.tsx
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -17,6 +16,7 @@ const ArticleUser = () => {
   const { category } = useParams<{ category: string }>();
   const [articles, setArticles] = useState<Article[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true); // Индикация загрузки
   const [redirectPath, setRedirectPath] = useState<string | undefined>(undefined);
   const { user } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
@@ -31,6 +31,8 @@ const ArticleUser = () => {
       } catch (error) {
         console.error("Ошибка при получении статей:", error);
         setError("Ошибка при получении статей.");
+      } finally {
+        setLoading(false); // Останавливаем индикацию загрузки
       }
     };
 
@@ -39,25 +41,34 @@ const ArticleUser = () => {
     }
   }, [category]);
 
-  if (error) {
-    return <div>{error}</div>;
-  }
-
   const handleLoginSuccess = (path?: string) => {
-    console.log("Redirecting to:", path); // Проверяем, какой путь передается
     if (path) {
-      navigate(path); // Перенаправляем на указанный путь после логина
+      navigate(path);
     } else {
-      navigate('/'); // Перенаправляем на главную, если путь не установлен
+      navigate('/');
     }
   };
 
   const handleReadMoreClick = (path: string) => {
-    setRedirectPath(path); // Сохраняем путь к статье
-    navigate('/login'); // Перенаправляем на страницу логина
+    setRedirectPath(path);
+    navigate('/login');
   };
 
   const defaultImageUrl = "https://st2.depositphotos.com/4152719/8388/i/450/depositphotos_83882536-stock-photo-competitive-pricing-concept-image-with.jpg";
+
+  if (loading) {
+    return <p>Загрузка статей...</p>;
+  }
+
+  if (error) {
+    return (
+      <div>
+        <p>{error}</p>
+        <button onClick={() => window.location.reload()}>Обновить страницу</button>
+        <Link to="/categories">Вернуться к списку категорий</Link>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.articlesContainer}>
@@ -88,7 +99,10 @@ const ArticleUser = () => {
           </div>
         ))
       ) : (
-        <p>Нет статей для этой категории.</p>
+        <div>
+          <p>Нет статей для этой категории.</p>
+          <Link to="/categories">Вернуться к списку категорий</Link>
+        </div>
       )}
     </div>
   );
