@@ -1,0 +1,103 @@
+/* styles.css */
+
+/* Основной стиль для блока комментариев */
+.comments {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Стиль для формы добавления комментария */
+  .comments textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    resize: none;
+    margin-bottom: 10px;
+  }
+  
+  /* Кнопка добавления комментария с иконкой */
+  .add-comment-button {
+    background-color: #ff4742;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  /* Стиль для каждого комментария */
+  .comment {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 10px;
+  }
+  
+  /* Стиль для автора и даты комментария */
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    color: #606060;
+  }
+  
+  /* Стиль для текста комментария */
+  .comment p {
+    margin: 5px 0;
+  }
+  
+  /* Иконки для действий с комментариями */
+  .commentActions {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .commentActions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #606060;
+    margin-right: 10px;
+  }
+  
+  .comment-actions button:hover {
+    color: #ff4742;
+  }
+  
+  /* Иконка редактирования и удаления */
+  .more-options {
+    cursor: pointer;
+  }
+  
+  /* Для иконок */
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Заголовок блока комментариев */
+  .comments h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    color: #333;
+  }
+
+  .commentInputContainer {
+    display: flex;
+    align-items: center; /* Вертикальное выравнивание */
+  }
+  
+  textarea {
+    flex: 1; /* Занимает доступное пространство */
+    margin-right: 8px; /* Отступ справа для пространства между textarea и кнопкой */
+  }
+  
+  .addCommentButton {
+    background: none; /* Убирает стандартный фон кнопки */
+    border: none; /* Убирает границы */
+    cursor: pointer; /* Указатель при наведении */
+  }
+  
+  
