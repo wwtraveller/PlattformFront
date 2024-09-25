@@ -30,6 +30,7 @@
     "react-redux": "^8.1.3",
     "react-router-dom": "^6.26.2",
     "react-scripts": "5.0.1",
+    "react-toastify": "^10.0.5",
     "remixicon": "^4.3.0",
     "styled-components": "^6.1.13",
     "typescript": "^4.9.5",
@@ -64,6 +65,7 @@
   },
   "devDependencies": {
     "@types/css-modules": "^1.0.5",
+    "@types/lodash": "^4.17.9",
     "@types/node": "^22.5.5",
     "@types/styled-components": "^5.1.34",
     "css-loader": "^7.1.2",

@@ -26,7 +26,6 @@ import AdminRoute from "admin/AdminRoute";
 import Login from "components/login/Login";
 import ArticlePageUser from "components/articles/ArticlePageUser";
 import UserMenu from "components/user/UserMenu";
-import SuccessRegPage from "components/registration/SuccessRegPage";
 
 interface SearchItem {
   id: number;
@@ -118,7 +117,6 @@ function App() {
 
           {/* Обработка ошибок и страниц, которые не найдены */}
           <Route path="*" element={<h1>Ошибка 404: Страница не найдена</h1>} />
-          <Route path="/success" element={<SuccessRegPage />} />
 
         </Routes>
 

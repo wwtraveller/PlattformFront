@@ -91,36 +91,36 @@ export default function About() {
       caption: "Алена Шилимова",
     },
     {
-      src: "https://avatars.githubusercontent.com/u/165147653?v=4",
+      src: "https://1.downloader.disk.yandex.ru/preview/fb642bb231c2a33a4ec7238a503e66cf30bc228acbff0ad3a102787071c079f3/inf/cMyxO6zz9fcvKyknLKom00p4KrYTav2nFrw8tmij4Luoaak_LKrDQ4Pp6WDP8Wv-kcTC-3uLL8d8K8etXOjemQ==?uid=7119991&filename=2022-07-21+19-19-55.HEIC&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&tknv=v2&owner_uid=7119991&size=3200x1362",
       caption: "Александр Варнавин-Браун",
     },
     {
-      src: "https://avatars.githubusercontent.com/u/165147557?v=4",
-      caption: "Денис Коваленко",
+      src: "https://downloader.disk.yandex.ru/preview/0588dde01021512a5d1f09f020256c33c7df7e558ecffe53cb3d1191046319c0/66f356ba/MVIcg3Z41wRWFN397QByzgDYy_4kLq2wUCrAY2U9cfHc_PYJ8NfLNXcsQZlDRkGKi2zrWBDFzEgIpx36PvopGw%3D%3D?uid=0&filename=IMG_1477.JPG&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&tknv=v2&size=2048x2048",
+      caption: "Катя Ваймер",
     },
   ];
   const imagesQa = [
     {
       src: "https://avatars.githubusercontent.com/u/30770110?v=4",
-      caption: "Алена Шилимова",
+      caption: "Акмур Забытахунова",
     },
     {
       src: "https://avatars.githubusercontent.com/u/133078737?v=4",
-      caption: "Алена Шилимова",
+      caption: "Анастасия ",
     },
   ];
   const imagesBack = [
     {
       src: "https://avatars.githubusercontent.com/u/133078737?v=4",
-      caption: "Алена Шилимова",
+      caption: "Алиса Тонгалюк",
     },
     {
       src: "https://avatars.githubusercontent.com/u/165147557?v=4",
-      caption: "Алена Шилимова",
+      caption: "Денис Коваленко",
     },
     {
       src: "https://avatars.githubusercontent.com/u/165147653?v=4",
-      caption: "Алена Шилимова",
+      caption: "Тарас Чайковский",
     },
   ];
 
