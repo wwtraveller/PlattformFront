@@ -38,15 +38,15 @@ export interface ILoginFormValues {
     password: Yup.string()
       .required('Введите пароль')
       .min(8, 'Пароль должен содержать минимум 8 символов')
-       .matches(/[A-Z]/, 'Пароль должен содержать хотя бы одну заглавную букву')
+      .matches(/[A-Z]/, 'Пароль должен содержать хотя бы одну заглавную букву')
       .matches(/[a-z]/, 'Пароль должен содержать хотя бы одну строчную букву')
-       .matches(/\d/, 'Пароль должен содержать хотя бы одну цифру')
-       .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Пароль должен содержать хотя бы один специальный символ'),
+      .matches(/\d/, 'Пароль должен содержать хотя бы одну цифру')
+      .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Пароль должен содержать хотя бы один специальный символ'),
   });
     const formik = useFormik({
       initialValues: {
-        username: 'tarasik',
-        password: 'Taras123!'
+        username: 'Alex123',
+        password: 'Alex12345!'
       } as ILoginFormValues,
       validationSchema: schema,
       validateOnChange: false,
