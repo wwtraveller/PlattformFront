@@ -26,6 +26,7 @@ import AdminRoute from "admin/AdminRoute";
 import Login from "components/login/Login";
 import ArticlePageUser from "components/articles/ArticlePageUser";
 import UserMenu from "components/user/UserMenu";
+import FavoritesPage from "components/articles/FavoritesPage";
 
 interface SearchItem {
   id: number;
@@ -97,6 +98,7 @@ function App() {
                 <Route path="/category/:category" element={<ArticleUser />} />
                 <Route path="/article/:id" element={<ArticlePage />} /> */}
                 {/* <Route path="/favorites" element={<ArticlePage />} /> */}
+                <Route path="/favorites" element={<FavoritesPage/>} />
               </>
             )}
             {/* Если пользователь не авторизован, перенаправляем на основную страницу */}
