@@ -9,7 +9,6 @@ import SearchErrorPage from "components/search/SearchErrorPage";
 import SearchResultsPage from "components/search/SearchResultsPage";
 import { useEffect, useState } from "react";
 import Articles from "admin/componentsAdmin/articlesAdmin/Articles";
-// import AdminRoute from 'admin/AdminRoute';
 import Profile from "components/user/Profile";
 import Dashboard from "components/user/Dashboard";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
@@ -27,6 +26,7 @@ import Login from "components/login/Login";
 import ArticlePageUser from "components/articles/ArticlePageUser";
 import UserMenu from "components/user/UserMenu";
 import FavoritesPage from "components/articles/FavoritesPage";
+import SuccessRegPage from "components/registration/SuccessRegPage";
 
 interface SearchItem {
   id: number;
@@ -61,7 +61,7 @@ function App() {
         });
     }
   }, [dispatch]);
-
+  
 
   return (
     <div className="App">
@@ -119,6 +119,7 @@ function App() {
 
           {/* Обработка ошибок и страниц, которые не найдены */}
           <Route path="*" element={<h1>Ошибка 404: Страница не найдена</h1>} />
+          <Route path="/success" element={<SuccessRegPage />} />
 
         </Routes>
 

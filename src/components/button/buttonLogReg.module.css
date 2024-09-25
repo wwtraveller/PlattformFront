@@ -49,16 +49,3 @@ width: 20px;
 .loginWindowContent button:hover {
    color: #7531da;   /*Цвет при наведении */
 }
-
-  /* @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
-  .loginWindowContent {
-    animation: fadeIn 1s ease-in-out;
-  } */
