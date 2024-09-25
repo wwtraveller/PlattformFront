@@ -41,7 +41,7 @@ export default function ButtonLogReg({
     }
     onLoginSuccess(redirectPath);
     onLoginSuccess();
-    console.log("Login successful");
+    // console.log("Login successful");
 
     setTimeout(() => {
       navigate("/");
