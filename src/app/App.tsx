@@ -119,7 +119,6 @@ function App() {
 
           {/* Обработка ошибок и страниц, которые не найдены */}
           <Route path="*" element={<h1>Ошибка 404: Страница не найдена</h1>} />
-          <Route path="/success" element={<SuccessRegPage />} />
 
         </Routes>
 

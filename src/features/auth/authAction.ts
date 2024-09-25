@@ -51,31 +51,33 @@ export const registerUser = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.log(error.message)
+      if (error.response && error.response.status === 409) {
+        return thunkAPI.rejectWithValue('Пользователь с таким именем или email уже существует.');
+      }
       return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
 
-export const checkUsername = async (username: string) => {
+export const isAvailableUsername = async (username: string) => {
   try {
-    const response = await axios.get(`/api/check-username?username=${username}`, {
-      params: { username },
+    const response = await axios.get(`/api/check-username`,{ 
+      params: { username }, 
     });
-    return response.data.exists; // ожидается, что сервер вернет { exists: true/false }
-  } catch (error) {
-    console.error('Такое имя уже существует', error);
-    return false; // решите, какое значение возвращать в случае ошибки
+    return !!response.data; // ожидается, что сервер вернет { exists: true/false }
+  } catch (error:any) {
+    return false;
   }
 };
 
 export const checkEmail = async (email: string) => {
   try {
-    const response = await axios.get(`/api/check-email?email=${email}`, {
-      params: { email },
+    const response = await axios.get(`/api/check-email`, { 
+      params: { email } 
     });
-    return response.data.exists;
-  } catch (error) {
-    console.error('Ошибка при проверке email:', error);
-    return false;
+    return !!response.data; 
+  } catch (error:any) {
+   return false;
   }
 };
+
