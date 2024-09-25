@@ -9,7 +9,6 @@ import SearchErrorPage from "components/search/SearchErrorPage";
 import SearchResultsPage from "components/search/SearchResultsPage";
 import { useEffect, useState } from "react";
 import Articles from "admin/componentsAdmin/articlesAdmin/Articles";
-// import AdminRoute from 'admin/AdminRoute';
 import Profile from "components/user/Profile";
 import Dashboard from "components/user/Dashboard";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
@@ -26,6 +25,7 @@ import AdminRoute from "admin/AdminRoute";
 import Login from "components/login/Login";
 import ArticlePageUser from "components/articles/ArticlePageUser";
 import UserMenu from "components/user/UserMenu";
+import FavoritesPage from "components/articles/FavoritesPage";
 import SuccessRegPage from "components/registration/SuccessRegPage";
 
 interface SearchItem {
@@ -98,6 +98,7 @@ function App() {
                 <Route path="/category/:category" element={<ArticleUser />} />
                 <Route path="/article/:id" element={<ArticlePage />} /> */}
                 {/* <Route path="/favorites" element={<ArticlePage />} /> */}
+                <Route path="/favorites" element={<FavoritesPage/>} />
               </>
             )}
             {/* Если пользователь не авторизован, перенаправляем на основную страницу */}
