@@ -4,13 +4,16 @@ import Button from "../button/Button";
 import styles from "./registration.module.css";
 import {
   checkEmail,
-  checkUsername,
+  isAvailableUsername,
   registerUser,
 } from "features/auth/authAction";
 import { useAppDispatch } from "redux/hooks";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export interface IRegisterFormValues {
   firstName: string;
@@ -36,46 +39,31 @@ export default function Registration({ onRegisterSuccess }: RegistrationProps) {
   };
 
 
-  useEffect(() => {
-    try{
-    if (isRegistered) {
-      console.log("Перенаправление на /success после регистрации.");
-      console.log("Перенаправление: isRegistered =", isRegistered);
-      navigate('/success');
-    }
-  } catch (error) {
-    console.error("Ошибка при перенаправлении:", error);
-  }
-  }, [isRegistered, navigate]);
-
   const schema = Yup.object().shape({
     username: Yup.string()
       .required("Введите имя пользователя")
       .min(2, "Минимум 2 символа")
       .max(15, "Максимум 15 символов")
-      .test("unique-username", "Имя пользователя уже занято", async (value) => {
-        if (value) {
-          try {
-            const isUsernameTaken = await checkUsername(value);
-            return !isUsernameTaken; // true, если имя доступно
-          } catch (error) {
-            console.error("Ошибка проверки имени пользователя:", error);
-            return true; // Можно вернуть true, чтобы не блокировать регистрацию, или false, если хотите отобразить ошибку
-          }
+      .test(
+        "unique-username",
+        "Имя пользователя должно быть уникальным!",
+        async (value) => {
+          return (await isAvailableUsername(value));
         }
-        return true;
-      }),
+      ),
 
     email: Yup.string()
       .required("Введите email")
       .email("Некорректный формат email")
-      .test("unique-email", "Email уже занят", async (value) => {
-        if (value) {
-          const isEmailTaken = await checkEmail(value);
-          return !isEmailTaken;
-        }
-        return true;
-      }),
+      .test(
+        "unique-email",
+        "Email уже занят!",
+        async (value) => {
+         
+              return (await checkEmail(value));
+            }
+         
+      ),
 
     password: Yup.string()
       .required("Введите пароль")
@@ -101,22 +89,21 @@ export default function Registration({ onRegisterSuccess }: RegistrationProps) {
     validateOnChange: false,
     onSubmit: async (values: IRegisterFormValues, { resetForm }) => {
       try {
-        console.log("Отправка данных регистрации:", values);
         const result = await dispatch(registerUser(values)).unwrap();
-        console.log("Результат регистрации:", result);
-
-        setIsRegistered(true);  // Устанавливаем успешную регистрацию
+        toast.success('Регистрация прошла успешно! Можете войти в свой аккаунт!');
+        setIsRegistered(true); // Устанавливаем успешную регистрацию
         resetForm();
-        onRegisterSuccess();
+        // onRegisterSuccess();
       } catch (error: any) {
-        console.error("Ошибка регистрации:", error);
-        setServerError(error.message || 'Произошла ошибка регистрации.');  // Устанавливаем ошибку сервера
+        toast.error("Ошибка регистрации: " + (error.message || "Произошла ошибка регистрации."));
+        setServerError(error.message || "Произошла ошибка регистрации."); // Устанавливаем ошибку сервера
       }
     },
   });
 
   return (
     <div>
+       <ToastContainer />
       <form onSubmit={formik.handleSubmit} className={styles.signupForm}>
         {serverError && <div className={styles.error}>{serverError}</div>}{" "}
         <input
