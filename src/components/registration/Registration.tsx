@@ -93,7 +93,11 @@ export default function Registration({ onRegisterSuccess }: RegistrationProps) {
         toast.success('Регистрация прошла успешно! Можете войти в свой аккаунт!');
         setIsRegistered(true); // Устанавливаем успешную регистрацию
         resetForm();
-        // onRegisterSuccess();
+        setTimeout(() => {
+          if (typeof onRegisterSuccess === "function") {
+            onRegisterSuccess();
+          }
+        }, 2000);
       } catch (error: any) {
         toast.error("Ошибка регистрации: " + (error.message || "Произошла ошибка регистрации."));
         setServerError(error.message || "Произошла ошибка регистрации."); // Устанавливаем ошибку сервера
