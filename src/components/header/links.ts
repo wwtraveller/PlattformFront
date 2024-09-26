@@ -78,4 +78,8 @@ export const adminLinks: ILinks[] = [
         pathname: '/admin/createCategories',
         title: 'Управление категориями'
       },
+      {
+        pathname: '/favorites',
+        title: 'Избранное'
+      },
   ];
