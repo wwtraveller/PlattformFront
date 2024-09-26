@@ -8,7 +8,7 @@ import "./App.css"; // Сохраняем подключение стилей
 import SearchErrorPage from "components/search/SearchErrorPage";
 import SearchResultsPage from "components/search/SearchResultsPage";
 import { useEffect, useState } from "react";
-import Articles from "admin/componentsAdmin/articlesAdmin/Articles";
+
 import Profile from "components/user/Profile";
 import Dashboard from "components/user/Dashboard";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
@@ -26,7 +26,8 @@ import Login from "components/login/Login";
 import ArticlePageUser from "components/articles/ArticlePageUser";
 import UserMenu from "components/user/UserMenu";
 import FavoritesPage from "components/articles/FavoritesPage";
-import SuccessRegPage from "components/registration/SuccessRegPage";
+import Articles from "admin/componentsAdmin/articlesAdmin/Articles";
+
 
 interface SearchItem {
   id: number;

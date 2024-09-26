@@ -9,11 +9,11 @@ interface Article {
 
 interface ArticleListProps {
   articles: Article[];
-  onEdit: (article: Article) => void;
+  // onEdit: (article: Article) => void;
   onDelete: (id: number) => void;
 }
 
-export default function ArticleList({ articles, onEdit, onDelete }: ArticleListProps) {
+export default function ArticleList({ articles, onDelete }: ArticleListProps) {
   return (
     <ul className={styles.articleList}>
       {articles.map((article) => (
@@ -24,7 +24,7 @@ export default function ArticleList({ articles, onEdit, onDelete }: ArticleListP
             <p>{article.category ? article.category.name : 'Без категории'}</p>
           </div>
           <div>
-            <button className={styles.editButton} onClick={() => onEdit(article)}>Редактировать</button>
+            <button className={styles.editButton}>Редактировать</button>
             <button className={styles.deleteButton} onClick={() => onDelete(article.id)}>Удалить</button>
           </div>
         </li>
