@@ -8,8 +8,7 @@ import "./App.css"; // Сохраняем подключение стилей
 import SearchErrorPage from "components/search/SearchErrorPage";
 import SearchResultsPage from "components/search/SearchResultsPage";
 import { useEffect, useState } from "react";
-import Articles from "admin/componentsAdmin/articlesAdmin/Articles";
-// import AdminRoute from 'admin/AdminRoute';
+
 import Profile from "components/user/Profile";
 import Dashboard from "components/user/Dashboard";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
@@ -23,7 +22,12 @@ import ArticleUser from "components/articles/ArticleUser";
 import CategoryLinks from "components/categories/CategoryLink";
 import ArticlePage from "components/articles/ArticlePageUser";
 import AdminRoute from "admin/AdminRoute";
+import Login from "components/login/Login";
+import ArticlePageUser from "components/articles/ArticlePageUser";
 import UserMenu from "components/user/UserMenu";
+import FavoritesPage from "components/articles/FavoritesPage";
+import Articles from "admin/componentsAdmin/articlesAdmin/Articles";
+
 
 interface SearchItem {
   id: number;
@@ -58,7 +62,7 @@ function App() {
         });
     }
   }, [dispatch]);
-
+  
 
   return (
     <div className="App">
@@ -77,7 +81,8 @@ function App() {
             <Route path="/search-error" element={<SearchErrorPage />} />
             <Route path="/catLinks" element={<CategoryLinks />} />
             <Route path="/category/:category" element={<ArticleUser />} />
-            <Route path="/article/:id" element={<ArticlePage />} />
+            <Route path="/articles" element={<ArticleUser />} />
+            <Route path="/articles/:id" element={<ArticlePageUser />} />
             
 
 
@@ -94,6 +99,7 @@ function App() {
                 <Route path="/category/:category" element={<ArticleUser />} />
                 <Route path="/article/:id" element={<ArticlePage />} /> */}
                 {/* <Route path="/favorites" element={<ArticlePage />} /> */}
+                <Route path="/favorites" element={<FavoritesPage/>} />
               </>
             )}
             {/* Если пользователь не авторизован, перенаправляем на основную страницу */}

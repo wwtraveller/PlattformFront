@@ -18,6 +18,17 @@
     position: absolute;
     right: 10px;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-40%);
     cursor: pointer;
+}
+
+
+.successMessage {
+  color: green; /* Цвет текста */
+  font-size: 14px; /* Размер шрифта */
+  margin-top: 10px; /* Отступ сверху */
+  padding: 5px; /* Внутренний отступ */
+  border: 1px solid green; /* Обводка для выделения */
+  background-color: #e0ffe0; /* Светлый фон для сообщения об успехе */
+  border-radius: 5px; /* Закругленные углы */
 }

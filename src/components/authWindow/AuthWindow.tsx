@@ -6,13 +6,10 @@ import Button from "components/button/Button";
 import {
   FaFacebook,
   FaGoogle,
-  FaInstagram,
   FaTwitter,
   FaVk,
 } from "react-icons/fa"; // Импортируем иконки
-import { useAppDispatch } from "redux/hooks";
-import { useNavigate } from "react-router-dom";
-import { loginUser } from "features/auth/authAction";
+
 
 
 interface AuthWindowProps {

@@ -6,13 +6,14 @@ interface IButtonProps {
     onClick?: () => void;
     count?: number;
     className?: string;
+    children?: React.ReactNode;
   }
   
   
-  export default function Button({ type='button', onClick, name='default', count, className }:IButtonProps): JSX.Element {
+  export default function Button({ type='button', onClick, name='default', count, className, children }:IButtonProps): JSX.Element {
     return (
       <button type={type} onClick={onClick} className={`${styles.myButton} ${className || ''}`}>
-        {name} {count !== undefined ? count : ''}
+      {children ? children : name} {count !== undefined ? count : ''}
       </button>
     );
   }

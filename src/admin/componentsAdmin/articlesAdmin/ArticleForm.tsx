@@ -34,7 +34,7 @@ export default function ArticleForm({ onSubmit, categories }: ArticleFormProps) 
       />
       <ReactQuill value={content} onChange={setContent} className={styles.textarea} />
       
-      <div className={styles.categoryBlock}> {/* Добавляем отдельный блок для категории */}
+      <div className={styles.categoryBlock}>
         <select
           value={categoryId}
           onChange={(e) => setCategoryId(Number(e.target.value))}
