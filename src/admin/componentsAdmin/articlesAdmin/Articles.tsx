@@ -1,84 +1,166 @@
-import { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ArticleForm from './ArticleForm'; // Проверьте правильность пути
-import ArticleList from './ArticleList'; // Проверьте правильность пути
-import styles from './articles.module.css';
+import ArticleForm from './ArticleForm';
+import ArticleList from './ArticleList';
 
+// Интерфейсы для статей и категорий
 interface Article {
-  id: number;
-  title: string;
-  content: string;
-  category: { id: number; name: string } | null;
+    id: number;
+    title: string;
+    content: string;
+    photo: string | null;
+    username: string;
+    comments: any[];
+    categories: Category[];
 }
 
 interface Category {
-  id: number;
-  name: string;
+    id: number;
+    name: string;
+    articles: Article[];
 }
 
-export default function Articles() {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
+const Articles = () => {
+    const [articles, setArticles] = useState<Article[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [isCreating, setIsCreating] = useState(false);
+    const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 
-  const fetchArticles = async () => {
-    try {
-      const response = await axios.get('/api/articles');
-      setArticles(response.data);
-    } catch (error) {
-      console.error('Ошибка при загрузке статей:', error);
-    }
-  };
+    const checkAuthToken = () => {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            throw new Error('Нет токена доступа. Пожалуйста, авторизуйтесь.');
+        }
+        return token;
+    };
 
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get('/api/categories');
-      setCategories(response.data);
-    } catch (error) {
-      console.error('Ошибка при загрузке категорий:', error);
-    }
-  };
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const token = checkAuthToken();
+                const categoriesResponse = await axios.get('/api/categories', {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setCategories(categoriesResponse.data);
 
-  const handleCreateArticle = async (data: { title: string; content: string; categoryId: number }) => {
-    try {
-      await axios.post('/api/articles', data);
-      fetchArticles(); // Обновляем список статей после создания новой
-    } catch (error) {
-      console.error('Ошибка при создании статьи:', error);
-    }
-  };
+                const articlesResponse = await axios.get('/api/articles', {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setArticles(articlesResponse.data);
+            } catch (err) {
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError('Произошла неизвестная ошибка');
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
 
-  const handleEditArticle = (article: Article) => {
-    console.log('Редактировать статью:', article);
-    // Логика редактирования статьи
-  };
+        fetchData();
+    }, []);
 
-  const handleDeleteArticle = async (id: number) => {
-    try {
-      await axios.delete(`/api/articles/${id}`);
-      fetchArticles(); // Обновляем список статей после удаления
-    } catch (error) {
-      console.error('Ошибка при удалении статьи:', error);
-    }
-  };
+    const handleCategoryChange = (categoryId: number) => {
+        setSelectedCategory(categoryId);
+    };
 
-  useEffect(() => {
-    fetchArticles();
-    fetchCategories();
-  }, []);
+    const handleCreateArticle = () => {
+        setSelectedArticle(null);
+        setIsCreating(true);
+    };
 
-  return (
-    <div></div>
-    // <div className={styles.articlesContainer}>
-    //   <ArticleForm onSubmit={handleCreate} />
-    //   <ArticleList articles={articles} onEdit={handleEdit} onDelete={handleDelete} />
+    const handleEditArticle = (articleId: number) => {
+        const article = articles.find((a) => a.id === articleId);
+        setSelectedArticle(article || null);
+        setIsCreating(true);
+    };
 
-    //   {/* Отображаем компонент комментариев только если выбрана статья */}
-    //   {selectedArticleId && (
-    //     <div className={styles.commentsContainer}>
-    //       <h2>Комментарии для статьи {selectedArticleId}</h2>
-    //      <Comments articleId={selectedArticleId} currentUser={'currenttUser'}/> {/* Передаем articleId в компонент Comments */}
-    //     </div>
-    //   )}
-    // </div>
-  );
-}
+    const handleDeleteArticle = async (articleId: number) => {
+        try {
+            const token = checkAuthToken();
+            await axios.delete(`/api/articles/${articleId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            setArticles((prevArticles) => prevArticles.filter((a) => a.id !== articleId));
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('Произошла неизвестная ошибка');
+            }
+        }
+    };
+
+    const handleFormSuccess = () => {
+        setIsCreating(false);
+        setSelectedArticle(null);
+        const fetchUpdatedArticles = async () => {
+            try {
+                const token = checkAuthToken();
+                const response = await axios.get('/api/articles', {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setArticles(response.data);
+                console.log('Статьи успешно обновлены:', response.data);
+            } catch (err) {
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError('Произошла неизвестная ошибка');
+                }
+            }
+        };
+
+        fetchUpdatedArticles();
+    };
+
+    if (loading) return <p>Загрузка данных...</p>;
+    if (error) return <p>Ошибка: {error}</p>;
+
+    const filteredArticles = selectedCategory
+        ? articles.filter((article) =>
+              article.categories.some((cat) => cat.id === selectedCategory),
+          )
+        : articles;
+
+    return (
+        <div>
+            <h1>Управление артиклями</h1>
+
+            {/* Фильтр по категориям */}
+            <div>
+                <label>Категории:</label>
+                <select onChange={(e) => handleCategoryChange(Number(e.target.value))} value={selectedCategory || ''}>
+                    <option value="">Все категории</option>
+                    {categories.map((category) => (
+                        <option key={category.id} value={category.id}>
+                            {category.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
+
+            {/* Список артиклей */}
+            <ArticleList articles={filteredArticles} onEdit={handleEditArticle} onDelete={handleDeleteArticle} />
+
+            {/* Кнопка для создания нового артикля */}
+            <button onClick={handleCreateArticle}>Создать новый артикль</button>
+
+            {/* Форма для создания/редактирования артикля */}
+            {isCreating && (
+                <ArticleForm
+                    articleId={selectedArticle ? selectedArticle.id : null}
+                    categoryId={selectedArticle ? selectedArticle.categories[0]?.id : null}
+                    categories={categories}
+                    onSuccess={handleFormSuccess}
+                />
+            )}
+        </div>
+    );
+};
+
+export default Articles;

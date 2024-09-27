@@ -26,7 +26,7 @@ import Login from "components/login/Login";
 import ArticlePageUser from "components/articles/ArticlePageUser";
 import UserMenu from "components/user/UserMenu";
 import FavoritesPage from "components/articles/FavoritesPage";
-import SuccessRegPage from "components/registration/SuccessRegPage";
+
 
 interface SearchItem {
   id: number;
