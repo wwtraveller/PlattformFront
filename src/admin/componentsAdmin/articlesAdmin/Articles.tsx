@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ArticleForm from './ArticleForm';
-import ArticleList from './ArticleList';
+import { useNavigate } from 'react-router-dom';
+import styles from './articles.module.css'
 
 // Интерфейсы для статей и категорий
 interface Article {
@@ -28,6 +29,8 @@ const Articles = () => {
     const [error, setError] = useState<string | null>(null);
     const [isCreating, setIsCreating] = useState(false);
     const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+    const navigate = useNavigate(); // Создайте навигатор
+   
 
     const checkAuthToken = () => {
         const token = localStorage.getItem('accessToken');
@@ -127,11 +130,14 @@ const Articles = () => {
           )
         : articles;
 
-    return (
-        <div>
-            <h1>Управление артиклями</h1>
 
-            {/* Фильтр по категориям */}
+    return (
+        <div className={styles.container}>
+            <h3>Управление артиклями</h3>
+
+{/* Кнопка для перехода на страницу со списком артиклей */}
+<button className={styles.button} onClick={() => navigate('/articlesList')}>Список артиклей</button>
+            {/* Фильтр по категориям 
             <div>
                 <label>Категории:</label>
                 <select onChange={(e) => handleCategoryChange(Number(e.target.value))} value={selectedCategory || ''}>
@@ -142,13 +148,13 @@ const Articles = () => {
                         </option>
                     ))}
                 </select>
-            </div>
+            </div>*/}
 
-            {/* Список артиклей */}
-            <ArticleList articles={filteredArticles} onEdit={handleEditArticle} onDelete={handleDeleteArticle} />
+            {/* Список артиклей 
+            <ArticleList articles={filteredArticles} onEdit={handleEditArticle} onDelete={handleDeleteArticle} />*/}
 
             {/* Кнопка для создания нового артикля */}
-            <button onClick={handleCreateArticle}>Создать новый артикль</button>
+            <button className={styles.button} onClick={handleCreateArticle}>Создать новый артикль</button>
 
             {/* Форма для создания/редактирования артикля */}
             {isCreating && (
