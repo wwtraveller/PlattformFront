@@ -1,13 +1,12 @@
 import axios from 'axios';
 import Button from 'components/button/Button';
 import React, { useState, useEffect } from 'react';
-import { format, formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
 import styles from '../comments/coment.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
-import { ru } from 'date-fns/locale'; // Исправленный импорт локали
 
 // Интерфейсы для комментариев
 interface CommentProps {
@@ -40,20 +39,11 @@ const Comment = ({ comment, onReply, onEdit, onDelete }: CommentProps) => {
 
   // Функция форматирования даты
   const formatDate = (dateString: string) => {
-    console.log("Исходная дата:", dateString); // Логируем дату для отладки
-    if (!dateString) return 'Дата недоступна'; // Проверка на наличие даты
-
+    if (!dateString) return 'Дата недоступна'; // или другой подходящий текст
     const date = new Date(dateString);
-    
-    if (isNaN(date.getTime())) {
-        console.warn("Некорректная дата:", dateString); // Логируем предупреждение о некорректной дате
-        return 'Некорректная дата'; // Возвращаем сообщение о некорректной дате
-    }
-    
-    return format(date, 'dd MMMM yyyy в HH:mm', { locale: ru }); // Форматируем дату
-};
-
-
+    if (isNaN(date.getTime())) return 'Некорректная дата'; // Проверка на валидность даты
+    return formatDistanceToNow(date, { addSuffix: true });
+  };
 
   return (
     <div className={`${styles.comment} ${isShortComment ? styles.shortComment : ''}`}>
@@ -129,92 +119,96 @@ const Comments = ({ article_id}: CommentsProps) => {
     const currentUser = useSelector((state: RootState) => state.user.user); // Здесь user — это слайс аутентификации
     const currentUserId = currentUser?.id;
 
-// В функции fetchComments
-const fetchComments = async () => {
-  try {
+  const fetchComments = async () => {
+    try {
       const token = localStorage.getItem('accessToken');
       if (!token) {
-          throw new Error('Отсутствует токен авторизации');
+        throw new Error('Отсутствует токен авторизации');
       }
 
       const response = await axios.get(`/api/articles/${article_id}`, {
-          headers: {
-              'Authorization': `Bearer ${token}`,
-          },
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
       });
 
-      console.log("Полученные данные комментариев:", response.data.comments);
-
       const transformedComments = response.data.comments.map((comment: any) => ({
-          id: comment.id,
-          author: comment.author,
-          text: comment.text,
-          date: comment.date ? new Date(comment.date).toISOString() : null, // Устанавливаем дату с сервера
-          replies: comment.replies || [], // Убедитесь, что это массив
+        id: comment.id,
+        author: comment.author,
+        text: comment.text,
+        date: comment.date,
+        //likes: comment.likes,
+        //dislikes: comment.dislikes,
+        replies: comment.replies,
       }));
 
       setComments(transformedComments);
-  } catch (error) {
+    } catch (error) {
       console.error("Ошибка при загрузке комментариев:", error);
       setError("Ошибка при загрузке комментариев.");
-  }
-};
+    }
+  };
 
-// В функции handleAddComment
-const handleAddComment = () => {
-  if (!currentUserId || currentUserId === 0) {
+  const handleAddComment = () => {
+    // Проверка на авторизацию пользователя
+    if (!currentUserId || currentUserId === 0) {
       alert('Пользователь не аутентифицирован');
       return;
-  }
-
-  const token = localStorage.getItem('accessToken');
-  if (!token) {
+    }
+  
+    // Получение токена из localStorage
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
       alert('Отсутствует токен авторизации');
       return;
-  }
-
-  const commentData = {
+    }
+  
+    // Данные комментария
+    const commentData = {
       text: newComment,
       user_id: currentUserId,
       article_id: article_id,
-      date: new Date().toISOString(), // Отправляем текущую дату в момент добавления
-  };
-
-  console.log(commentData);
-
-  fetch(`/api/comments`, {
+    };
+  
+    // Вывод данных комментария в консоль для проверки
+    console.log(commentData);
+  
+    // Отправка запроса на сервер
+    fetch(`/api/comments`, {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`, // Добавляем токен авторизации в заголовки
       },
-      body: JSON.stringify(commentData),
-  })
-  .then(response => {
-      if (!response.ok) {
+      body: JSON.stringify(commentData), // Преобразуем данные в JSON
+    })
+      .then(response => {
+        if (!response.ok) {
           throw new Error(`Ошибка: ${response.status}`);
-      }
-      return response.json();
-  })
-  .then(newComment => {
-      const transformedComment = {
+        }
+        return response.json();
+      })
+      .then(newComment => {
+        // Преобразование и добавление нового комментария в состояние
+        const transformedComment = {
           id: newComment.id,
           author: newComment.author,
           text: newComment.text,
-          date: newComment.date ? new Date(newComment.date).toISOString() : new Date().toISOString(), // Если есть, используем дату из ответа сервера
-      };
-
-      // Обновляем список комментариев
-      setComments([...comments, transformedComment]);
-      setNewComment(''); // Очищаем текстовое поле после добавления комментария
-  })
-  .catch(error => {
-      console.error('Ошибка при добавлении комментария:', error);
-      alert('Не удалось добавить комментарий. Проверьте сервер или маршрут.');
-  });
-};
-
-
+          date: newComment.date,
+          //likes: newComment.likes,
+         // dislikes: newComment.dislikes,
+        };
+  
+        // Обновляем список комментариев
+        setComments([...comments, transformedComment]);
+        setNewComment(''); // Очищаем текстовое поле после добавления комментария
+      })
+      .catch(error => {
+        console.error('Ошибка при добавлении комментария:', error);
+        alert('Не удалось добавить комментарий. Проверьте сервер или маршрут.');
+      });
+  };
+  
 
   const handleDeleteComment = (commentId: number) => {
     const token = localStorage.getItem('accessToken');

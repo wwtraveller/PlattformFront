@@ -1,5 +1,5 @@
-/* Articles.module.css */
-.container {
+
+.articles {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
@@ -29,33 +29,9 @@ h1 {
   background-color: #0056b3;
 }
 
-.select-container {
-  margin: 20px 0;
-}
 
 .error-message {
   color: red;
   text-align: center;
 }
 
-.loading-message {
-  text-align: center;
-  color: #007bff;
-}
-
-.article-list {
-  list-style-type: none;
-  padding: 0;
-}
-
-.article-list li {
-  padding: 10px;
-  margin: 5px 0;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-}
-
-.article-list button {
-  margin-left: 10px;
-}

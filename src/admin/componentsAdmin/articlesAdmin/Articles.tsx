@@ -132,7 +132,7 @@ const Articles = () => {
 
 
     return (
-        <div className={styles.container}>
+        <div className={styles.articles}>
             <h3>Управление артиклями</h3>
 
 {/* Кнопка для перехода на страницу со списком артиклей */}
