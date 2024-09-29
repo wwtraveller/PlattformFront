@@ -44,11 +44,6 @@ export const userLinks: ILinks[] = [
     pathname: '/catLinks',
     title: 'Категории'
     },
-    
-  {
-    pathname: '/product',
-    title: 'Продукт',
-  },
 
   {
     pathname: '/favorites',
@@ -65,10 +60,6 @@ export const adminLinks: ILinks[] = [
   {
     pathname: '/catLinks',
     title: 'Категории'
-    },
-    {
-      pathname: '/product',
-      title: 'Продукт',
     },
     {
       pathname: '/admin/createArticles',

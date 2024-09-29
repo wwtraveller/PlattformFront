@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './articleList.module.css';
 import axios from 'axios';
+import ArticleForm from './ArticleForm';
 
 interface Article {
   id: number;
@@ -30,6 +31,7 @@ const ArticleList = ({ articles, onEdit, onDelete }: ArticleListProps) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+
   // Получение категорий из API
   useEffect(() => {
     const fetchCategories = async () => {
@@ -54,6 +56,7 @@ const ArticleList = ({ articles, onEdit, onDelete }: ArticleListProps) => {
   const handleCategoryChange = (categoryId: number) => {
     setSelectedCategory(categoryId);
   };
+
 
   // Фильтруем статьи по выбранной категории
   const filteredArticles = selectedCategory
