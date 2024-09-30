@@ -27,6 +27,12 @@
     margin-top: 5px;
   }
 
+  .loginError{
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+
   .p{
     font-size: 10px;
   }

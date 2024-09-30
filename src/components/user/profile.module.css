@@ -1,62 +1,131 @@
 .profileContainer {
-    padding: 20px;
-    background-color: var(--bg-color);
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    max-width: 800px;
-    margin: 20px auto;
-    display: flex;
-    flex-direction: column;
-  }
+  position: relative;
+  padding: 60px;
+  background-color: rgba(128, 128, 128, 0.408);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  max-width: 900px;
+  margin: 5px auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.backgroundHeader{
+  position: absolute; /* Абсолютное позиционирование */
+  top: 0;
+  left: 0;
+  width: 100%; /* Фон занимает всю ширину контейнера */
+  height: 200px; /* Задаем фиксированную высоту фона */
+  background-image: url('https://img.freepik.com/free-photo/3d-modern-technology-background-with-flowing-connecting-lines_1048-11701.jpg?t=st=1727722241~exp=1727725841~hmac=db9fa8760db5bdd1ed39949b7522c449f8f5cd804eedbfdce9b75227e91b0f23&w=1380');
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px 10px 0 0; /* Скругленные верхние углы фона */
+  z-index: -1;
+}
+
+.background{
+  background-image: url('https://images.unsplash.com/photo-1487147264018-f937fba0c817?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D');
+  background-size: cover;
+  background-position: center;
+  height: 200vh;
+  width: 100vw;
+  margin: 0;
+  position: relative;
+}
+
+h1 {
+  font-size: 30px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: rgba(0, 64, 119, 0.681);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  margin: 20px;
+}
+
+.headerUsername{
+  color: rgba(0, 64, 119, 0.681);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 600;
   
-  .profileHeader {
-    display: flex;
+}
+.profileForm p {
+  color: #ffffff9d;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.profileHeader {
+  display: flex;
     align-items: center;
     gap: 20px;
     margin-bottom: 20px;
+     align-items: flex-end;
+     justify-content: flex-start;
   }
   
   .profileAvatar {
-    width: 80px;
-    height: 80px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid var(--primary-color);
+    border: 4px solid white;
   }
   
-  .profileDetails {
+  .avatarButtons {
     flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
   }
   
   .profileName {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--primary-color);
-  }
-  
-  .profileEmail {
-    font-size: 14px;
-    color: var(--text-color);
+    font-size: 24px;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.695);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
   
   .profileForm {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
+    gap: 5px;
+    margin-top: 15px;
   }
   
   .profileInput {
-    padding: 10px;
-    border: 1px solid var(--border-color);
+    padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.319);
     border-radius: 5px;
-    font-size: 14px;
     outline: none;
     transition: border-color 0.3s;
+    background-color: rgba(128, 128, 128, 0.351);
+    height: 45px;
+    width: 100%;
+    margin-bottom: 10px;
+    
   }
   
-  .profileInput:focus {
-    border-color: var(--primary-color);
+  .profileInput::placeholder {
+    color: #ffffff69;  
+    font-size: 15px;
   }
   
   .profileButton {
@@ -72,14 +141,127 @@
   .profileButton:hover {
     background-color: var(--hover-color);
   }
+    
+
   
-  .avatarPreview {
-    margin-top: 10px;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--border-color);
-    display: block;
+  .imageInput{
+    width: 150px;
+    display: none; /*  Скрываем оригинальный input */
+  }
+
+  .imageInput::placeholder{
+    width: 150px;
   }
   
+  .customFileButton {
+    background-color: var(--primary-color);
+    color: white; /* Белый цвет текста */
+    font-size: 9px; /* Размер текста */
+    text-transform: uppercase; /* Верхний регистр текста */
+    border: none; /* Без границ */
+    border-radius: 5px; /* Скругленные углы */
+    cursor: pointer; /* Курсор "рука" при наведении */
+    transition: background-color 0.3s ease; /* Плавное изменение цвета фона */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень */
+    width: 120px;
+    font-weight: 600;
+    max-height: 40px;
+    padding: 5px 16px;
+    text-align: center;
+  }
+  
+  .customFileButton:hover {
+    background-color: #45a049; /* Темный зеленый при наведении */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Более глубокая тень при наведении */
+  }
+  
+  .customFileButton:active {
+    background-color: #39873c; /* Еще темнее при клике */
+    transform: translateY(2px); /* Небольшой сдвиг вниз при клике */
+  }
+
+  .removeAvatarButton{
+    background-color: rgba(128, 128, 128, 0.351);
+    color: white;
+    font-size: 9px; /* Размер текста */
+    text-transform: uppercase; /* Верхний регистр текста */
+    border: 1px solid rgba(0, 0, 0, 0.114);
+    border-radius: 5px; /* Скругленные углы */
+    cursor: pointer; /* Курсор "рука" при наведении */
+    transition: background-color 0.3s ease; /* Плавное изменение цвета фона */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень */
+    width: 120px;
+    font-weight: 600;
+    max-height: 40px;
+    padding: 5px 16px;
+    text-align: center;
+  }
+
+  .removeAvatarButton:hover {
+    background-color: #45a049; /* Темный зеленый при наведении */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Более глубокая тень при наведении */
+  }
+  
+  .changePasswordContainer{
+    padding: 20px;
+    background-color: rgba(128, 128, 128, 0.408);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .passwordButton{
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .profileInputPassword {
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.319);
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+    background-color: rgba(128, 128, 128, 0.351);
+    height: 45px;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .profileInputPassword::placeholder {
+    color: #ffffff69;  
+    font-size: 15px;
+    padding: 10px;
+  }
+
+
+  .deleteAccountButton{
+    background-color: var(--primary-color);
+    color: white; /* Белый цвет текста */
+    font-size: 9px; /* Размер текста */
+    text-transform: uppercase; /* Верхний регистр текста */
+    border: none; /* Без границ */
+    border-radius: 5px; /* Скругленные углы */
+    cursor: pointer; /* Курсор "рука" при наведении */
+    transition: background-color 0.3s ease; /* Плавное изменение цвета фона */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень */
+    width: 120px;
+    font-weight: 600;
+    max-height: 40px;
+    padding: 5px 16px;
+    text-align: center;
+    margin-top: 50px;
+  }
+
+  .deleteAccountButton:hover {
+    background-color: #45a049; /* Темный зеленый при наведении */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Более глубокая тень при наведении */
+  }

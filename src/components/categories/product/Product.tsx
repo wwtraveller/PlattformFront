@@ -1,13 +1,3 @@
-// import React from 'react'
-
-// export default function Product() {
-//   return (
-//     <h2>Product</h2>
-
-
-//   )
-// }
-
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'redux/hooks'; // Хук для проверки авторизации
@@ -43,10 +33,10 @@ const articles: Article[] = [
 
 export default function Products() {
   const navigate = useNavigate();
-  const { user } = useAppSelector((state) => state.user); // Проверяем авторизован ли пользователь
+  const { user } = useAppSelector((state) => state.auth); // Проверяем авторизован ли пользователь
 
   const handleLoginSuccess = () => {
-    navigate('/'); // Перенаправляем на страницу после логина
+    navigate('/articles/${article.id}'); // Перенаправляем на страницу после логина
   };
   return (
     <div className={styles.articlesContainer}>
@@ -59,7 +49,7 @@ export default function Products() {
             
             {/* Если пользователь авторизован, показываем полную статью */}
             {user?.username ? (
-              <Link to={`/articles/${article.id}`} className={styles.readMoreLink}>
+              <Link to={`api/articles/${article.id}`} className={styles.readMoreLink}>
                 Читать далее
               </Link>
             ) : (

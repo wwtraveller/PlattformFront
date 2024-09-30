@@ -9,7 +9,6 @@
 
 .main {
   /* чтобы main занимал все свободное место если контента мало */
-  padding: 20px 0;
   width: 100%;
   flex: 1;
   margin: auto;

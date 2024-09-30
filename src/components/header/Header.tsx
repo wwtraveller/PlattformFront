@@ -9,6 +9,7 @@ import { logoutUser } from 'features/auth/authSlice';
 import ParentComponent from 'components/search/ParentComponent';
 import Button from 'components/button/Button';
 import ButtonLogReg from 'components/button/ButtonLogReg';
+import { RootState } from 'redux/store';
 
 
 interface SearchItem {
@@ -27,9 +28,10 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
   const location = useLocation();
   // const { categories } = useAppSelector((state) => state.categories); // Получаем категории из store
   // const [searchQuery, setSearchQuery] = useState(''); // Состояние для хранения запроса
-  const { user } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const userAvatar = useAppSelector((state: RootState) => state.auth.user.photo); // Предположим, что в user.photo хранится URL аватара
 
   const handleLogout = () => {
     // чистим браузерное хранилище данных
@@ -87,7 +89,7 @@ const [categories, setCategories] = useState<string[]>([]);
               <Link to="/profile">
                 <div className={styles.userInfo}>
                     <img
-                    src={user.photo || '/default-FFA-avatar.png'}  
+                    src={userAvatar || '/default-FFA-avatar.png'}  
                     alt="User Avatar"
                     className={styles.avatar}
                      

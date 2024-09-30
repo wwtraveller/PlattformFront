@@ -5,7 +5,7 @@
 }
 
 .background {
-    background-image: url('https://img.freepik.com/free-photo/cylinder-empty-black-podium-pedestal-product-display-stand-background-3d-rendering_56104-1366.jpg?t=st=1727119657~exp=1727123257~hmac=15a137e2d73d02c913e7139b146d70a82e4fd230a5b3d99406b87797a66ba485&w=1800');
+    background-image: url('https://img.freepik.com/free-photo/3d-abstract-plexus-background_1048-8113.jpg?t=st=1727721405~exp=1727725005~hmac=b3af2d69100d51b84a902dfc4428a2379459f64393ed246ffb15729fb2a2a483&w=1800');
     /* Замените на путь к вашему изображению */
     background-size: cover;
     background-position: center;
@@ -20,7 +20,8 @@
 
 .scrollButton {
     background: transparent;
-    border: none;
+    border: transparent;
+    border-radius: 50%;
     cursor: pointer;
     font-size: 4rem;
     color: rgb(255, 255, 255);
@@ -33,23 +34,24 @@
     transform: translateX(-50%);
     /* Центрируем кнопку по горизонтали */
     -webkit-box-reflect: below 0px linear-gradient(transparent, #0005);
-    box-shadow: 0 0 5px #03e9f4, 0 0 15px #03e9f4, 0 0 25px #03e9f4, 0 0 100px #03e9f4;
+    box-shadow: 0 0 0px #dcf403, 0 0 10px #e9af3b9f, 0 0 25px #dcf403, 0 0 100px #dcf403;
     z-index: 10;
     animation: glow 3s infinite;
+    width: 100px;
 }
 
 
 @keyframes glow {
     0% {
-        box-shadow: 0 0 5px #03e8f4;
+        box-shadow: 0 0 0px #03e9f4;
     }
 
     50% {
-        box-shadow: 0 0 30px #03e9f4;
+        box-shadow: 0 0 30px #e9af3b9f;
     }
 
     100% {
-        box-shadow: 0 0 5px #03e9f4;
+        box-shadow: 0 0 0px #03e9f4;
     }
 }
 
@@ -70,11 +72,13 @@
     padding: 40px 0;
 }
 
-h1 {
+.background h1 {
+    margin-top: -300px;
     font-size: 50px;
-    color: rgba(240, 248, 255, 0.681);
+    color: rgba(221, 238, 250, 0.878);
     display: flex;
     flex-direction: row;
+    text-decoration:overline underline;
 }
 
 .category {
@@ -94,10 +98,6 @@ h1 {
     font-weight: bold;
     /* text-align:justify; */
     margin-bottom: 30px;
-}
-
-.background h1 {
-    margin-top: -300px;
 }
 
 .grid {

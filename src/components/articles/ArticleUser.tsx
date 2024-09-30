@@ -17,8 +17,8 @@ const ArticleUser = () => {
   const { category } = useParams<{ category: string }>();
   const [articles, setArticles] = useState<Article[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const { user } = useAppSelector((state) => state.user);
+  const [loading, setLoading] = useState<boolean>(true); // Индикация загрузки
+  const { user } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
 
   useEffect(() => {

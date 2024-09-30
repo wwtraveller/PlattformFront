@@ -27,6 +27,7 @@ import UserMenu from "components/user/UserMenu";
 import FavoritesPage from "components/articles/FavoritesPage";
 import ArticlesListPage from "admin/componentsAdmin/articlesAdmin/ArticlesListPage";
 import Articles from "admin/componentsAdmin/articlesAdmin/Articles";
+import { ToastContainer } from 'react-toastify';
 
 interface SearchItem {
   id: number;
@@ -39,7 +40,7 @@ function App() {
 
   const [error, setError] = useState<string | null>(null);
   const [searchResults, setSearchResults] = useState<SearchItem[]>([]);
-  const { user } = useAppSelector((state) => state.user); 
+  const { user } = useAppSelector((state) => state.auth); 
   const { isOpen } = useAppSelector((state) => state.modalWindow);
   const dispatch = useAppDispatch();
   const handleLoginSuccess = (): void => {
@@ -65,6 +66,7 @@ function App() {
 
   return (
     <div className="App">
+
       {/* Приветственное сообщение здесь или перенести его лучше в компонент About? */}
       {/* <h1>Hello</h1> */}
 
@@ -91,12 +93,12 @@ function App() {
                 {/* <Route path="/about" element={<About />} /> */}
                 {/* <Route path="/product" element={<Product />} />
                 <Route path="/marketing" element={<Marketing />} />
-                <Route path="/blog" element={<Blog />} /> */}
+              <Route path="/blog" element={<Blog />} /> */}
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/profile" element={<Profile />} />
                 {/* <Route path="/catLinks" element={<CategoryLinks />} />
                 <Route path="/category/:category" element={<ArticleUser />} />
-                <Route path="/article/:id" element={<ArticlePage />} /> */}
+              <Route path="/article/:id" element={<ArticlePage />} /> */}
                 {/* <Route path="/favorites" element={<ArticlePage />} /> */}
                 <Route path="/favorites" element={<FavoritesPage/>} />
               </>
@@ -125,6 +127,7 @@ function App() {
 
       {isOpen && <AuthWindow onLoginSuccess={handleLoginSuccess} />}
       </HashRouter>
+            <ToastContainer />
     </div>
   );
 }
