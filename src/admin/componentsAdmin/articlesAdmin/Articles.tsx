@@ -133,7 +133,7 @@ const Articles = () => {
 
     return (
         <div className={styles.articles}>
-            <h3>Управление артиклями</h3>
+            <h3 className={styles.h3}>Управление артиклями</h3>
 
 {/* Кнопка для перехода на страницу со списком артиклей */}
 <button className={styles.button} onClick={() => navigate('/articlesList')}>Список артиклей</button>
