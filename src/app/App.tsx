@@ -8,7 +8,6 @@ import "./App.css"; // Сохраняем подключение стилей
 import SearchErrorPage from "components/search/SearchErrorPage";
 import SearchResultsPage from "components/search/SearchResultsPage";
 import { useEffect, useState } from "react";
-import Articles from "admin/componentsAdmin/articlesAdmin/Articles";
 import Profile from "components/user/Profile";
 import Dashboard from "components/user/Dashboard";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
@@ -27,7 +26,7 @@ import ArticlePageUser from "components/articles/ArticlePageUser";
 import UserMenu from "components/user/UserMenu";
 import FavoritesPage from "components/articles/FavoritesPage";
 import ArticlesListPage from "admin/componentsAdmin/articlesAdmin/ArticlesListPage";
-
+import Articles from "admin/componentsAdmin/articlesAdmin/Articles";
 
 interface SearchItem {
   id: number;
