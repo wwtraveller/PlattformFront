@@ -29,6 +29,7 @@ interface ArticleFormProps {
     categoryId: number | null; 
     categories: Category[];
     onSuccess: () => void;
+}
 
 const ArticleForm = ({ articleId, categoryId, categories, onSuccess }: ArticleFormProps) => {
     const [article, setArticle] = useState<Article>({
