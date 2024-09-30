@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Comments from 'components/comments/Comment';
+import styles from "./articlePageUser.module.css"
 
 interface Article {
   id: number;
@@ -117,7 +118,8 @@ const ArticlePageUser = () => {
     <div>
       <h3>{article.title}</h3>
       {/*<img src={article.imageUrl} alt={article.title} />*/}
-      <p>{article.content}</p>
+      {/* <p>{article.content}</p> */}
+      <div className={styles.articlecontent} dangerouslySetInnerHTML={{ __html: article.content }} />
 
       {/* Кнопка добавления в избранное */}
       <button onClick={toggleFavorite} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
