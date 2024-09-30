@@ -41,7 +41,7 @@
   }
   
   /* Ссылки категорий */
-  a {
+  .a {
     display: block;
     text-decoration: none;
     font-size: 1.2rem;
@@ -50,7 +50,7 @@
     transition: color 0.3s ease, transform 0.3s ease;
   }
   
-  a:hover {
+  .a:hover {
     color: #ffffff;
     transform: translateX(5px); /* Небольшой сдвиг вправо при наведении */
   }
