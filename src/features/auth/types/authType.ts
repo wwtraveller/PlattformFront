@@ -5,14 +5,15 @@ export interface Role {
 }
 
 export interface IUserData {
-    id: number
-    username: string
-    email: string
-    firstName:string
-    lastName:string
-    photo:string | null
-    accessToken: string
-    refreshToken: string
-    roles: Role[];
+  id: number
+  username: string
+  email: string
+  firstName:string
+  lastName:string
+  photo:string | null
+  accessToken: string
+  refreshToken: string
+  roles: Role[]
+  avatar: string
   }
   

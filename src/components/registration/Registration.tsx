@@ -46,7 +46,7 @@ export default function Registration({ onRegisterSuccess }: RegistrationProps) {
       .max(15, "Максимум 15 символов")
       .test(
         "unique-username",
-        "Имя пользователя должно быть уникальным!",
+        "Имя пользователя уже существует!",
         async (value) => {
           return (await isAvailableUsername(value));
         }
@@ -90,7 +90,7 @@ export default function Registration({ onRegisterSuccess }: RegistrationProps) {
     onSubmit: async (values: IRegisterFormValues, { resetForm }) => {
       try {
         const result = await dispatch(registerUser(values)).unwrap();
-        toast.success('Регистрация прошла успешно! Можете войти в свой аккаунт!');
+        toast.success('Регистрация прошла успешно!');
         setIsRegistered(true); // Устанавливаем успешную регистрацию
         resetForm();
         setTimeout(() => {

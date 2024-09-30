@@ -18,7 +18,7 @@ const ArticleUser = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true); // Индикация загрузки
   const [redirectPath, setRedirectPath] = useState<string | undefined>(undefined);
-  const { user } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
 
   useEffect(() => {

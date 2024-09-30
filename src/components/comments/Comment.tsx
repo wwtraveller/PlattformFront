@@ -116,7 +116,7 @@ const Comments = ({ article_id}: CommentsProps) => {
   const [error, setError] = useState<string | null>(null);
 
     // Получение userId из глобального состояния Redux
-    const currentUser = useSelector((state: RootState) => state.user.user); // Здесь user — это слайс аутентификации
+    const currentUser = useSelector((state: RootState) => state.auth.user); // Здесь user — это слайс аутентификации
     const currentUserId = currentUser?.id;
 
   const fetchComments = async () => {
