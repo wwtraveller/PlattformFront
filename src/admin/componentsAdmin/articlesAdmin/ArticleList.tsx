@@ -84,7 +84,7 @@ const ArticleList = ({ articles, onEdit, onDelete }: ArticleListProps) => {
           ))}
         </select>
       </div>
-      <h2>Список артиклей</h2>
+      <h2>Список статей</h2>
       <ul>
         {filteredArticles.map((article) => (
           <li key={article.id}>
