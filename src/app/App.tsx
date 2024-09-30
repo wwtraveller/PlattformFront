@@ -8,7 +8,6 @@ import "./App.css"; // Сохраняем подключение стилей
 import SearchErrorPage from "components/search/SearchErrorPage";
 import SearchResultsPage from "components/search/SearchResultsPage";
 import { useEffect, useState } from "react";
-
 import Profile from "components/user/Profile";
 import Dashboard from "components/user/Dashboard";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
@@ -26,8 +25,8 @@ import Login from "components/login/Login";
 import ArticlePageUser from "components/articles/ArticlePageUser";
 import UserMenu from "components/user/UserMenu";
 import FavoritesPage from "components/articles/FavoritesPage";
+import ArticlesListPage from "admin/componentsAdmin/articlesAdmin/ArticlesListPage";
 import Articles from "admin/componentsAdmin/articlesAdmin/Articles";
-
 
 interface SearchItem {
   id: number;
@@ -111,6 +110,7 @@ function App() {
               <>
                 <Route path="/admin/createArticles" element={<AdminRoute><Articles /></AdminRoute>} />
                 <Route path="/admin/createCategories" element={<AdminRoute><CategoryManager /></AdminRoute>} />
+                <Route path="/articlesList" element={<AdminRoute><ArticlesListPage /></AdminRoute>} />
               </>
             )}
             {/*!!!! РАСКОМЕНТИРОВАТЬ, КОГДА БУДЕТ ГОТОВА АДМИНКА Защищённый маршрут для админов 

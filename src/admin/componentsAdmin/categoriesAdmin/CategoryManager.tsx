@@ -1,5 +1,6 @@
 import Button from 'components/button/Button';
 import React, { useState, useEffect } from 'react';
+import styles from './categoryManager.module.css'
 
 
 interface Category {
@@ -105,15 +106,18 @@ const CategoryManager = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
-      <h2>Управление категориями</h2>
+    <div className={styles.div}>
+      <h2 className={styles.h2}>Управление категориями</h2>
       <Button onClick={() => { setShowEditModal(true); setEditingCategory(null); setNewCategoryName(''); }} name="Создать категорию" />
-      <ul>
+      <ul className={styles.ul}>
         {categories.map((category) => (
-          <li key={category.id}>
+          <li className={styles.li} key={category.id}>
             {category.name}
+            <div className={styles.buttonGroup}>
             <Button onClick={() => { setEditingCategory(category); setNewCategoryName(category.name); setShowEditModal(true); }} name="Редактировать" />
             <Button onClick={() => { setEditingCategory(category); setShowDeleteModal(true); }} name="Удалить" />
+
+            </div>
           </li>
         ))}
       </ul>
@@ -127,8 +131,8 @@ const CategoryManager = () => {
             value={newCategoryName}
             onChange={(e) => setNewCategoryName(e.target.value)}
           />
-          <Button onClick={editingCategory ? handleSave : handleCreate} name="Сохранить" />
-          <Button onClick={() => setShowEditModal(false)} name="Отмена" />
+          <Button className={styles.button} onClick={editingCategory ? handleSave : handleCreate} name="Сохранить" />
+          <Button className={styles.button} onClick={() => setShowEditModal(false)} name="Отмена" />
         </div>
       )}
 
@@ -136,8 +140,8 @@ const CategoryManager = () => {
       {showDeleteModal && (
         <div className="modal">
           <h2>Удалить категорию "{editingCategory?.name}"?</h2>
-          <Button onClick={handleDelete} name="Удалить" />
-          <Button onClick={() => setShowDeleteModal(false)} name="Отмена" />
+          <Button className={styles.button} onClick={handleDelete} name="Удалить" />
+          <Button className={styles.button} onClick={() => setShowDeleteModal(false)} name="Отмена" />
         </div>
       )}
     </div>

@@ -1,131 +1,172 @@
-import { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ArticleForm from './ArticleForm'; 
-import ArticleList from './ArticleList'; 
-import styles from './articles.module.css';
-import Button from 'components/button/Button';
+import ArticleForm from './ArticleForm';
+import { useNavigate } from 'react-router-dom';
+import styles from './articles.module.css'
 
+// Интерфейсы для статей и категорий
 interface Article {
-  id: number;
-  title: string;
-  content: string;
-  categoryId: number;
-  category: { id: number; name: string } | null;
+    id: number;
+    title: string;
+    content: string;
+    photo: string | null;
+    username: string;
+    comments: any[];
+    categories: Category[];
 }
 
 interface Category {
-  id: number;
-  name: string;
+    id: number;
+    name: string;
+    articles: Article[];
 }
 
-export default function Articles() {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  // const [showEditModal, setShowEditModal] = useState(false);
-  // const [showDeleteModal, setShowDeleteModal] = useState(false);
-  // const [editingArticle, setEditingArticle] = useState<Article | null>(null); // Для редактирования статьи
-  // const [newArticleData, setNewArticleData] = useState({
-  //   title: '',
-  //   content: '',
-  //   categoryId: 0
-  // });
+const Articles = () => {
+    const [articles, setArticles] = useState<Article[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [isCreating, setIsCreating] = useState(false);
+    const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+    const navigate = useNavigate(); // Создайте навигатор
+   
 
-  // Загружаем статьи и категории при монтировании компонента
-  useEffect(() => {
-    fetchArticles();
-    fetchCategories();
-  }, []);
+    const checkAuthToken = () => {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            throw new Error('Нет токена доступа. Пожалуйста, авторизуйтесь.');
+        }
+        return token;
+    };
 
-  const fetchArticles = async () => {
-    try {
-      const token = localStorage.getItem('accessToken'); // Получаем токен
-      const response = await axios.get('/api/articles', {
-        headers: {
-          'Authorization': `Bearer ${token}`, // Добавляем токен в заголовки
-        },
-      });
-      setArticles(response.data);
-    } catch (error) {
-      console.error('Ошибка при загрузке статей:', error);
-    }
-  };
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const token = checkAuthToken();
+                const categoriesResponse = await axios.get('/api/categories', {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setCategories(categoriesResponse.data);
 
-  // Функция для загрузки категорий
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get('/api/categories');
-      setCategories(response.data);
-      setLoading(false);
-    } catch (error) {
-      setError('Не удалось загрузить категории');
-      setLoading(false);
-    }
-  };
+                const articlesResponse = await axios.get('/api/articles', {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setArticles(articlesResponse.data);
+            } catch (err) {
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError('Произошла неизвестная ошибка');
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
 
-  // Создание новой статьи
-  const handleCreateArticle = async (data: { title: string; content: string; categoryId: number }) => {
-    try {
-      const token = localStorage.getItem('accessToken');
-      const response = await axios.post('/api/articles', data, {
-        headers: {
-          Authorization: `Bearer ${token}`,  // Добавляем токен в заголовки
-        },
-      });
-      setArticles([...articles, response.data]); // Добавляем новую статью в список
-      // setArticles((prev) => [...prev, response.data]);
-    } catch (error) {
-      console.error('Ошибка при создании статьи:', error);
-    }
-  };
+        fetchData();
+    }, []);
 
-  // Редактирование статьи
-  const handleEditArticle = (article: Article) => {
-    console.log('Редактировать статью:', article);
-    // Логика редактирования статьи
-  };
+    const handleCategoryChange = (categoryId: number) => {
+        setSelectedCategory(categoryId);
+    };
 
-  // Удаление статьи
-  const handleDeleteArticle = async (id: number) => {
-    try {
-      const token = localStorage.getItem('accessToken');
-      await axios.delete(`/api/articles/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setArticles(articles.filter((article) => article.id !== id));
-    } catch (error) {
-      console.error('Ошибка при удалении статьи:', error);
-    }
-  };
+    const handleCreateArticle = () => {
+        setSelectedArticle(null);
+        setIsCreating(true);
+    };
+
+    const handleEditArticle = (articleId: number) => {
+        const article = articles.find((a) => a.id === articleId);
+        setSelectedArticle(article || null);
+        setIsCreating(true);
+    };
+
+    const handleDeleteArticle = async (articleId: number) => {
+        try {
+            const token = checkAuthToken();
+            await axios.delete(`/api/articles/${articleId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            setArticles((prevArticles) => prevArticles.filter((a) => a.id !== articleId));
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('Произошла неизвестная ошибка');
+            }
+        }
+    };
+
+    const handleFormSuccess = () => {
+        setIsCreating(false);
+        setSelectedArticle(null);
+        const fetchUpdatedArticles = async () => {
+            try {
+                const token = checkAuthToken();
+                const response = await axios.get('/api/articles', {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setArticles(response.data);
+                console.log('Статьи успешно обновлены:', response.data);
+            } catch (err) {
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError('Произошла неизвестная ошибка');
+                }
+            }
+        };
+
+        fetchUpdatedArticles();
+    };
+
+    if (loading) return <p>Загрузка данных...</p>;
+    if (error) return <p>Ошибка: {error}</p>;
+
+    const filteredArticles = selectedCategory
+        ? articles.filter((article) =>
+              article.categories.some((cat) => cat.id === selectedCategory),
+          )
+        : articles;
 
 
+    return (
+        <div className={styles.articles}>
+            <h3>Управление артиклями</h3>
 
-  if (loading) return <p>Загрузка...</p>;
-  if (error) return <p>{error}</p>;
+{/* Кнопка для перехода на страницу со списком артиклей */}
+<button className={styles.button} onClick={() => navigate('/articlesList')}>Список артиклей</button>
+            {/* Фильтр по категориям 
+            <div>
+                <label>Категории:</label>
+                <select onChange={(e) => handleCategoryChange(Number(e.target.value))} value={selectedCategory || ''}>
+                    <option value="">Все категории</option>
+                    {categories.map((category) => (
+                        <option key={category.id} value={category.id}>
+                            {category.name}
+                        </option>
+                    ))}
+                </select>
+            </div>*/}
 
-  // Обязательно возвращаем JSX вне зависимости от логики
-  return (
-    <div className={styles.articlesContainer}>
+            {/* Список артиклей 
+            <ArticleList articles={filteredArticles} onEdit={handleEditArticle} onDelete={handleDeleteArticle} />*/}
 
-      {/* Форма для создания/редактирования статьи */}
-      <ArticleForm onSubmit={handleCreateArticle} categories={categories} />
-      <ArticleList articles={articles} onDelete={handleDeleteArticle} />
-    
-      {/* Список статей */}
-      {/* <ul>
-        {articles.map((article) => (
-          <li key={article.id}>
-            <h3>{article.title}</h3>
-            <p>{article.content}</p>
-            <p>Категория: {article.category ? article.category.name : 'Без категории'}</p>
-            <Button onClick={() => setEditingArticle(article)} name="Редактировать" />
-            <Button onClick={() => handleDeleteArticle(article.id)} name="Удалить" />
-          </li>
-        ))}
-      </ul> */}
-    </div>
-  );
+            {/* Кнопка для создания нового артикля */}
+            <button className={styles.button} onClick={handleCreateArticle}>Создать новый артикль</button>
+
+            {/* Форма для создания/редактирования артикля */}
+            {isCreating && (
+                <ArticleForm
+                    articleId={selectedArticle ? selectedArticle.id : null}
+                    categoryId={selectedArticle ? selectedArticle.categories[0]?.id : null}
+                    categories={categories}
+                    onSuccess={handleFormSuccess}
+                />
+            )}
+        </div>
+    );
 };
+
+export default Articles;
