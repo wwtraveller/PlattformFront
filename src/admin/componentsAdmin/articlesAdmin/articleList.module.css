@@ -1,46 +1,74 @@
+/* ArticleList.css */
+
 .articleList {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .articleItem {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    background-color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .articleItem h4 {
-    margin: 0;
-    font-size: 16px;
-  }
-  
-  .articleItem p {
-    margin: 0;
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .editButton, .deleteButton {
-    margin-left: 10px;
-    padding: 5px 10px;
-    border: none;
-    cursor: pointer;
-    font-size: 12px;
-    border-radius: 4px;
-  }
-  
-  .editButton {
-    background-color: #f0ad4e;
-    color: white;
-  }
-  
-  .deleteButton {
-    background-color: #d9534f;
-    color: white;
-  }
-  
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.articleList h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.articleList ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.articleList li {
+  padding: 15px;
+  margin: 10px 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.articleList li:hover {
+  background-color: #f9f9f9;
+}
+
+.articleList strong {
+  font-size: 18px;
+  color: #007bff;
+  flex: 1; /* Позволяет заголовку занимать оставшееся пространство */
+}
+
+.articleList .buttonGroup {
+  display: flex;
+  flex-direction: column; /* Кнопки теперь будут в столбик */
+  gap: 5px; /* Промежуток между кнопками */
+}
+
+.articleList button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.articleList button:hover {
+  background-color: #007bff;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.articleList button:nth-child(2) {
+  background-color: #dc3545;
+  color: white;
+}
+
+.articleList button:nth-child(2):hover {
+  background-color: #c82333;
+}

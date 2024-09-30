@@ -1,103 +1,176 @@
-/* styles.css */
-
-/* Основной стиль для блока комментариев */
 .comments {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  /* Стиль для формы добавления комментария */
-  .comments textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    resize: none;
-    margin-bottom: 10px;
-  }
-  
-  /* Кнопка добавления комментария с иконкой */
-  .add-comment-button {
-    background-color: #ff4742;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 20px;
-    cursor: pointer;
-  }
-  
-  /* Стиль для каждого комментария */
-  .comment {
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 10px;
-    margin-top: 10px;
-  }
-  
-  /* Стиль для автора и даты комментария */
-  .comment-header {
-    display: flex;
-    justify-content: space-between;
-    color: #606060;
-  }
-  
-  /* Стиль для текста комментария */
-  .comment p {
-    margin: 5px 0;
-  }
-  
-  /* Иконки для действий с комментариями */
-  .commentActions {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-  }
-  
-  .commentActions button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #606060;
-    margin-right: 10px;
-  }
-  
-  .comment-actions button:hover {
-    color: #ff4742;
-  }
-  
-  /* Иконка редактирования и удаления */
-  .more-options {
-    cursor: pointer;
-  }
-  
-  /* Для иконок */
-  .icon {
-    width: 20px;
-    height: 20px;
-  }
-  
-  /* Заголовок блока комментариев */
-  .comments h2 {
-    margin: 0 0 10px;
-    font-size: 20px;
-    color: #333;
-  }
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 12px;
+  width: 700px;
+  margin: 40px auto;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
 
-  .commentInputContainer {
-    display: flex;
-    align-items: center; /* Вертикальное выравнивание */
-  }
-  
-  textarea {
-    flex: 1; /* Занимает доступное пространство */
-    margin-right: 8px; /* Отступ справа для пространства между textarea и кнопкой */
-  }
-  
-  .addCommentButton {
-    background: none; /* Убирает стандартный фон кнопки */
-    border: none; /* Убирает границы */
-    cursor: pointer; /* Указатель при наведении */
-  }
-  
-  
+.comments h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 25px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.commentInputContainer {
+  display: flex;
+  align-items: center; /* Кнопка на одной строке с полем */
+  justify-content: space-between;
+  margin-bottom: 20px;
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  position: relative;
+}
+
+.commentInputContainer textarea {
+  width: 100%;
+  padding: 10px 15px;
+  border: none;
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+  background-color: transparent;
+  resize: none;
+  outline: none;
+  height: 50px;
+}
+
+.addCommentButton {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.addCommentButton:hover {
+  background-color: #2980b9;
+}
+
+.addCommentButton svg {
+  font-size: 18px;
+}
+
+.comment {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  position: relative;
+  width: 100%; /* Фиксированная ширина, чтобы форма не менялась */
+  box-sizing: border-box; /* Учитываем padding в ширине */
+}
+
+.comment:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.commentHeader p {
+  font-size: 14px;
+  color: #7f8c8d;
+}
+
+.commentHeader strong {
+  font-size: 16px;
+  color: #2c3e50;
+}
+
+.comment p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #34495e;
+  margin-bottom: 10px;
+  text-align: left; /* Выравнивание текста по левому краю */
+  word-wrap: break-word; /* Автоматически переносить длинные строки */
+}
+
+.commentActions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+}
+
+.commentActions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3498db;
+  transition: color 0.3s ease;
+}
+
+.commentActions button:hover {
+  color: #2980b9;
+}
+
+.commentActions .moreOptions {
+  cursor: pointer;
+  color: #bdc3c7;
+  transition: color 0.3s ease;
+}
+
+.commentActions .moreOptions:hover {
+  color: #7f8c8d;
+}
+
+.shortComment {
+  font-style: italic;
+  color: #7f8c8d;
+}
+
+.replySection {
+  margin-left: 20px;
+  padding-left: 15px;
+  border-left: 3px solid #ecf0f1;
+}
+
+.replySection .comment {
+  margin-top: 10px;
+}
+
+/* Для формы редактирования */
+textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  resize: none;
+  font-size: 14px;
+  margin-top: 10px;
+  transition: height 0.3s ease;
+  box-sizing: border-box;
+}
+
+textarea:focus {
+  height: 100px;
+  border-color: #3498db;
+}
+
+/* Предотвращение расширения формы при редактировании */
+.comment textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  box-sizing: border-box; /* Чтобы padding не увеличивал ширину формы */
+}
