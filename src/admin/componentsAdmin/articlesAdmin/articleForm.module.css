@@ -1,5 +1,5 @@
 /* Основные стили для формы */
-.articleForm {
+
 .articleForm {
   display: flex;
   flex-direction: column;
@@ -13,7 +13,7 @@
 }
 
 /* Стили для заголовка статьи */
-.articleTitle[type="text"] {
+
 .articleTitle[type="text"] {
   padding: 12px;
   font-size: 18px;
@@ -24,7 +24,6 @@
   box-sizing: border-box;
 }
 
-.articleTitle[type="text"]:focus {
 .articleTitle[type="text"]:focus {
   border-color: #007bff;
   outline: none;
@@ -84,7 +83,7 @@
 }
 
 /* Стили для ошибки */
-.errorMessage[style*="color: red"] {
+
 .errorMessage[style*="color: red"] {
   font-size: 16px;
   color: #ff4d4d;
@@ -108,7 +107,7 @@
 
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
-  .articleForm {
+  
   .articleForm {
     padding: 15px;
   }
@@ -117,7 +116,7 @@
     font-size: 16px;
   }
 
-  .button[type="submit"] {
+  .articleForm button[type="submit"] {
     padding: 10px;
   }
 }
