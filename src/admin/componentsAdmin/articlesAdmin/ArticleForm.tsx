@@ -30,9 +30,7 @@ interface ArticleFormProps {
     categories: Category[];
     onSuccess: () => void;
 
-}
-
-const ArticleForm: React.FC<ArticleFormProps> = ({ articleId, categoryId, categories, onSuccess }) => {
+const ArticleForm = ({ articleId, categoryId, categories, onSuccess }: ArticleFormProps) => {
     const [article, setArticle] = useState<Article>({
         id: 0,
         title: '',

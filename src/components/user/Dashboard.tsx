@@ -13,7 +13,7 @@ const Dashboard: React.FC = () => {
         <div className={styles.dashboardCard}>
           <h2 className={styles.cardTitle}>Статьи</h2>
           <p className={styles.cardContent}>Читать все статьи платформы.</p>
-          <Link to="/articles" className={styles.cardLink}>Перейти к статьям</Link>
+          <Link to="/articlesList" className={styles.cardLink}>Перейти к статьям</Link>
         </div>
         <div className={styles.dashboardCard}>
           <h2 className={styles.cardTitle}>Профиль</h2>

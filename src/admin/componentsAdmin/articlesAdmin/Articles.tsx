@@ -35,7 +35,7 @@ const Articles = () => {
     const checkAuthToken = () => {
         const token = localStorage.getItem('accessToken');
         if (!token) {
-            throw new Error('Нет токена доступа. Пожалуйста, авторизуйтесь.');
+            throw new Error('Нет доступа. Пожалуйста, авторизуйтесь.');
         }
         return token;
     };
@@ -133,10 +133,10 @@ const Articles = () => {
 
     return (
         <div className={styles.articles}>
-            <h3>Управление артиклями</h3>
+            <h3>Управление статьями</h3>
 
 {/* Кнопка для перехода на страницу со списком артиклей */}
-<button className={styles.button} onClick={() => navigate('/articlesList')}>Список артиклей</button>
+<button onClick={() => navigate('/articlesList')}>Список статей</button>
             {/* Фильтр по категориям 
             <div>
                 <label>Категории:</label>
@@ -154,7 +154,7 @@ const Articles = () => {
             <ArticleList articles={filteredArticles} onEdit={handleEditArticle} onDelete={handleDeleteArticle} />*/}
 
             {/* Кнопка для создания нового артикля */}
-            <button className={styles.button} onClick={handleCreateArticle}>Создать новый артикль</button>
+            <button onClick={handleCreateArticle}>Создать новую статью</button>
 
             {/* Форма для создания/редактирования артикля */}
             {isCreating && (
