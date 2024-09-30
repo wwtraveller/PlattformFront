@@ -28,11 +28,10 @@ interface ArticleFormProps {
     articleId: number | null;  
     categoryId: number | null; 
     categories: Category[];
-    onSuccess: () => void;     
+    onSuccess: () => void; 
+}    
 
-}
-
-const ArticleForm: React.FC<ArticleFormProps> = ({ articleId, categoryId, categories, onSuccess }) => {
+const ArticleForm = ({ articleId, categoryId, categories, onSuccess }: ArticleFormProps) => {
     const [article, setArticle] = useState<Article>({
         id: 0,
         title: '',
@@ -161,13 +160,13 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ articleId, categoryId, catego
                 }}
             />
 
-            <select className={styles.select} value={selectedCategory || ''} onChange={handleCategoryChange} required>
+            <select value={selectedCategory || ''} onChange={handleCategoryChange} required>
                 <option value="" disabled>Выберите категорию</option>
                 {categories.map(category => (
                     <option key={category.id} value={category.id}>{category.name}</option>
                 ))}
             </select>
-            <button className={styles.button} type="submit">Сохранить</button>
+            <button type="submit">Сохранить</button>
         </form>
     );
 };

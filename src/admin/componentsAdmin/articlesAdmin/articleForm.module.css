@@ -1,4 +1,5 @@
 /* Основные стили для формы */
+
 .articleForm {
   display: flex;
   flex-direction: column;
@@ -12,6 +13,7 @@
 }
 
 /* Стили для заголовка статьи */
+
 .articleTitle[type="text"] {
   padding: 12px;
   font-size: 18px;
@@ -49,7 +51,7 @@
 }
 
 /* Стили для выпадающего списка категорий */
-.select {
+.articleForm select {
   padding: 12px;
   font-size: 16px;
   border: 1px solid #ddd;
@@ -59,13 +61,13 @@
   background-color: #fff;
 }
 
-.select:focus {
+.articleForm select:focus {
   border-color: #007bff;
   outline: none;
 }
 
 /* Стили для кнопки */
-.button[type="submit"] {
+.articleForm button[type="submit"] {
   padding: 12px 20px;
   font-size: 18px;
   color: #fff;
@@ -76,11 +78,12 @@
   transition: background-color 0.3s ease;
 }
 
-.button[type="submit"]:hover {
+.articleForm button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
 /* Стили для ошибки */
+
 .errorMessage[style*="color: red"] {
   font-size: 16px;
   color: #ff4d4d;
@@ -104,15 +107,16 @@
 
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
+  
   .articleForm {
     padding: 15px;
   }
 
-  .articleTitle[type="text"], .select, .button[type="submit"] {
+  .articleTitle[type="text"], .articleForm select, .articleForm button[type="submit"] {
     font-size: 16px;
   }
 
-  .button[type="submit"] {
+  .articleForm button[type="submit"] {
     padding: 10px;
   }
 }
