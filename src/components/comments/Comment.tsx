@@ -368,9 +368,9 @@ const Comments = ({ article_id}: CommentsProps) => {
 
   return (
     <div className={styles.comments}>
-      <h2>Комментарии</h2>
+      <h2 className={styles.h2}>Комментарии</h2>
       <div className={styles.commentInputContainer}>
-      <textarea 
+      <textarea className={styles.textarea}
         value={newComment}
         onChange={(e) => setNewComment(e.target.value)}
         placeholder="Оставьте комментарий"

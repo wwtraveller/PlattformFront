@@ -34,13 +34,13 @@ const CategoryLinks: React.FC = () => {
   }
 
   return (
-    <div>
-      <h1>Категории</h1>
+    <div className={styles.div}>
+      <h2 className={styles.h2}>Категории</h2>
       {categories.length > 0 ? (
-        <ul>
+        <ul className={styles.ul}>
           {categories.map(category => (
-            <li key={category}>
-              <Link to={`/category/${encodeURIComponent(category)}`}>
+            <li className={styles.li} key={category}>
+              <Link className={styles.a} to={`/category/${encodeURIComponent(category)}`}>
                 {category.charAt(0).toUpperCase() + category.slice(1)}
               </Link>
             </li>

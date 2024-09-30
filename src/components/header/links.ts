@@ -44,11 +44,6 @@ export const userLinks: ILinks[] = [
     pathname: '/catLinks',
     title: 'Категории'
     },
-    
-  {
-    pathname: '/product',
-    title: 'Продукт',
-  },
 
   {
     pathname: '/favorites',
@@ -56,7 +51,7 @@ export const userLinks: ILinks[] = [
   },
   ];
 
-  // Ссылки для зарегистрированных пользователей
+  // Ссылки для админов
 export const adminLinks: ILinks[] = [
   {
     pathname: '/dashboard',
@@ -67,12 +62,8 @@ export const adminLinks: ILinks[] = [
     title: 'Категории'
     },
     {
-      pathname: '/product',
-      title: 'Продукт',
-    },
-    {
       pathname: '/admin/createArticles',
-      title: 'Создание статьи',
+      title: 'Управление статьями',
     },
     {
         pathname: '/admin/createCategories',
@@ -82,4 +73,5 @@ export const adminLinks: ILinks[] = [
         pathname: '/favorites',
         title: 'Избранное'
       },
+     
   ];

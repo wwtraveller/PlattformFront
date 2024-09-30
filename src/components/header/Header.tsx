@@ -26,6 +26,7 @@ interface HeaderProps {
 
 export default function Header({ setError, setSearchResults }: HeaderProps) {
   const location = useLocation();
+  // const { categories } = useAppSelector((state) => state.categories); // Получаем категории из store
   // const [searchQuery, setSearchQuery] = useState(''); // Состояние для хранения запроса
   const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
@@ -73,6 +74,9 @@ const [categories, setCategories] = useState<string[]>([]);
               )}
             </>
           )}
+
+          {/* Добавляем выпадающее меню категорий */}
+          {/* <CategoryDropdown categories={categories} /> */}
         </div>
 
         {/* Справа: Поиск, имя пользователя и кнопка Войти/Выйти */}

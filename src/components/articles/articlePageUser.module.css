@@ -1,0 +1,74 @@
+.articlecontent {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    text-align: justify; /* Выравнивание текста по ширине (слева и справа) */
+    margin: 20px auto; /* Центрирование статьи и отступы сверху/снизу */
+    max-width: 800px; /* Ограничение ширины контента */
+    padding: 0 20px; /* Внутренние отступы слева и справа */
+  }
+  
+  .articlecontent h1, .articlecontent h2, .articlecontent h3 {
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: left; /* Заголовки выравниваются по левому краю */
+  }
+
+  /* Стили для заголовков */
+.articlecontent h1 {
+    font-size: 2em;
+  }
+  
+  .articlecontent h2 {
+    font-size: 1.75em;
+  }
+  
+  .articlecontent h3 {
+    font-size: 1.5em;
+  }
+  
+  /* Стили для списков */
+  .article-content ul,
+.article-content ol {
+  margin-left: 20px; /* Отступ для списка */
+  list-style-position: inside; /* Маркеры/номера выравниваются с текстом */
+  text-align: left; /* Текст в списках выравнивается по левому краю */
+  margin-bottom: 20px; /* Отступ снизу между списками */
+}
+
+  .articlecontent ul {
+    list-style-type: disc; /* или square для квадратов */
+  }
+  
+  .articlecontent ol {
+    list-style-type: decimal;
+  }
+  
+  .articlecontent li {
+    margin-bottom: 10px;
+  }
+  
+  /* Стили для параграфов */
+  .articlecontent p {
+    margin-bottom: 20px; /* Отступ между абзацами */
+    text-align: justify; /* Выравнивание текста по ширине (слева и справа) */
+  }
+
+  /* Стили для жирного текста */
+.articlecontent strong {
+    font-weight: bold;
+  }
+  
+  /* Стили для курсива */
+  .articlecontent em {
+    font-style: italic;
+  }
+
+  /* Дополнительные стили для цитат */
+.articlecontent blockquote {
+    margin-left: 20px;
+    font-style: italic;
+    color: #666;
+    border-left: 4px solid #ddd;
+    padding-left: 16px;
+  }

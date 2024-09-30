@@ -1,0 +1,83 @@
+/* Основной контейнер */
+.div {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  
+  /* Список категорий */
+  .ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Элементы списка категорий */
+  .li {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .li:hover {
+    background-color: #007bff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Ссылки категорий */
+  .a {
+    display: block;
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: #007bff;
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .a:hover {
+    color: #ffffff;
+    transform: translateX(5px); /* Небольшой сдвиг вправо при наведении */
+  }
+  
+  /* Стили для текста ошибки */
+  .div > .error {
+    color: red;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  @media (max-width: 600px) {
+    .div {
+      padding: 15px;
+    }
+  
+    .h2 {
+      font-size: 1.6rem;
+    }
+  
+    a {
+      font-size: 1rem;
+    }
+  
+    .li {
+      padding: 8px;
+    }
+  }
+  

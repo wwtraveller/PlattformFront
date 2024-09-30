@@ -9,7 +9,8 @@ interface Article {
   id: number;
   title: string;
   shortDescription: string;
-  imageUrl: string;
+  imageUrl: string | null; // Теперь photo может быть null
+  categories: { id: number; name: string }[]; // Массив категорий
 }
 
 const ArticleUser = () => {
@@ -17,22 +18,23 @@ const ArticleUser = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true); // Индикация загрузки
-  const [redirectPath, setRedirectPath] = useState<string | undefined>(undefined);
   const { user } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axios.get(`/api/articles`, {
-          params: { category },
-        });
-        setArticles(response.data);
+        const response = await axios.get(`/api/articles`);
+        // Фильтруем статьи, проверяя наличие категории в массиве categories
+        const filteredArticles = response.data.filter((article: Article) =>
+          article.categories.some((cat) => cat.name === category)
+        );
+        setArticles(filteredArticles);
       } catch (error) {
         console.error("Ошибка при получении статей:", error);
         setError("Ошибка при получении статей.");
       } finally {
-        setLoading(false); // Останавливаем индикацию загрузки
+        setLoading(false);
       }
     };
 
@@ -47,11 +49,6 @@ const ArticleUser = () => {
     } else {
       navigate('/');
     }
-  };
-
-  const handleReadMoreClick = (path: string) => {
-    setRedirectPath(path);
-    navigate('/login');
   };
 
   const defaultImageUrl = "https://st2.depositphotos.com/4152719/8388/i/450/depositphotos_83882536-stock-photo-competitive-pricing-concept-image-with.jpg";
@@ -101,7 +98,7 @@ const ArticleUser = () => {
       ) : (
         <div>
           <p>Нет статей для этой категории.</p>
-          <Link to="/categories">Вернуться к списку категорий</Link>
+          <Link to="/catLinks">Вернуться к списку категорий</Link>
         </div>
       )}
     </div>

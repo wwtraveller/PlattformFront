@@ -1,0 +1,150 @@
+/* Основные стили контейнера */
+.div {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #fff;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease;
+  }
+  
+  .li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Контейнер для кнопок внутри li */
+  .buttonGroup {
+    display: flex;
+    gap: 10px; /* Отступ между кнопками */
+  }
+  
+  .button {
+    font-size: 1rem;
+    padding: 10px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    text-align: center;
+    min-width: 100px; /* Минимальная ширина кнопки для выравнивания */
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Выравнивание текста по центру */
+  .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Модальное окно */
+  .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  .modal h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .modal input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .modal input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .modal button {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    margin-top: 10px;
+    border-radius: 8px;
+  }
+  
+  .modal button:first-child {
+    background-color: #28a745;
+  }
+  
+  .modal button:first-child:hover {
+    background-color: #218838;
+  }
+  
+  .modal button:last-child {
+    background-color: #dc3545;
+  }
+  
+  .modal button:last-child:hover {
+    background-color: #c82333;
+  }
+  
+  /* Адаптивность */
+  @media (max-width: 600px) {
+    .div {
+      padding: 10px;
+    }
+  
+    .li {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .button-group {
+      width: 100%;
+      justify-content: space-between;
+    }
+  
+    .button {
+      width: 100%;
+    }
+  }
+  

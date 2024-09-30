@@ -1,131 +1,37 @@
-:root {
-  --primary-color: #6788f3;
-  --hover-color: #5278f7;
-  --danger-color: #d9534f;
-  --warning-color: #f0ad4e;
-  --text-color: #333;
-  --bg-color: #ffffff;
-  --border-color: #ddd;
-}
 
-.articlesContainer {
-  padding: 24px;
-  background-color: var(--bg-color);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.input, 
-.textarea, 
-.select {
-  padding: 12px;
-  border: 1px solid var(--border-color);
+.articles {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
   border-radius: 8px;
-  font-size: 15px;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.input:focus, 
-.textarea:focus, 
-.select:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(103, 136, 243, 0.2);
+.articles h3 {
+  text-align: center;
+  color: #333;
 }
 
-.textarea {
-  resize: vertical;
-  min-height: 100px;
-}
-
-.submitButton {
-  padding: 12px 24px;
-  background-color: var(--primary-color);
-  color: #fff;
+.articles button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-.submitButton:hover {
-  background-color: var(--hover-color);
-  transform: translateY(-2px);
-}
-
-.articleList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.articleItem {
-  padding: 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  background-color: var(--bg-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.articleItem:hover {
-  border-color: var(--primary-color);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.articleItem h4 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--primary-color);
-  flex: 1;
-}
-
-.articleItem p {
-  margin: 0;
-  font-size: 14px;
-  color: var(--text-color);
-  flex: 2;
-}
-
-.editButton, 
-.deleteButton {
-  margin-left: 10px;
-  padding: 8px 16px;
-  border: none;
-  cursor: pointer;
-  font-size: 13px;
-  border-radius: 8px;
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-.editButton {
-  background-color: var(--warning-color);
+  border-radius: 5px;
+  background-color: #007bff;
   color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.editButton:hover {
-  background-color: darken(var(--warning-color), 10%);
-  transform: translateY(-2px);
+.articles button:hover {
+  background-color: #0056b3;
 }
 
-.deleteButton {
-  background-color: var(--danger-color);
-  color: white;
+
+.error-message {
+  color: red;
+  text-align: center;
 }
 
-.deleteButton:hover {
-  background-color: darken(var(--danger-color), 10%);
-  transform: translateY(-2px);
-}
