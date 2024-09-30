@@ -40,7 +40,7 @@ const CategoryLinks: React.FC = () => {
         <ul className={styles.ul}>
           {categories.map(category => (
             <li className={styles.li} key={category}>
-              <Link to={`/category/${encodeURIComponent(category)}`}>
+              <Link className={styles.a} to={`/category/${encodeURIComponent(category)}`}>
                 {category.charAt(0).toUpperCase() + category.slice(1)}
               </Link>
             </li>

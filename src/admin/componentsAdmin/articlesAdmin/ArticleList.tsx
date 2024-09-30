@@ -84,14 +84,14 @@ const ArticleList = ({ articles, onEdit, onDelete }: ArticleListProps) => {
           ))}
         </select>
       </div>
-      <h2>Список артиклей</h2>
-      <ul>
+      <h2 className={styles.h2}>Список артиклей</h2>
+      <ul className={styles.ul}>
         {filteredArticles.map((article) => (
-          <li key={article.id}>
-            <strong>{article.title}</strong> — Автор: {article.username}
+          <li className={styles.li} key={article.id}>
+            <strong className={styles.strong}>{article.title}</strong> — Автор: {article.username}
             <div className={styles.buttonGroup}>
-              <button onClick={() => onEdit(article.id)}>Редактировать</button>
-              <button onClick={() => onDelete(article.id)}>Удалить</button>
+              <button className={styles.button} onClick={() => onEdit(article.id)}>Редактировать</button>
+              <button className={styles.button} onClick={() => onDelete(article.id)}>Удалить</button>
             </div>
           </li>
         ))}

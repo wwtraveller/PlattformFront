@@ -160,13 +160,13 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ articleId, categoryId, catego
                 }}
             />
 
-            <select value={selectedCategory || ''} onChange={handleCategoryChange} required>
+            <select className={styles.select} value={selectedCategory || ''} onChange={handleCategoryChange} required>
                 <option value="" disabled>Выберите категорию</option>
                 {categories.map(category => (
                     <option key={category.id} value={category.id}>{category.name}</option>
                 ))}
             </select>
-            <button type="submit">Сохранить</button>
+            <button className={styles.button} type="submit">Сохранить</button>
         </form>
     );
 };

@@ -1,5 +1,5 @@
 /* Основные стили для формы */
-form {
+.articleForm {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -12,7 +12,7 @@ form {
 }
 
 /* Стили для заголовка статьи */
-input[type="text"] {
+.articleTitle[type="text"] {
   padding: 12px;
   font-size: 18px;
   border: 1px solid #ddd;
@@ -22,7 +22,7 @@ input[type="text"] {
   box-sizing: border-box;
 }
 
-input[type="text"]:focus {
+.articleTitle[type="text"]:focus {
   border-color: #007bff;
   outline: none;
 }
@@ -49,7 +49,7 @@ input[type="text"]:focus {
 }
 
 /* Стили для выпадающего списка категорий */
-select {
+.select {
   padding: 12px;
   font-size: 16px;
   border: 1px solid #ddd;
@@ -59,13 +59,13 @@ select {
   background-color: #fff;
 }
 
-select:focus {
+.select:focus {
   border-color: #007bff;
   outline: none;
 }
 
 /* Стили для кнопки */
-button[type="submit"] {
+.button[type="submit"] {
   padding: 12px 20px;
   font-size: 18px;
   color: #fff;
@@ -76,12 +76,12 @@ button[type="submit"] {
   transition: background-color 0.3s ease;
 }
 
-button[type="submit"]:hover {
+.button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
 /* Стили для ошибки */
-div[style*="color: red"] {
+.errorMessage[style*="color: red"] {
   font-size: 16px;
   color: #ff4d4d;
   padding: 10px;
@@ -104,15 +104,15 @@ div[style*="color: red"] {
 
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
-  form {
+  .articleForm {
     padding: 15px;
   }
 
-  input[type="text"], select, button[type="submit"] {
+  .articleTitle[type="text"], .select, .button[type="submit"] {
     font-size: 16px;
   }
 
-  button[type="submit"] {
+  .button[type="submit"] {
     padding: 10px;
   }
 }
