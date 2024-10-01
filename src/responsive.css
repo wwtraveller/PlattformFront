@@ -1,0 +1,125 @@
+/* Адаптив для мобильных устройств (до 576px) */
+@media (max-width: 576px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      height: auto;
+      padding: 10px;
+    }
+  
+    .navMenu {
+      flex-direction: column;
+    }
+  
+    .userInfo {
+      flex-direction: column;
+    }
+  
+    .userName {
+      font-size: 14px;
+    }
+  
+    .avatar {
+      width: 30px;
+      height: 30px;
+    }
+
+    .navMenu {
+      display: none; /* Скрываем меню на малых экранах */
+    }
+  
+    /* Кнопка гамбургера */
+    .hamburger {
+      display: block; /* Показываем иконку гамбургера */
+      font-size: 30px;
+      cursor: pointer;
+    }
+  
+    /* Открытое меню */
+    .navMenu.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background-color: var(--bg-color);
+      z-index: 1000;
+    }
+  
+    .navLink {
+      padding: 10px 20px;
+      text-align: left;
+    }
+  }
+  
+  /* Для планшетов (576px до 768px) */
+  @media (min-width: 576px) and (max-width: 768px) {
+    .header {
+      padding: 15px;
+    }
+  
+    .navMenu {
+      justify-content: space-between;
+    }
+  
+    .userInfo {
+      gap: 20px;
+    }
+  }
+  
+  /* Для ноутбуков (от 768px до 992px) */
+  @media (min-width: 768px) and (max-width: 992px) {
+    .header {
+      padding: 20px;
+    }
+  
+    .navLink {
+      font-size: 18px;
+    }
+  }
+  
+  /* Для больших экранов (от 992px и выше) */
+  @media (min-width: 992px) {
+    .header {
+      padding: 25px;
+    }
+  
+    .navLink {
+      font-size: 20px;
+    }
+  }
+
+  /* Адаптив для статьи */
+@media (max-width: 768px) {
+    .articlecontent {
+      padding: 15px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .articlecontent {
+      padding: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  }
+
+  /* Поисковая строка на маленьких экранах */
+@media (max-width: 576px) {
+    .searchInput {
+      width: 0; /* Сворачиваем в лупу */
+    }
+  
+    .search:focus-within .searchInput {
+      width: 100px; /* Раскрываем при фокусе */
+    }
+  
+    .searchButton {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  

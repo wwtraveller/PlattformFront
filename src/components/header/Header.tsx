@@ -32,6 +32,7 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const userAvatar = useAppSelector((state: RootState) => state.auth.user.photo); // Предположим, что в user.photo хранится URL аватара
+  const [isOpen, setIsOpen] = useState(false); // Логика для гамбургер-меню
 
   const handleLogout = () => {
     // чистим браузерное хранилище данных
@@ -45,10 +46,17 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
  // Здесь можно обновить состояние или сделать перенаправление при успешной авторизации
   };
 
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
 const [categories, setCategories] = useState<string[]>([]);
   return (
     <header className={styles.header}>
-      <div className={styles.navMenu}>
+      <div className={styles.hamburger} onClick={toggleMenu}>
+        &#9776; {/* Иконка гамбургера */}
+      </div>
+      <div className={`${styles.navMenu} ${isOpen ? styles.open : ''}`}>
         <div className={styles.navLeft}>
           {/* Отображение ссылок для незарегистрированных пользователей */}
           {!user?.username &&

@@ -57,14 +57,71 @@
 
   .navLink {
     color: var(--text-color);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s, font-weight 0.3s;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s, font-weight 0.3s;
   }
   
   .navLink:hover {
     color: var(--primary-color);
   }
+
+  .hamburger {
+    display: none; /* Скрываем гамбургер на больших экранах */
+  }
+  
+  /* Адаптив для мобильных устройств (до 768px) */
+  @media (max-width: 768px) {
+    .hamburger {
+      display: block;
+      font-size: 30px;
+      cursor: pointer;
+    }
+  
+    .navMenu {
+      display: none; /* Скрываем меню на маленьких экранах */
+    }
+  
+    .navMenu.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background-color: var(--bg-color);
+      z-index: 1000;
+    }
+  
+    .navLink {
+      padding: 10px 20px;
+      text-align: left;
+    }
+  }
+
+  /* Адаптив для экранов ниже 768px */
+@media (max-width: 768px) {
+  .navMenu.open {
+    display: block; /* Открываем меню при клике на гамбургер */
+  }
+
+  .navLink {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .navMenu {
+    flex-direction: column;
+    background-color: var(--bg-color);
+    width: 100%;
+    position: absolute;
+    top: 70px;
+    left: 0;
+  }
+}
 
 .active {
     text-decoration: underline; 
