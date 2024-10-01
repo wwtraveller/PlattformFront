@@ -28,6 +28,7 @@ import FavoritesPage from "components/articles/FavoritesPage";
 import ArticlesListPage from "admin/componentsAdmin/articlesAdmin/ArticlesListPage";
 import Articles from "admin/componentsAdmin/articlesAdmin/Articles";
 import { ToastContainer } from 'react-toastify';
+import UserList from "admin/componentsAdmin/UserListAdmin/UserLIst";
 
 interface SearchItem {
   id: number;
@@ -113,6 +114,7 @@ function App() {
                 <Route path="/admin/createArticles" element={<AdminRoute><Articles /></AdminRoute>} />
                 <Route path="/admin/createCategories" element={<AdminRoute><CategoryManager /></AdminRoute>} />
                 <Route path="/articlesList" element={<AdminRoute><ArticlesListPage /></AdminRoute>} />
+                <Route path="/userList" element={<AdminRoute><UserList /></AdminRoute>} />
               </>
             )}
             {/*!!!! РАСКОМЕНТИРОВАТЬ, КОГДА БУДЕТ ГОТОВА АДМИНКА Защищённый маршрут для админов 
