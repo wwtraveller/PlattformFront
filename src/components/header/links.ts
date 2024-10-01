@@ -12,18 +12,16 @@ export const guestLinks: ILinks[] = [
     pathname: '/about',
     title: 'О нас',
   },
-  // {
-  //   pathname: '/marketing',
-  //   title: 'Маркетинг',
-  // },
   {
-    pathname: '/product',
-    title: 'Продукт',
+    pathname: '/dashboard',
+    title: 'Главная',
   },
+
   // {
-  //   pathname: '/blog',
-  //   title: 'Блог',
+  //   pathname: '/product',
+  //   title: 'Продукт',
   // },
+
   {
     pathname: '/catLinks',
     title: 'Категории'

@@ -1,16 +1,14 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import styles from './header.module.css';
-import { guestLinks } from './links'; // Используем только guestLinks для незарегистрированных пользователей
-import { useState } from 'react';
-import UserMenu from '../user/UserMenu'; // Подключаем меню пользователя
-import AdminMenu from 'admin/AdminMenu'; // Подключаем меню админа
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { logoutUser } from 'features/auth/authSlice';
-import ParentComponent from 'components/search/ParentComponent';
-import Button from 'components/button/Button';
-import ButtonLogReg from 'components/button/ButtonLogReg';
-import { RootState } from 'redux/store';
-
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import styles from "./header.module.css";
+import { adminLinks, guestLinks, userLinks } from "./links";
+import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { logoutUser } from "features/auth/authSlice";
+import ParentComponent from "components/search/ParentComponent";
+import Button from "components/button/Button";
+import ButtonLogReg from "components/button/ButtonLogReg";
+import { RootState } from "redux/store";
+import CategoryLink from "components/categories/CategoryLink";
 
 interface SearchItem {
   id: number;
@@ -26,81 +24,92 @@ interface HeaderProps {
 
 export default function Header({ setError, setSearchResults }: HeaderProps) {
   const location = useLocation();
-  // const { categories } = useAppSelector((state) => state.categories); // Получаем категории из store
-  // const [searchQuery, setSearchQuery] = useState(''); // Состояние для хранения запроса
   const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const userAvatar = useAppSelector((state: RootState) => state.auth.user.photo); // Предположим, что в user.photo хранится URL аватара
+  const userAvatar = useAppSelector(
+    (state: RootState) => state.auth.user.photo
+  );
+  const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
 
   const handleLogout = () => {
-    // чистим браузерное хранилище данных
     localStorage.removeItem("accessToken");
-    // чистим state, выносим 'мусор' данных за пользователем
     dispatch(logoutUser());
     navigate("/");
   };
 
-  const handleLoginSuccess = () => {
- // Здесь можно обновить состояние или сделать перенаправление при успешной авторизации
+  const handleMouseEnter = () => {
+    setIsCategoryMenuOpen(true);
   };
 
-const [categories, setCategories] = useState<string[]>([]);
+  const handleMouseLeave = () => {
+    setIsCategoryMenuOpen(false);
+  };
+
+  const links = user?.roles?.some((role) => role.authority === 'ROLE_ADMIN')
+  ? adminLinks
+  : user?.username
+  ? userLinks
+  : guestLinks;
+
   return (
     <header className={styles.header}>
       <div className={styles.navMenu}>
         <div className={styles.navLeft}>
-          {/* Отображение ссылок для незарегистрированных пользователей */}
-          {!user?.username &&
-            guestLinks.map((el, index) => (
+          {/* Отображение ссылок в зависимости от пользователя */}
+          {links.map((el, index) => (
+            <div
+              key={index}
+              className={styles.navLinkContainer}
+              onMouseEnter={el.pathname === '/catLinks' ? handleMouseEnter : undefined} // Показ меню при наведении на "Категории"
+              onMouseLeave={el.pathname === '/catLinks' ? handleMouseLeave : undefined} // Скрытие меню при уходе мыши
+            >
+               {el.pathname === '/catLinks' ? (
+                  <span
+                    className={`${styles.navLink} ${location.pathname === el.pathname ? styles.active : ''}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleMouseEnter();
+                    }}
+                  >
+                    {el.title}
+                  </span>
+                ) : (
               <Link
-                key={index}
-                className={`${styles.navLink} ${
-                  location.pathname === el.pathname ? styles.active : ''
-                }`}
+                className={`${styles.navLink} ${location.pathname === el.pathname ? styles.active : ''}`}
                 to={el.pathname}
               >
                 {el.title}
               </Link>
-            ))}
-            
-          {/* Если пользователь авторизован, отображаем меню в зависимости от роли */}
-          {user?.username && (
-            <>
-              {user.roles.some((role) => role.authority === 'ROLE_ADMIN') ? (
-                <AdminMenu /> // Для админов
-              ) : (
-                <UserMenu /> // Для зарегистрированных пользователей
+                )}
+              {/* Всплывающее меню для "Категории" */}
+              {el.pathname === '/catLinks' && isCategoryMenuOpen && (
+                <div className={styles.categoryMenu}>
+                  <CategoryLink /> {/* Компонент для отображения вложенных категорий */}
+                </div>
               )}
-            </>
-          )}
-
-          {/* Добавляем выпадающее меню категорий */}
-          {/* <CategoryDropdown categories={categories} /> */}
+            </div>
+          ))}
         </div>
 
-        {/* Справа: Поиск, имя пользователя и кнопка Войти/Выйти */}
         <div className={styles.navRight}>
           <ParentComponent /> {/* Компонент поиска */}
-          
-          {/* Если пользователь авторизован, показываем его имя и кнопку "Выйти" */}
+
           {user?.username ? (
             <>
               <Link to="/profile">
                 <div className={styles.userInfo}>
-                    <img
-                    src={userAvatar || '/default-FFA-avatar.png'}  
+                  <img
+                    src={user.photo || '/default-FFA-avatar.png'}
                     alt="User Avatar"
                     className={styles.avatar}
-                     
-                    />
-                 
+                  />
                 </div>
               </Link>
               <Button name="Выйти" onClick={handleLogout} />
             </>
           ) : (
-            <ButtonLogReg onLoginSuccess={handleLoginSuccess} />
+<ButtonLogReg onLoginSuccess={() => {}} />
           )}
         </div>
       </div>
