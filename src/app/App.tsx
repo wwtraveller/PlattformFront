@@ -1,9 +1,7 @@
 import { HashRouter, Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Layout from "../components/layout/Layout";
-import Marketing from "../components/categories/marketing/Marketing";
 import About from "../components/about/About";
 import Product from "../components/categories/product/Product";
-import Blog from "../components/categories/blog/Blog";
 import "./App.css"; // Сохраняем подключение стилей
 import SearchErrorPage from "components/search/SearchErrorPage";
 import SearchResultsPage from "components/search/SearchResultsPage";
@@ -78,6 +76,7 @@ function App() {
             {/* Незарегистрированный пользователь - доступные страницы */}
             <Route path="/about" element={<About />} />
             <Route path="/product" element={<Product />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             {/* <Route path="/blog" element={<Blog />} /> */}
             <Route path="/search-results" element={<SearchResultsPage />} />
             <Route path="/search-error" element={<SearchErrorPage />} />

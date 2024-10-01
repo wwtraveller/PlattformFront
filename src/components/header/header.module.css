@@ -55,14 +55,14 @@
     gap: 15px;
   }
 
-  .navLink {
+  .navLinkContainer {
     color: var(--text-color);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s, font-weight 0.3s;
   }
   
-  .navLink:hover {
+  .navLinkContainer:hover {
     color: var(--primary-color);
   }
 
@@ -126,7 +126,7 @@
 .active {
     text-decoration: underline; 
     color: var(--active-color); /* Более насыщенный оттенок синего */
-    font-weight: 700; /* Жирный текст */
+    font-weight: 600; /* Жирный текст */
     text-decoration: none !important; /* Убираем подчеркивание полностью */
 }
 
@@ -139,7 +139,7 @@
 
 .userName {
   font-size: 16px;
-  color: #333;
+  color: #932727;
   /* margin-left: 10px; */
   cursor: pointer;
 }
@@ -149,3 +149,46 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;}
+
+
+  /*-------------------*/
+
+
+  /* Стили для выпадающего меню категорий */
+.categoryMenu {
+  position: absolute;
+  top: 50px; /* Положение под хедером */
+  left: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  /* padding: 10px; */
+  z-index: 1000;
+}
+
+.categoryMenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.categoryMenu li {
+  padding: 8px 12px;
+  cursor: pointer;
+  
+}
+
+.categoryMenu li:hover {
+  background-color: #f0f0f0;
+}
+
+.categoryLink a{
+  font-size: 0px;
+}
+.navLink{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
