@@ -71,5 +71,9 @@ export const adminLinks: ILinks[] = [
         pathname: '/favorites',
         title: 'Избранное'
       },
+      {
+        pathname: '/userList',
+        title: 'user'
+      },
      
   ];
