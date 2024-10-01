@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './articleList.module.css';
 import axios from 'axios';
 import ArticleForm from './ArticleForm';
+import DeleteModal from './DeleteModal';
 
 interface Article {
   id: number;
@@ -30,6 +31,8 @@ const ArticleList = ({ articles, onEdit, onDelete }: ArticleListProps) => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false); 
+  const [articleToDelete, setArticleToDelete] = useState<Article | null>(null);
 
 
   // Получение категорий из API
@@ -65,6 +68,26 @@ const ArticleList = ({ articles, onEdit, onDelete }: ArticleListProps) => {
       )
     : articles;
 
+     // Открываем модальное окно для подтверждения удаления
+  const handleDeleteClick = (article: Article) => {
+    setArticleToDelete(article);
+    setShowDeleteModal(true);
+  };
+
+  // Подтверждение удаления
+  const confirmDelete = () => {
+    if (articleToDelete) {
+      onDelete(articleToDelete.id); // Вызываем функцию удаления
+    }
+    closeModal();
+  };
+
+  // Закрытие модального окна
+  const closeModal = () => {
+    setShowDeleteModal(false);
+    setArticleToDelete(null);
+  };
+
   if (loading) return <p>Загрузка категорий...</p>;
   if (error) return <p>Ошибка: {error}</p>;
 
@@ -91,11 +114,19 @@ const ArticleList = ({ articles, onEdit, onDelete }: ArticleListProps) => {
             <strong>{article.title}</strong> — Автор: {article.username}
             <div className={styles.buttonGroup}>
               <button onClick={() => onEdit(article.id)}>Редактировать</button>
-              <button onClick={() => onDelete(article.id)}>Удалить</button>
+              <button onClick={() => handleDeleteClick(article)}>Удалить</button>
             </div>
           </li>
         ))}
       </ul>
+      {/* Модальное окно для подтверждения удаления */}
+      {showDeleteModal && articleToDelete && (
+        <DeleteModal
+          onConfirm={confirmDelete}
+          onCancel={closeModal}
+          articleTitle={articleToDelete.title}
+        />
+      )}
     </div>
   );
 };
