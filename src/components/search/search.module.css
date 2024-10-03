@@ -15,14 +15,14 @@
 }
 
 .search.expanded {
-  opacity: 0.6; /* Полная непрозрачность при развернутом состоянии */
+  opacity: 0.9; /* Полная непрозрачность при развернутом состоянии */
   background-image: #fff; /* Яркий фон при развернутом состоянии */
   color: #0b09a2;
 }
 
-input.expanded{
+/* input.expanded{
   color: #0b09a2;
-}
+} */
 
 .search :is(input, button) {
   background: transparent;
@@ -34,9 +34,13 @@ input.expanded{
 .searchInput {
   width: 50px;
   transition: width 0.5s;
+  /* display: none;
+  width: 0;
+  transition: width 0.5s ease; */
 }
 
 .searchSelect{
+  /* display: none; */
   width: 0;
   transition: width 0.5s;
 }
@@ -44,18 +48,30 @@ input.expanded{
 .searchButton {
   display: flex;
   flex-direction: column;
-  /* place-items: center; */
+  place-items: center;
   align-items: center;
   width: 10px;
   height: 10px;
   cursor: pointer;
   transition: color 0.25s;
-  background: transparent;
+  background: none;
+  border: none;
+  font-size: 20px;
   margin: 4px;
 }
 
 .searchButton:hover {
   color: #0b09a2;
+}
+
+.searchWrapper.expanded .searchInput {
+  display: block;
+  width: 150px; /* Поле поиска расширяется при развернутом состоянии */
+}
+
+.searchWrapper.expanded .searchSelect {
+  display: block;
+  width: 120px; /* Категории становятся видимыми при развернутом состоянии */
 }
 
 .search:focus-within .searchInput {

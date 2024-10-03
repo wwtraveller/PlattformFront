@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./header.module.css";
 import { adminLinks, guestLinks, userLinks } from "./links";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { logoutUser } from "features/auth/authSlice";
 import ParentComponent from "components/search/ParentComponent";
@@ -32,9 +32,12 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
   );
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false); // Логика для гамбургер-меню
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // Для анимации
 
   const handleLogout = () => {
+    // чистим браузерное хранилище данных
     localStorage.removeItem("accessToken");
+    // чистим state, выносим 'мусор' данных за пользователем
     dispatch(logoutUser());
     navigate("/");
   };
@@ -58,16 +61,62 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
   : guestLinks;
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(!isOpen); // Открываем/закрываем меню
+    setIsMenuOpen(!isMenuOpen); // Для анимации гамбургера
   };
+
+  // Функция для закрытия меню после перехода по ссылке
+  const handleMenuClick = () => {
+    setIsOpen(false); // Закрываем гамбургер-меню
+    setIsMenuOpen(false); // Отключаем анимацию меню
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.querySelector("main")?.classList.add(styles.blurEffect);
+    } else {
+      document.querySelector("main")?.classList.remove(styles.blurEffect);
+    }
+  }, [isOpen]);
 
   return (
     <header className={styles.header}>
-      <div className={styles.hamburger} onClick={toggleMenu}>
-        &#9776; {/* Иконка гамбургера */}
+      {/* Иконка меню */}
+      {/* <div className={styles.hamburger} onClick={toggleMenu}>
+        {isOpen ? '✖' : '☰'}  Иконка меняется на крестик при открытии 
+        </div> */}
+      {/* Гамбургер-меню для мобильных устройств */}
+      <div id="nav-icon" className={`${styles.hamburger} ${isMenuOpen ? styles.open : ""}`} onClick={toggleMenu}>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
+      {/* Логотип */}
+      <a href="/">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 100 100"
+              className={styles.logo}
+            >
+              <text x="10" y="53" fontSize="10" fill="currentColor">probusiness24</text>
+            </svg>
+          </a>
+
+      {/* Меню навигации для больших экранов */}
+      {/* <div className={`${styles.navMenu} ${isOpen ? styles.open : ''}`}> */}
       <div className={`${styles.navMenu} ${isOpen ? styles.open : ''}`}>
         <div className={styles.navLeft}>
+          {/* Логотип */}
+          {/* <a href="/">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 100 100"
+              className={styles.logo}
+            >
+              <text x="20" y="53" fontSize="10" fill="currentColor">probusiness24</text>
+            </svg>
+          </a> */}
           {/* Отображение ссылок в зависимости от пользователя */}
           {links.map((el, index) => (
             <div
@@ -78,21 +127,22 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
             >
                {el.pathname === '/catLinks' ? (
                   <span
-                    className={`${styles.navLink} ${location.pathname === el.pathname ? styles.active : ''}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleMouseEnter();
-                    }}
-                  >
-                    {el.title}
-                  </span>
+                  className={`${styles.navLink} ${location.pathname === el.pathname ? styles.active : ''}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleMouseEnter();
+                  }}
+                >
+                  {el.title}
+                </span>
                 ) : (
-              <Link
-                className={`${styles.navLink} ${location.pathname === el.pathname ? styles.active : ''}`}
-                to={el.pathname}
-              >
-                {el.title}
-              </Link>
+                  <Link
+                  className={`${styles.navLink} ${location.pathname === el.pathname ? styles.active : ''}`}
+                  to={el.pathname}
+                  onClick={handleMenuClick}  // Закрываем меню после клика
+                >
+                  {el.title}
+                </Link>
                 )}
               {/* Всплывающее меню для "Категории" */}
               {el.pathname === '/catLinks' && isCategoryMenuOpen && (
@@ -103,7 +153,7 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
             </div>
           ))}
         </div>
-
+          {/* Только кнопки "Войти" и "Поиск" всегда видны */}
         {/* Справа: Поиск, имя пользователя и кнопка Войти/Выйти */}
         <div className={styles.navRight}>
           <ParentComponent /> {/* Компонент поиска */}
@@ -120,13 +170,29 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
                   />
                 </div>
               </Link>
-              <Button name="Выйти" onClick={handleLogout} />
+              <Button className={styles.buttonLogout} name="Выйти" onClick={handleLogout} />
             </>
           ) : (
-<ButtonLogReg onLoginSuccess={() => {}} />
+          <ButtonLogReg className={styles.buttonLogin} onLoginSuccess={() => {}} />
           )}
         </div>
-      </div>
+        </div>
+      
+      {/* Гамбургер-меню для navLeft (на маленьких экранах) */}
+      {isOpen && (
+        <div className={styles.burgerMenu}>
+          {links.map((el, index) => (
+            <Link
+              key={index}
+              className={`${styles.navLink} ${location.pathname === el.pathname ? styles.active : ""}`}
+              to={el.pathname}
+              onClick={handleMenuClick} // Закрываем меню после клика
+            >
+              {el.title}
+            </Link>
+          ))}
+        </div>
+      )}
     </header>
   );
 }

@@ -13,6 +13,7 @@
   
     .userInfo {
       flex-direction: column;
+
     }
   
     .userName {
@@ -50,6 +51,10 @@
     .navLink {
       padding: 10px 20px;
       text-align: left;
+    }
+
+    .iconProfile {
+        display: none;
     }
   }
   
@@ -107,19 +112,49 @@
     }
   }
 
+  /* @media (max-width: 320px) {
+    .articlecontent {
+      padding: 8px;
+      font-size: 10px;
+      line-height: 1.2;
+    }
+  } */
+
   /* Поисковая строка на маленьких экранах */
 @media (max-width: 576px) {
     .searchInput {
       width: 0; /* Сворачиваем в лупу */
+      display: none; /* Скрываем поле поиска */
     }
   
-    .search:focus-within .searchInput {
-      width: 100px; /* Раскрываем при фокусе */
-    }
+    /* .search:focus-within .searchInput { */
+        /* Раскрываем при фокусе */
+      /* width: 100px;  */
+    /* } */
+
+    .searchWrapper.expanded .searchInput {
+        width: 120px;
+        display: block;
+      }
+    
+      .searchWrapper.expanded .searchSelect {
+        width: 90px;
+        display: block;
+      }
   
     .searchButton {
+    display: block; /* Отображаем кнопку лупы */
+    background: none;
+    border: none;
       width: 30px;
       height: 30px;
+      font-size: 24px;
+    }
+     /* Когда происходит клик по лупе, раскрываем поле поиска */
+    .searchActive .searchInput {
+    display: block;
+    width: 150px; /* Расширяем поле поиска */
+    transition: width 0.5s ease;
     }
   }
   

@@ -8,25 +8,42 @@ interface ILinks {
 
 // Ссылки для незарегистрированных пользователей
 export const guestLinks: ILinks[] = [
-  {
-    pathname: '/about',
-    title: 'О нас',
-  },
-  {
-    pathname: '/dashboard',
-    title: 'Главная',
-  },
-
   // {
-  //   pathname: '/product',
-  //   title: 'Продукт',
+  //   pathname: '/dashboard',
+  //   title: 'Главная',
   // },
+  
+  // {
+  //     pathname: '/product',
+  //     title: 'Продукт',
+  //   },
+    
+    {
+      pathname: '/catLinks',
+      title: 'Контент'
+    },
 
-  {
-    pathname: '/catLinks',
-    title: 'Категории'
-    }
-];
+    {
+      pathname: '/about',
+      title: 'О нас',
+    },
+
+    {
+      pathname: '/referenten',
+      title: 'Авторы',
+    },
+
+    {
+      pathname: '/partner',
+      title: 'Партнерство',
+    },
+
+    {
+      pathname: '/contact',
+      title: 'Контакты',
+    },
+
+  ];
 
 // Ссылки для зарегистрированных пользователей
 export const userLinks: ILinks[] = [

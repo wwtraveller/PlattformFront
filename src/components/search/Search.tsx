@@ -52,7 +52,8 @@ const Search = (props: SearchProps) => {
   const [error, setError] = useState<string | null>(null);
   const [items, setItems] = useState<SearchItem[]>([]); // Данные для фильтрации
   const [filteredItems, setFilteredItems] = useState<SearchItem[]>([]); // Результаты live-фильтрации
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false); // Логика для сворачивания/разворачивания
+  const [isSearchActive, setIsSearchActive] = useState(false);
 
   const handleFocus = () => {
     setIsExpanded(true);
@@ -162,44 +163,54 @@ const Search = (props: SearchProps) => {
     //console.log('Updated Categories:', updatedCategories);
   };
 
+  const toggleExpandSearch = () => {
+    setIsExpanded(!isExpanded); // Логика для разворачивания поля поиска
+  };
+
+  const toggleSearch = () => {
+    setIsSearchActive(!isSearchActive);
+  };
 
   return (
     <div className={`${styles.search} ${isExpanded ? styles.expanded : ''}`}>
-      <div className={styles.searchWrapper}>
+      <div className={`${styles.searchWrapper} ${isExpanded ? styles.expanded : ''}`}>
+
+        {/* Кнопка лупы */}
         <div className={styles.searchIcon}>
-        <button type="button" className={styles.searchButton}>
-      <i className="ri-search-2-line" >
-      </i>
-    </button>
-    <div className={styles.selectContainer}>
-        <select 
-          value={group}
-          onChange={handleGroupChange}
-          className={styles.searchSelect}
-        >
+          <button type="button" className={styles.searchButton} onClick={toggleExpandSearch}>
+            <i className="ri-search-2-line"></i>
+          </button>
+          <div className={styles.selectContainer}>
+            <select 
+              value={group}
+              onChange={handleGroupChange}
+              className={`${styles.searchSelect} ${isExpanded ? styles.expanded : ''}`}
+            >
          
-          <option  value="">Все категории</option>
+            <option  value="">Все категории</option>
           
-          {categories.map((category) => (
-          <option key={category} value={category}>
-            {category.charAt(0).toUpperCase() + category.slice(1)}
-          </option>
-        ))}
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </option>
+            ))}
         
-        </select>
+            </select>
+          </div>
+
+          {/* Поле поиска */}
+          <input
+            type="text"
+            value={query}
+            onChange={handleInputChange}
+            onKeyPress={handleKeyPress}
+            placeholder="Поиск"
+            className={`${styles.searchInput} ${isExpanded ? styles.expanded : ''}`}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+          />
+        
         </div>
-        <input
-          type="text"
-          value={query}
-          onChange={handleInputChange}
-          onKeyPress={handleKeyPress}
-          placeholder="Поиск"
-          className={styles.searchInput}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-        />
-        
-    </div>
       </div>
       <SearchFilter items={items} query={query} />
     </div>

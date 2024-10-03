@@ -34,6 +34,10 @@ function Layout() {
         <Outlet />
         {/* Показ ошибок поиска как отдельной страницы */}
         {error && <div style={{ color: 'red', marginBottom: '20px' }}>{error}</div>}
+        <a href="https://platform-qxs32.ondigitalocean.app/" target="_blank" className={styles.iconProfile} rel="noreferrer">
+        {/* <i className ="fa-regular fa-bell"></i> */}
+        <i className ="fa-solid fa-house"></i>
+        </a>
       </main>
       <Footer />
     </div>
