@@ -101,11 +101,11 @@ export default function About() {
   ];
   const imagesQa = [
     {
-      src: "https://avatars.githubusercontent.com/u/30770110?v=4",
-      caption: "Акмур Забытахунова",
+      src: "https://ca.slack-edge.com/T049BEB3UQP-U064D5MSW3C-0e0bb58a63e4-512",
+      caption: "Акмоор Забытахунова",
     },
     {
-      src: "https://ca.slack-edge.com/T049BEB3UQP-U06M0TQMKML-a58762b0836e-192",
+      src: "https://ca.slack-edge.com/T049BEB3UQP-U06M0TQMKML-a58762b0836e-512",
       caption: "Анастасия Григоренко",
     },
   ];
