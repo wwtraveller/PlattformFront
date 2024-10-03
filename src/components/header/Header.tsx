@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./header.module.css";
 import { adminLinks, guestLinks, userLinks } from "./links";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { logoutUser } from "features/auth/authSlice";
 import ParentComponent from "components/search/ParentComponent";
@@ -31,6 +31,8 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
     (state: RootState) => state.auth.user.photo
   );
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
+  const hideMenuTimeout = useRef<NodeJS.Timeout | null>(null); // Таймер для скрытия меню
+
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
@@ -39,11 +41,16 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
   };
 
   const handleMouseEnter = () => {
+    if (hideMenuTimeout.current) {
+      clearTimeout(hideMenuTimeout.current);
+    }
     setIsCategoryMenuOpen(true);
   };
 
   const handleMouseLeave = () => {
-    setIsCategoryMenuOpen(false);
+    hideMenuTimeout.current = setTimeout(() => {
+      setIsCategoryMenuOpen(false);
+    }, 300);
   };
 
   const links = user?.roles?.some((role) => role.authority === 'ROLE_ADMIN')
@@ -73,6 +80,9 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
                     }}
                   >
                     {el.title}
+                    <span className={styles.arrow}>
+                      {isCategoryMenuOpen ? '▲' : '▼'}
+                    </span>
                   </span>
                 ) : (
               <Link

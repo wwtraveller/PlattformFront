@@ -46,13 +46,14 @@
   display: flex;
   align-items: center; /* Выравнивание по вертикали */
   justify-content: space-between; /* Разделение на лево и право */
-  width: 100%; /* Растягивание на всю ширину */
+  width: 100%; 
   }
 
   .navLeft, .navRight {
     display: flex;
     align-items: center; 
-    gap: 15px;
+    box-sizing: border-box; 
+    gap: 20px;
   }
 
   .navLinkContainer {
@@ -106,7 +107,7 @@
   border: 1px solid #ddd;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
-  /* padding: 10px; */
+  transition: opacity 0.2s ease-in-out; /* Плавное исчезновение */
   z-index: 1000;
 }
 
@@ -134,4 +135,10 @@
   align-items: center;
   flex-direction: row;
   justify-content: center;
+}
+
+.arrow {
+  margin-left: 5px;
+  font-size: 12px;
+  transition: transform 0.3s;
 }
