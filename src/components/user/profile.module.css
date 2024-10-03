@@ -24,7 +24,7 @@
   left: 0;
   width: 100%; /* Фон занимает всю ширину контейнера */
   height: 200px; /* Задаем фиксированную высоту фона */
-  background-image: url('https://img.freepik.com/free-photo/3d-modern-technology-background-with-flowing-connecting-lines_1048-11701.jpg?t=st=1727722241~exp=1727725841~hmac=db9fa8760db5bdd1ed39949b7522c449f8f5cd804eedbfdce9b75227e91b0f23&w=1380');
+  background-image: url('https://images.unsplash.com/photo-1492892132812-a00a8b245c45?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
   background-size: cover;
   background-position: center;
   border-radius: 10px 10px 0 0; /* Скругленные верхние углы фона */

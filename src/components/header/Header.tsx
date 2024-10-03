@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./header.module.css";
 import { adminLinks, guestLinks, userLinks } from "./links";
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { logoutUser } from "features/auth/authSlice";
 import ParentComponent from "components/search/ParentComponent";
@@ -33,6 +33,8 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false); // Логика для гамбургер-меню
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Для анимации
+  const hideMenuTimeout = useRef<NodeJS.Timeout | null>(null); // Таймер для скрытия меню
+
 
   const handleLogout = () => {
     // чистим браузерное хранилище данных
@@ -47,11 +49,16 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
      };
 
   const handleMouseEnter = () => {
+    if (hideMenuTimeout.current) {
+      clearTimeout(hideMenuTimeout.current);
+    }
     setIsCategoryMenuOpen(true);
   };
 
   const handleMouseLeave = () => {
-    setIsCategoryMenuOpen(false);
+    hideMenuTimeout.current = setTimeout(() => {
+      setIsCategoryMenuOpen(false);
+    }, 300);
   };
 
   const links = user?.roles?.some((role) => role.authority === 'ROLE_ADMIN')
@@ -127,14 +134,17 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
             >
                {el.pathname === '/catLinks' ? (
                   <span
-                  className={`${styles.navLink} ${location.pathname === el.pathname ? styles.active : ''}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleMouseEnter();
-                  }}
-                >
-                  {el.title}
-                </span>
+                    className={`${styles.navLink} ${location.pathname === el.pathname ? styles.active : ''}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleMouseEnter();
+                    }}
+                  >
+                    {el.title}
+                    <span className={styles.arrow}>
+                      {isCategoryMenuOpen ? '▲' : '▼'}
+                    </span>
+                  </span>
                 ) : (
                   <Link
                   className={`${styles.navLink} ${location.pathname === el.pathname ? styles.active : ''}`}

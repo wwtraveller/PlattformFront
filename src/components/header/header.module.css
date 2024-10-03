@@ -50,9 +50,10 @@
 .navLeft, .navRight {
   display: flex;
   align-items: center; 
+  box-sizing: border-box;
   gap: 20px;
-  padding: 10px;
-  white-space: nowrap; /* Предотвращает перенос ссылок меню на новые строки */
+  /* padding: 10px;
+  white-space: nowrap; Предотвращает перенос ссылок меню на новые строки */
 }
   
 .navLinkContainer {
@@ -103,7 +104,7 @@
   border: 1px solid #ddd;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
-  /* padding: 10px; */
+  transition: opacity 0.2s ease-in-out; /* Плавное исчезновение */
   z-index: 1000;
 }
 
@@ -333,3 +334,10 @@
 } */
 
   /*-------------------*/
+
+
+.arrow {
+  margin-left: 5px;
+  font-size: 12px;
+  transition: transform 0.3s;
+}
