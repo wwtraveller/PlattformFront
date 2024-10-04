@@ -93,7 +93,7 @@ const Profile: React.FC = () => {
 
     return response.data.avatarUrl; // Предполагается, что сервер возвращает URL загруженного аватара
   };
-
+  // загрузка аватарки с локального компьютера.
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
@@ -122,7 +122,7 @@ const Profile: React.FC = () => {
       setAvatarPreview(null);
     }
   };
-
+  // Загрузка аватара через URL
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAvatarUrl(event.target.value);
     setAvatarPreview(event.target.value); // Обновить предварительный просмотр для URL

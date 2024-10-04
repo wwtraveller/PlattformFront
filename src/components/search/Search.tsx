@@ -130,9 +130,7 @@ const Search = (props: SearchProps) => {
       navigate("/search-error", {
         state: { error: "Ошибка при выполнении поиска. Попробуйте снова." },
       });
-      {
-        /*error: 'Ошибка при выполнении поиска. Попробуйте снова.' */
-      }
+  
     } finally {
       setIsSearching(false);
       setQuery("");
@@ -194,12 +192,12 @@ const Search = (props: SearchProps) => {
             role="img"
           >
             <path
-              vector-effect="non-scaling-stroke"
+              vectorEffect="non-scaling-stroke"
               stroke="var(--icon-color, #001e00)"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-miterlimit="10"
-              stroke-width="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeMiterlimit="10"
+              strokeWidth="1.5"
               d="M10.688 18.377a7.688 7.688 0 100-15.377 7.688 7.688 0 000 15.377zm5.428-2.261L21 21"
             ></path>
           </svg>

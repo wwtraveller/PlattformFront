@@ -14,6 +14,5 @@ export interface IUserData {
   accessToken: string
   refreshToken: string
   roles: Role[]
-  avatar: string
   }
   
