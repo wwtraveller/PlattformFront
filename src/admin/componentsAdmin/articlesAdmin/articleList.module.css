@@ -1,7 +1,5 @@
-/* ArticleList.css */
-
 .articleList {
-  max-width: 600px;
+  width: 600px;
   margin: 20px auto;
   padding: 20px;
   border: 1px solid #e0e0e0;
@@ -29,8 +27,7 @@
   border-radius: 8px;
   transition: background-color 0.2s ease;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column; /* Ставим колонки, чтобы модальное окно появлялось под статьей */
 }
 
 .articleList li:hover {
@@ -40,35 +37,123 @@
 .articleList strong {
   font-size: 18px;
   color: #007bff;
-  flex: 1; /* Позволяет заголовку занимать оставшееся пространство */
+  margin-bottom: 10px;
 }
 
 .articleList .buttonGroup {
   display: flex;
-  flex-direction: column; /* Кнопки теперь будут в столбик */
-  gap: 5px; /* Промежуток между кнопками */
+  gap: 5px;
+  margin-top: 10px;
 }
 
-.articleList button {
+.articleList .button {
   padding: 8px 12px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.articleList button:hover {
+.articleList .button:hover {
   background-color: #007bff;
   color: white;
-  transform: translateY(-2px);
 }
 
-.articleList button:nth-child(2) {
+.articleList .button:nth-child(2) {
   background-color: #dc3545;
   color: white;
 }
 
-.articleList button:nth-child(2):hover {
+.articleList .button:nth-child(2):hover {
   background-color: #c82333;
+}
+
+.modalContainer {
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  width: 100%; /* Модальное окно будет растягиваться на всю ширину статьи */
+}
+
+.modalContainer p {
+  margin: 0;
+}
+
+.modalButtons {
+  display: flex;
+  justify-content: flex-start; /* Кнопки выстраиваются в одну строку слева */
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.modalButtons .button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modalButtons .button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Стили для пагинации */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pageButton {
+  background-color: white;
+  color: #0b1015;
+  border: 1px solid #007bff;
+  border-radius: 50%; /* Круглая форма */
+  width: 30px; /* Устанавливаем фиксированную ширину */
+  height: 30px; /* Устанавливаем фиксированную высоту */
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex; /* Используем flexbox для центрирования текста */
+  align-items: center; /* Центрируем по вертикали */
+  justify-content: center; /* Центрируем по горизонтали */
+  font-size: 14px; /* Размер шрифта для цифр */
+}
+
+.pageButton:hover {
+  background-color: #97c2f0;
+  color: white;
+}
+
+.arrowButton {
+  background-color: #97c2f0;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 30px; /* Устанавливаем фиксированную ширину для стрелок */
+  height: 30px; /* Устанавливаем фиксированную высоту для стрелок */
+  margin: 0 5px; /* Отступ между стрелками и номерами страниц */
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex; /* Используем flexbox для центрирования текста */
+  align-items: center; /* Центрируем по вертикали */
+  justify-content: center; /* Центрируем по горизонтали */
+  font-size: 14px; /* Размер шрифта для стрелок */
+}
+
+.arrowButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.active {
+  background-color: #4498f2;
+  color: white;
+}
+
+.ellipsis {
+  margin: 0 5px;
 }
