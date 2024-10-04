@@ -101,22 +101,22 @@ export default function About() {
   ];
   const imagesQa = [
     {
-      src: "https://avatars.githubusercontent.com/u/30770110?v=4",
-      caption: "Акмур Забытахунова",
+      src: "https://ca.slack-edge.com/T049BEB3UQP-U064D5MSW3C-0e0bb58a63e4-512",
+      caption: "Акмоор Забытахунова",
     },
     {
-      src: "https://avatars.githubusercontent.com/u/133078737?v=4",
-      caption: "Анастасия ",
+      src: "https://ca.slack-edge.com/T049BEB3UQP-U06M0TQMKML-a58762b0836e-512",
+      caption: "Анастасия Григоренко",
     },
   ];
   const imagesBack = [
     {
-      src: "https://avatars.githubusercontent.com/u/133078737?v=4",
-      caption: "Алиса Тонгалюк",
-    },
-    {
       src: "https://avatars.githubusercontent.com/u/165147557?v=4",
       caption: "Денис Коваленко",
+    },
+    {
+      src: "https://media.licdn.com/dms/image/v2/D4E03AQH1RP883hIICw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1727607343092?e=1733356800&v=beta&t=sg0uLqdY8V_AWw4FchS8gk4L-0dVOLzfeAMvbBsLICQ",
+      caption: "Алиса Тонгалюк",
     },
     {
       src: "https://avatars.githubusercontent.com/u/165147653?v=4",

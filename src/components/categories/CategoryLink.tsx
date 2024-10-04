@@ -35,7 +35,6 @@ const CategoryLinks: React.FC = () => {
 
   return (
     <div className={styles.div}>
-      <h2 className={styles.h2}>Категории</h2>
       {categories.length > 0 ? (
         <ul className={styles.ul}>
           {categories.map(category => (

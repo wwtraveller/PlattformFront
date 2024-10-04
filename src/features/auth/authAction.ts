@@ -81,3 +81,15 @@ export const checkEmail = async (email: string) => {
   }
 };
 
+
+
+export const updateUserProfile = async (userData: IUserData) => {
+  const userId = userData.id; 
+  const accessToken = localStorage.getItem("accessToken"); // Получаем токен из localStorage
+  const response = await axios.put(`/api/users/${userId}`, userData, {
+    headers: {
+      "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+    });
+  return response.data;
+};

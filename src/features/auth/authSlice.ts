@@ -7,7 +7,7 @@ import { getUserWithToken, loginUser } from "../../features/auth/authAction";
 interface IUserState {
   user: IUserData;
   isLoading: boolean;
-  error: string;
+  error: string | null;
 }
 
 // начальное значение для user
@@ -20,14 +20,14 @@ const initialUser: IUserData = {
   photo: "",
   accessToken: "",
   refreshToken: "",
-  roles: []
+  roles: [],
 };
 
 // создаем state и передаем начальное значение user
 const initialState: IUserState = {
   user: initialUser,
   isLoading: false,
-  error: "",
+  error: null,
 };
 
 // создаем slice
@@ -38,9 +38,18 @@ export const authSlice = createSlice({
     // создаем синхронный action для очистки state
     logoutUser: (state) => {
       state.user = initialUser;
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      
     },
-    setUserAvatar: (state, action: PayloadAction<string | null>) => {
+    setUserData: (state, action: PayloadAction<IUserData>) => {
+      state.user = action.payload;
+    },
+    setUserAvatar: (state, action: PayloadAction<string>) => {
       state.user.photo = action.payload;
+  },
+  updateUserProfile: (state, action: PayloadAction<Partial<IUserData>>) => {
+    state.user = { ...state.user, ...action.payload };
   },
   },
   // ! логика работы с асинхронными действиями
@@ -48,10 +57,13 @@ export const authSlice = createSlice({
     builder
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload;
+        localStorage.setItem("accessToken", action.payload.accessToken);
+        localStorage.setItem("refreshToken", action.payload.refreshToken);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -62,8 +74,8 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload;
       })
-      .addCase(getUserWithToken.pending, (state, action) => {
-        state.isLoading = false;
+      .addCase(getUserWithToken.pending, (state) => {
+        state.isLoading = true;
       })
       .addCase(getUserWithToken.rejected, (state, action) => {
         state.isLoading = false;
@@ -74,4 +86,4 @@ export const authSlice = createSlice({
 
 export default authSlice.reducer;
 // экспортируем синхронные actions из slice
-export const { logoutUser, setUserAvatar } = authSlice.actions;
+export const { logoutUser, setUserAvatar, updateUserProfile, setUserData} = authSlice.actions;
