@@ -52,8 +52,8 @@
   align-items: center; 
   box-sizing: border-box;
   gap: 20px;
-  /* padding: 10px;
-  white-space: nowrap; Предотвращает перенос ссылок меню на новые строки */
+  padding: 10px;
+  white-space: nowrap; /* Предотвращает перенос ссылок меню на новые строки */
 }
   
 .navLinkContainer {
@@ -95,6 +95,12 @@
   object-fit: cover;
 }
 
+.arrow {
+  margin-left: 5px;
+  font-size: 12px;
+  transition: transform 0.3s;
+}
+
 /* Стили для выпадающего меню категорий */
 .categoryMenu {
   position: absolute;
@@ -106,6 +112,9 @@
   width: 100%;
   transition: opacity 0.2s ease-in-out; /* Плавное исчезновение */
   z-index: 1000;
+  opacity: 1; /* Обеспечиваем видимость */
+  max-height: 300px; /* Ограничиваем высоту */
+  overflow-y: auto; /* Добавляем прокрутку при необходимости */
 }
 
 .categoryMenu ul {
@@ -152,7 +161,7 @@
 }
 
 /* Адаптив для мобильных устройств (до 768px) */
-@media (min-width: 993px) {
+@media (max-width: 768px) {
   .hamburger {
     display: block;
     width: 50px;
@@ -244,9 +253,9 @@
     display: none; /* Скрываем обычное меню на маленьких экранах */
   }
 
-  /* .logo {
+  .logo {
     display: none;
-  } */
+  }
 
   /* Кнопки "Поиск" и "Войти" остаются видимыми */
  .navRight {
@@ -277,13 +286,47 @@
   }
 
   .categoryMenu {
-    position: relative; /* Чтобы выпадающее меню шло внутри гамбургера */
-    top: auto; /* Убираем жесткое позиционирование */
-    left: auto; 
-    width: 100%; /* Растягиваем меню на всю ширину */
-    background-color: var(--bg-color);
-    padding: 10px;
-    display: none; /* Скрыто по умолчанию */
+      display: none;
+  padding: 10px;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .burgerLink {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .burgerLink .arrow {
+    margin-left: auto;
+    font-size: 12px;
+    transition: transform 0.3s ease;
+  }
+  
+  .burgerLink:hover .arrow {
+    transform: rotate(180deg);
+  }
+  
+  .burgerMenu.open .categoryMenu {
+    display: block;
+  }
+  
+  .burgerMenu .categoryMenu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .burgerMenu .categoryMenu li {
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  
+  .burgerMenu .categoryMenu li:hover {
+    background-color: #f0f0f0;
   }
 
   .navLinkContainer {
@@ -334,10 +377,3 @@
 } */
 
   /*-------------------*/
-
-
-.arrow {
-  margin-left: 5px;
-  font-size: 12px;
-  transition: transform 0.3s;
-}

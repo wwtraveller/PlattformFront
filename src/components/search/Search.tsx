@@ -141,9 +141,7 @@ const Search = (props: SearchProps) => {
       navigate("/search-error", {
         state: { error: "Ошибка при выполнении поиска. Попробуйте снова." },
       });
-      {
-        /*error: 'Ошибка при выполнении поиска. Попробуйте снова.' */
-      }
+      
     } finally {
       setIsSearching(false);
       setQuery("");

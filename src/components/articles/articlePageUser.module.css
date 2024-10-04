@@ -5,7 +5,7 @@
     text-align: justify; /* Выравнивание текста по ширине (слева и справа) */
     margin: 20px auto; /* Центрирование статьи и отступы сверху/снизу */
     max-width: 800px; /* Ограничение ширины контента */
-    padding: 0 20px; /* Внутренние отступы слева и справа */
+    padding: 0 10px; /* Внутренние отступы слева и справа */
   }
   
   .articlecontent h1, .articlecontent h2, .articlecontent h3 {
@@ -74,7 +74,7 @@
   }
 
    /* Адаптив для статьи */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .articlecontent {
     padding: 15px;
     font-size: 16px;
@@ -88,4 +88,4 @@
     font-size: 14px;
     line-height: 1.5;
   }
-}
+} */

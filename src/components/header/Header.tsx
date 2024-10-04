@@ -60,24 +60,23 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
       setIsCategoryMenuOpen(false);
     }, 300);
   };
-
-  const links = user?.roles?.some((role) => role.authority === 'ROLE_ADMIN')
-  ? adminLinks
-  : user?.username
-  ? userLinks
-  : guestLinks;
-
+  
   const toggleMenu = () => {
     setIsOpen(!isOpen); // Открываем/закрываем меню
     setIsMenuOpen(!isMenuOpen); // Для анимации гамбургера
   };
-
+  
+  // Логика для отображения категорий в гамбургер-меню
+  const toggleCategoryMenu = () => {
+    setIsCategoryMenuOpen(!isCategoryMenuOpen);
+  };
+  
   // Функция для закрытия меню после перехода по ссылке
   const handleMenuClick = () => {
     setIsOpen(false); // Закрываем гамбургер-меню
     setIsMenuOpen(false); // Отключаем анимацию меню
   };
-
+  
   useEffect(() => {
     if (isOpen) {
       document.querySelector("main")?.classList.add(styles.blurEffect);
@@ -85,7 +84,13 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
       document.querySelector("main")?.classList.remove(styles.blurEffect);
     }
   }, [isOpen]);
-
+  
+    const links = user?.roles?.some((role) => role.authority === 'ROLE_ADMIN')
+    ? adminLinks
+    : user?.username
+    ? userLinks
+    : guestLinks;
+  
   return (
     <header className={styles.header}>
       {/* Иконка меню */}
