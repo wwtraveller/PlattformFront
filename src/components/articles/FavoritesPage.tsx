@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom'; // используем useNavigate вместо useHistory
+import { Link, useNavigate } from 'react-router-dom';
 
 interface Article {
   id: number;
@@ -13,18 +13,16 @@ const FavoritesPage = () => {
   const [favoriteArticles, setFavoriteArticles] = useState<Article[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const navigate = useNavigate(); // инициализация useNavigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
     if (!token) {
-      // Если токен отсутствует, отображаем ошибку и не продолжаем запросы
       setError('Для просмотра избранных статей необходимо авторизоваться.');
       setLoading(false);
       return;
     }
 
-    // Получаем избранные статьи из localStorage
     const fetchFavoriteArticles = async () => {
       const favorites = localStorage.getItem('favorites');
       if (!favorites) {
@@ -34,16 +32,37 @@ const FavoritesPage = () => {
       }
 
       const favoriteIds = JSON.parse(favorites) as number[];
+      const validArticles: Article[] = []; // Массив для найденных статей
+      const updatedFavorites: number[] = []; // Для обновления localStorage
 
       try {
         const requests = favoriteIds.map(id =>
           axios.get(`/api/articles/${id}`, {
-            headers: { Authorization: `Bearer ${token}` }, // Передаем токен в запросы
+            headers: { Authorization: `Bearer ${token}` },
+          }).catch(error => {
+            // Если сервер вернет 404, мы обработаем это
+            if (error.response && error.response.status === 404) {
+              console.warn(`Статья с ID ${id} не найдена и будет удалена из избранного.`);
+              return null; // Возвращаем null для удаленных статей
+            }
+            throw error; // Если ошибка не связана с 404, выбрасываем её дальше
           })
         );
+
         const responses = await Promise.all(requests);
-        const articles = responses.map(response => response.data);
-        setFavoriteArticles(articles);
+
+        // Обрабатываем ответы
+        responses.forEach((response, index) => {
+          if (response && response.data) {
+            validArticles.push(response.data);
+            updatedFavorites.push(favoriteIds[index]); // Только статьи, которые существуют
+          }
+        });
+
+        // Обновляем избранные статьи и localStorage
+        setFavoriteArticles(validArticles);
+        localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+
       } catch (error: any) {
         setError('Ошибка при загрузке избранных статей.');
         console.error('Ошибка при получении избранных статей:', error);
@@ -63,7 +82,7 @@ const FavoritesPage = () => {
     return (
       <div>
         <p>{error}</p>
-        <button onClick={() => navigate('/login')}>Перейти на страницу авторизации</button> {/* Используем navigate для перехода */}
+        <button onClick={() => navigate('/login')}>Перейти на страницу авторизации</button>
       </div>
     );
   }
@@ -79,7 +98,7 @@ const FavoritesPage = () => {
         {favoriteArticles.map(article => (
           <li key={article.id}>
             <Link to={`/articles/${article.id}`}>
-              <h4>{article.title}</h4> {/* Отображаем только заголовок */}
+              <h4>{article.title}</h4>
             </Link>
           </li>
         ))}
