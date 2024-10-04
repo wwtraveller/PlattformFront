@@ -3,6 +3,7 @@ import Footer from '../footer/Footer';
 import styles from './layout.module.css';
 import Header from '../header/Header';
 import { useEffect, useState } from 'react';
+import ScrollToTop from 'components/ScrollToTop';
 
 
 interface SearchItem {
@@ -27,7 +28,7 @@ function Layout() {
   return (
 
     <div className={styles.page}>
-      
+      <ScrollToTop />
       <Header setError={setError} setSearchResults={()=>{}}  />
       <main className={styles.main}>
         {/* сюда вместо outlet приходят все компоненты из вложенных route */}

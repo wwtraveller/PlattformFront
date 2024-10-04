@@ -17,7 +17,7 @@
   width: 100%;
   height: 70px;
   box-sizing: border-box; /* Включает padding и border в ширину */
-  position: fixed; /* Убедись, что элемент фиксирован, если это нужно */
+  position: fixed;
   top: 0; /* Чтобы header находился вверху страницы */
   left: 0; /* Чтобы header начинался с левого края */
   z-index: 1000;
@@ -97,8 +97,9 @@
 
 .arrow {
   margin-left: 5px;
-  font-size: 12px;
+  font-size: 14px;
   transition: transform 0.3s;
+  font-weight: 800;
 }
 
 /* Стили для выпадающего меню категорий */

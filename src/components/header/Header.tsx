@@ -147,7 +147,7 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
                   >
                     {el.title}
                     <span className={styles.arrow}>
-                      {isCategoryMenuOpen ? '▲' : '▼'}
+                      {isCategoryMenuOpen ? '⋀' : '⋁'}
                     </span>
                   </span>
                 ) : (
