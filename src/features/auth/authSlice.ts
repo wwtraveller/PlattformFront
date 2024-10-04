@@ -21,7 +21,6 @@ const initialUser: IUserData = {
   accessToken: "",
   refreshToken: "",
   roles: [],
-  avatar: "",
 };
 
 // создаем state и передаем начальное значение user
