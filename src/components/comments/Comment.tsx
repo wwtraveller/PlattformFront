@@ -19,14 +19,14 @@ interface CommentProps {
     dislikes?: number;
     replies?: CommentProps['comment'][];
   };
-  //onLike: (id: number) => void;
-  //onDislike: (id: number) => void;
+  onLike: (id: number) => void;
+  onDislike: (id: number) => void;
   onReply: (id: number) => void;
   onEdit: (id: number, newText: string) => void;
   onDelete: (id: number) => void;
 }
 
-const Comment = ({ comment, onReply, onEdit, onDelete }: CommentProps) => {
+const Comment = ({ comment, onReply, onEdit, onDelete, onLike, onDislike }: CommentProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(comment.text);
 
@@ -55,12 +55,12 @@ const Comment = ({ comment, onReply, onEdit, onDelete }: CommentProps) => {
         <textarea value={editText} onChange={(e) => setEditText(e.target.value)} />
       )}
       <div className={styles.commentActions}>
-        {/*<button onClick={() => onLike(comment.id)}>
+        <button onClick={() => onLike(comment.id)}>
         <i className="bi bi-hand-thumbs-up" ></i> 
         </button>
         <button onClick={() => onDislike(comment.id)}>
         <i className="bi bi-hand-thumbs-down"></i>
-        </button>*/}
+        </button>
         <button onClick={() => onReply(comment.id)}>
         <i className="bi bi-reply"></i> 
         </button>
@@ -83,8 +83,8 @@ const Comment = ({ comment, onReply, onEdit, onDelete }: CommentProps) => {
         <Comment 
           key={reply.id} 
           comment={reply} 
-          //onLike={onLike} 
-          //onDislike={onDislike}
+          onLike={onLike} 
+          onDislike={onDislike}
           onReply={onReply}
           onEdit={onEdit}
           onDelete={onDelete}
@@ -98,6 +98,7 @@ const Comment = ({ comment, onReply, onEdit, onDelete }: CommentProps) => {
 interface CommentsProps {
   article_id: number;
   currentUserId: string;
+
 }
 
 interface CommentData {
@@ -137,8 +138,8 @@ const Comments = ({ article_id}: CommentsProps) => {
         author: comment.author,
         text: comment.text,
         date: comment.date,
-        //likes: comment.likes,
-        //dislikes: comment.dislikes,
+        likes: comment.likes,
+        dislikes: comment.dislikes,
         replies: comment.replies,
       }));
 
@@ -195,8 +196,8 @@ const Comments = ({ article_id}: CommentsProps) => {
           author: newComment.author,
           text: newComment.text,
           date: newComment.date,
-          //likes: newComment.likes,
-         // dislikes: newComment.dislikes,
+          likes: newComment.likes,
+          dislikes: newComment.dislikes,
         };
   
         // Обновляем список комментариев
@@ -251,8 +252,8 @@ const Comments = ({ article_id}: CommentsProps) => {
           author: updatedComment.author,
           text: updatedComment.text,
           date: updatedComment.date,
-          //likes: updatedComment.likes,
-//dislikes: updatedComment.dislikes,
+          likes: updatedComment.likes,
+          dislikes: updatedComment.dislikes,
         };
 
         setComments(comments.map(c => c.id === commentId ? transformedComment : c));
@@ -260,7 +261,7 @@ const Comments = ({ article_id}: CommentsProps) => {
       .catch(error => console.error('Ошибка при редактировании комментария:', error));
   };
 
- /* const handleLikeComment = (commentId: number) => {
+  const handleLikeComment = (commentId: number) => {
     const token = localStorage.getItem('accessToken');
     if (!token) {
       alert('Отсутствует токен авторизации');
@@ -316,7 +317,7 @@ const Comments = ({ article_id}: CommentsProps) => {
         setComments(comments.map(c => c.id === commentId ? transformedComment : c));
       })
       .catch(error => console.error('Ошибка при дизлайке комментария:', error));
-  };*/
+  };
 
   const handleReplyComment = (parentCommentId: number) => {
     const replyText = prompt('Введите ваш ответ:');
@@ -379,13 +380,12 @@ const Comments = ({ article_id}: CommentsProps) => {
   <FontAwesomeIcon icon={faPaperPlane} /> 
 </button>
 </div>
-{/*/onLike={handleLikeComment} 
-          //onDislike={handleDislikeComment}*/}
       {Array.isArray(comments) && comments.map(comment => (
         <Comment 
           key={comment.id} 
           comment={comment} 
-          
+          onDislike={handleDislikeComment}
+          onLike={handleLikeComment}
           onReply={handleReplyComment}
           onEdit={handleEditComment} 
           onDelete={handleDeleteComment}
