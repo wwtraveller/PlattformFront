@@ -92,7 +92,7 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
     : guestLinks;
   
   return (
-    <header className={styles.header}>
+    <header className={`w-full md:w-1/2 ${styles.header}`}>
       {/* Иконка меню */}
       {/* <div className={styles.hamburger} onClick={toggleMenu}>
         {isOpen ? '✖' : '☰'}  Иконка меняется на крестик при открытии 
@@ -176,7 +176,7 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
           {/* Если пользователь авторизован, показываем его имя и кнопку "Выйти" */}
           {user?.username ? (
             <>
-              <Link to="/profile">
+              <Link to="/dashboard">
                 <div className={styles.userInfo}>
                   <img
                     src={user.photo || '/default-FFA-avatar.png'}

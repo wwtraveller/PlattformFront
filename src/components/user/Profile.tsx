@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import styles from "./profile.module.css";
 import { setUserAvatar, setUserData } from "features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import axios from "axios";
 import { RootState } from "redux/store";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import styles from "./profile.module.css";
+import Sidebar from "./Sidebar"; // Подключаем боковое меню
 // import { fetchUserData } from "features/auth/authAction";
 
 const Profile: React.FC = () => {
@@ -17,7 +19,6 @@ const Profile: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false); // Для состояния загрузки
   const dispatch = useAppDispatch();
   const userData = useAppSelector((state: RootState) => state.auth.user);
-
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -213,17 +214,17 @@ const Profile: React.FC = () => {
     }
   };
 
-
   return (
-    <div className={styles.background}>
-      <div className={styles.title}>
-        <h1>Настройки профиля:</h1>
-        <p className={styles.headerUsername}>{userData.username}</p>
-      </div>
-
+    <div className={styles.profilePage}>
+      <Sidebar /> {/* Боковое меню */}
       <div className={styles.profileContainer}>
+        <div className={styles.title}>
+          <h1>Настройки профиля</h1>
+          <p className={styles.headerUsername}>{userData.username}</p>
+        </div>
         <div className={styles.backgroundHeader}></div>
-        <h4 className={styles.profileName}>Редактировать профиль</h4>
+
+        <div className={styles.profileContent}>
         <div className={styles.profileHeader}>
           {avatarPreview ? (
             <img
@@ -255,46 +256,45 @@ const Profile: React.FC = () => {
           </div>
         </div>
 
-        <form className={styles.profileForm}>
+          <form className={styles.profileForm}>
           <input
             id="fileInput"
             className={styles.imageInput}
             type="file"
             onChange={handleAvatarChange}
           />
-          <input
+           <input
             className={styles.profileInput}
             type="text"
             placeholder="URL аватара"
             value={avatarUrl}
             onChange={handleUrlChange}
           />
-          <p>Имя</p>
-          <input
-            className={styles.profileInput}
-            type="text"
-            placeholder="Имя"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-          <p>Фамилия</p>
-          <input
-            className={styles.profileInput}
-            type="text"
-            placeholder="Фамилия"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-          <p>Email</p>
-          <input
-            className={styles.profileInput}
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-
-          <button
+            <p>Имя</p>
+            <input
+              className={styles.profileInput}
+              type="text"
+              placeholder="Имя"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+            <p>Фамилия</p>
+            <input
+              className={styles.profileInput}
+              type="text"
+              placeholder="Фамилия"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+            <p>Email</p>
+            <input
+              className={styles.profileInput}
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <button
             type="button"
             className={styles.profileButton}
             onClick={handleSave}
@@ -302,45 +302,40 @@ const Profile: React.FC = () => {
           >
             {isLoading ? "Сохранение..." : "Сохранить изменения"}
           </button>
-        </form>
+          </form>
 
-        <div className={styles.changePasswordContainer}>
-          <p>Безопасность</p>
+          <div className={styles.changePasswordContainer}>
+            <p>Изменить пароль</p>
+            <input
+              className={styles.profileInputPassword}
+              type="password"
+              placeholder="Текущий пароль"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+            />
+            <input
+              className={styles.profileInputPassword}
+              type="password"
+              placeholder="Новый пароль"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+            <input
+              className={styles.profileInputPassword}
+              type="password"
+              placeholder="Подтвердите новый пароль"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            <button className={styles.passwordButton} onClick={handlePasswordChange}>
+              Изменить пароль
+            </button>
+          </div>
 
-          <input
-            className={styles.profileInputPassword}
-            type="password"
-            placeholder="Текущий пароль"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-          />
-          <input
-            className={styles.profileInputPassword}
-            type="password"
-            placeholder="Новый пароль"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-          />
-          <input
-            className={styles.profileInputPassword}
-            type="password"
-            placeholder="Подтвердите новый пароль"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          <button
-            className={styles.passwordButton}
-            onClick={handlePasswordChange}
-          >
-            Изменить пароль
+          <button className={styles.deleteAccountButton} onClick={handleDeleteAccount}>
+            Удалить аккаунт
           </button>
         </div>
-        <button
-          onClick={handleDeleteAccount}
-          className={styles.deleteAccountButton}
-        >
-          Удалить аккаунт
-        </button>
       </div>
     </div>
   );

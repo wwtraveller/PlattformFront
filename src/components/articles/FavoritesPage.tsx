@@ -72,6 +72,19 @@ const FavoritesPage = () => {
     fetchFavoriteArticles();
   }, []);
 
+  const removeFromFavorites = (id: number) => {
+    setFavoriteArticles((prevArticles) => prevArticles.filter(article => article.id !== id));
+    setFavoriteArticles((prevArticles) => prevArticles.filter(article => article.id !== id));
+    
+    // Обновляем localStorage
+    const favorites = localStorage.getItem('favorites');
+    if (favorites) {
+      const favoriteIds = JSON.parse(favorites) as number[];
+      const updatedFavorites = favoriteIds.filter(favoriteId => favoriteId !== id);
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    }
+  };
+
   if (loading) {
     return <div className={styles.loading}>Загрузка избранных статей...</div>;
   }
@@ -98,6 +111,12 @@ const FavoritesPage = () => {
             <Link to={`/articles/${article.id}`} className={styles.articleLink}>
               <h4 className={styles.articleTitle}>{article.title}</h4>
             </Link>
+            <button 
+              className={styles.removeFavorite} 
+              onClick={() => removeFromFavorites(article.id)}
+            >
+              ⭐ {/* Здесь можно использовать любую иконку звезды */}
+            </button>
           </li>
         ))}
       </ul>

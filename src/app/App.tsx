@@ -38,6 +38,7 @@ import Contact from "components/contact/Contact";
 import Authors from "components/authors/Authors";
 import FaqPage from "components/faq/FaqPage";
 import Glossary from "components/glossary/GlossaryPage";
+import Homepage from "components/home/Homepage";
 
 interface SearchItem {
   id: number;
@@ -83,6 +84,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             {/* Незарегистрированный пользователь - доступные страницы */}
+            <Route path="/" element={<Homepage />} />
             <Route path="/catLinks" element={<CategoryLinks />} />
             <Route path="/category/:category" element={<ArticleUser />} />
             <Route path="/articles" element={<ArticleUser />} />
@@ -95,6 +97,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/search-results" element={<SearchResultsPage />} />
             <Route path="/search-error" element={<SearchErrorPage />} />
+            <Route path="/article/:id" element={<ArticlePage />} />
 
             {/* Проверка: если пользователь авторизован, показываем ему страницы личного кабинета */}
             {user?.username && (
