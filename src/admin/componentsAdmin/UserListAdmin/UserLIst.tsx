@@ -98,21 +98,33 @@ const UserList = () => {
   return (
     <div className={styles.userList}>
       <h2>Список пользователей</h2>
-      <ul>
+      <ul className={styles.userGrid}>
         {users.map((user) => (
           <li key={user.id} className={styles.userItem}>
-            <p><strong>Имя пользователя:</strong> {user.username}</p>
-            <p><strong>Email:</strong> {user.email}</p>
-            <p>
-              <strong>Статус:</strong> {user.isBlocked ? 'Заблокирован' : 'Активен'}
-            </p>
-            <div className={styles.buttonGroup}>
+            {/* <p><strong>Имя пользователя:</strong> {user.username}</p> */}
+            <span className={styles.userInfo}>
+              <strong>{user.username}</strong>
+            </span>
+            {/* <p><strong>Email:</strong> {user.email}</p> */}
+            <span className={styles.userInfo}>{user.email}</span>
+            {/* <p><strong>Статус:</strong> {user.isBlocked ? 'Заблокирован' : 'Активен'}</p> */}
+            <span className={styles.userStatus}>
+              {user.isBlocked ? 'Заблокирован' : 'Активен'}
+            </span>
+            {/* <div className={styles.buttonGroup}>
               {user.isBlocked ? (
                 <button onClick={() => unblockUser(user.id)}>Разблокировать</button>
               ) : (
                 <button onClick={() => blockUser(user.id)}>Заблокировать</button>
               )}
-            </div>
+            </div> */}
+            <span className={styles.actionButton}>
+              {user.isBlocked ? (
+                <button onClick={() => unblockUser(user.id)} className={styles.unblockButton}>Разблокировать</button>
+              ) : (
+                <button onClick={() => blockUser(user.id)} className={styles.blockButton}>Заблокировать</button>
+              )}
+            </span>
           </li>
         ))}
       </ul>
