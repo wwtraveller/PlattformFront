@@ -8,10 +8,6 @@ interface ILinks {
 
 // Ссылки для незарегистрированных пользователей
 export const guestLinks: ILinks[] = [
-  // {
-  //   pathname: '/dashboard',
-  //   title: 'Главная',
-  // },
   
   // {
   //     pathname: '/product',
@@ -60,10 +56,10 @@ export const userLinks: ILinks[] = [
   //   pathname: '/about',
   //   title: 'О нас',
   // },
-  {
-    pathname: '/dashboard',
-    title: 'Главная',
-  },
+  // {
+  //   pathname: '/dashboard',
+  //   title: 'Главная',
+  // },
   {
     pathname: '/catLinks',
     title: 'База знаний'
@@ -77,10 +73,7 @@ export const userLinks: ILinks[] = [
 
   // Ссылки для админов
 export const adminLinks: ILinks[] = [
-  {
-    pathname: '/dashboard',
-    title: 'Дашбоард',
-  },
+
   {
     pathname: '/catLinks',
     title: 'База знаний'

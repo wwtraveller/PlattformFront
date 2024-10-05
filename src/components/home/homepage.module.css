@@ -1,0 +1,80 @@
+.homepage {
+    width: 100%;
+    padding: 0;
+  }
+  
+  .hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px;
+    background-color: #f9f9f9;
+  }
+  
+  .heroContent {
+    max-width: 50%;
+  }
+  
+  .heroContent h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  
+  .heroContent p {
+    font-size: 1.25rem;
+    margin-bottom: 40px;
+  }
+  
+  .ctaButton {
+    padding: 15px 30px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .ctaButton:hover {
+    background-color: #218838;
+  }
+  
+  .heroImage {
+    max-width: 40%;
+  }
+  
+  .trustedBy {
+    text-align: center;
+    padding: 60px 0;
+  }
+  
+  .trustLogos {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .trustLogos img {
+    max-width: 100px;
+  }
+  
+  .features {
+    padding: 60px 40px;
+    background-color: #fff;
+  }
+  
+  .featuresList {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .featureItem {
+    max-width: 30%;
+  }
+  
+  .callToAction {
+    text-align: center;
+    padding: 60px;
+    background-color: #f1f1f1;
+  }
+  

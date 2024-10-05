@@ -30,7 +30,8 @@
   cursor: pointer;
   color: var(--primary-color);
   font-weight: 600;
-  margin-right: 20px; /* Отступ между логотипом и меню */
+  margin-right: 10px; /* Отступ между логотипом и меню */
+  /* padding: 20px; */
 }
 
 .hamburger {
@@ -54,6 +55,10 @@
   gap: 20px;
   padding: 10px;
   white-space: nowrap; /* Предотвращает перенос ссылок меню на новые строки */
+}
+.navLeft {
+  /* padding: 20px; */
+  /* margin-left: 10px; */
 }
   
 .navLinkContainer {
