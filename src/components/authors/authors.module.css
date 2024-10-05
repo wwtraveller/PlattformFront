@@ -1,0 +1,30 @@
+.contactSection {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+.photoAndText {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    margin-top: 50px;
+    gap: 40px;
+  }
+  
+  .photoContainer {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 30px;
+  }
+  
+  .photo {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+  }

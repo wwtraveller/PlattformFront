@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./search.module.css";
 import "remixicon/fonts/remixicon.css";
-import Select from 'react-select';
-import { SingleValue, ActionMeta } from 'react-select';
-
+import Select from "react-select";
+import { SingleValue, ActionMeta } from "react-select";
 
 interface SearchItem {
   id: number;
@@ -53,13 +52,25 @@ const SearchFilter = ({
 
 const Search = (props: SearchProps) => {
   const [query, setQuery] = useState("");
-  const [group, setGroup] = useState<{ value: string; label: string } | null>(null);
+  const [group, setGroup] = useState<{ value: string; label: string } | null>(
+    null
+  );
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false); // Флаг, что был выполнен поиск
   const [categories, setCategories] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [items, setItems] = useState<SearchItem[]>([]); // Данные для фильтрации
   const [filteredItems, setFilteredItems] = useState<SearchItem[]>([]); // Результаты live-фильтрации
+  const [isExpanded, setIsExpanded] = useState(false); // Логика для сворачивания/разворачивания
+  const [isSearchActive, setIsSearchActive] = useState(false);
+
+  const handleFocus = () => {
+    setIsExpanded(true);
+  };
+
+  const handleBlur = () => {
+    setIsExpanded(false);
+  };
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -108,7 +119,7 @@ const Search = (props: SearchProps) => {
     try {
       // Отправка запроса на бэкенд для выполнения поиска
       const response = await fetch(
-        `/api/search?query=${encodeURIComponent(query)}&groups=${encodeURIComponent(group?.value || '')}`
+        `/api/search?query=${encodeURIComponent(query)}&groups=${encodeURIComponent(group?.value || "")}`
       );
 
       // Проверка, что запрос завершился успешно
@@ -130,7 +141,6 @@ const Search = (props: SearchProps) => {
       navigate("/search-error", {
         state: { error: "Ошибка при выполнении поиска. Попробуйте снова." },
       });
-  
     } finally {
       setIsSearching(false);
       setQuery("");
@@ -151,15 +161,18 @@ const Search = (props: SearchProps) => {
     }
   };
 
-  const handleGroupChange = (newValue: SingleValue<{ value: string; label: string }>, actionMeta: ActionMeta<{ value: string; label: string }>) => {
+  const handleGroupChange = (
+    newValue: SingleValue<{ value: string; label: string }>,
+    actionMeta: ActionMeta<{ value: string; label: string }>
+  ) => {
     if (newValue) {
-    setGroup(newValue);
-    if (newValue.value === "Все категории") {
-      setGroup(null); // Сбрасываем выбор категории, чтобы вернуться к "Все категории"
-    } else {
-      props.setError(null);// Сбрасываем ошибку, если категория выбрана
+      setGroup(newValue);
+      if (newValue.value === "Все категории") {
+        setGroup(null); // Сбрасываем выбор категории, чтобы вернуться к "Все категории"
+      } else {
+        props.setError(null); // Сбрасываем ошибку, если категория выбрана
+      }
     }
-  }
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -172,11 +185,18 @@ const Search = (props: SearchProps) => {
     setCategories(updatedCategories); // Обновляем локальные категории
     //console.log('Updated Categories:', updatedCategories);
   };
-  
+
+  const toggleExpandSearch = () => {
+    setIsExpanded(!isExpanded); // Логика для разворачивания поля поиска
+  };
+
+  const toggleSearch = () => {
+    setIsSearchActive(!isSearchActive);
+  };
 
   const options = categories.map((category: string) => ({
     value: category,
-    label: category.charAt(0).toUpperCase() + category.slice(1)
+    label: category.charAt(0).toUpperCase() + category.slice(1),
   }));
 
   return (
@@ -224,27 +244,29 @@ const Search = (props: SearchProps) => {
           styles={{
             control: (provided, state) => ({
               ...provided,
-              backgroundColor: state.isFocused ? '#ffffffb2' : 'transparent',
-              border: state.isFocused ? '1px solid #007bff' : '2px solid transparent',
-              borderRadius: '40px',
-              height: '35px',
-              transition: 'border 0.3s ease',
-              width: '130px',
+              backgroundColor: state.isFocused ? "#ffffffb2" : "transparent",
+              border: state.isFocused
+                ? "1px solid #007bff"
+                : "2px solid transparent",
+              borderRadius: "40px",
+              height: "35px",
+              transition: "border 0.3s ease",
+              width: "130px",
 
-              '&:hover': {
-                backgroundColor: state.isFocused ? '#00000023' : '#ffffffb2',
-                color: '#fff',
+              "&:hover": {
+                backgroundColor: state.isFocused ? "#00000023" : "#ffffffb2",
+                color: "#fff",
               },
             }),
             option: (provided, state) => ({
               ...provided,
-              backgroundColor: '#ffffff',
-              color: '#000000',
-              '&:hover': {
-                backgroundColor: '#007bff',
-                color: '#fff',
-            },
-          }),
+              backgroundColor: "#ffffff",
+              color: "#000000",
+              "&:hover": {
+                backgroundColor: "#007bff",
+                color: "#fff",
+              },
+            }),
           }}
         />
       </div>
