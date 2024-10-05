@@ -35,6 +35,9 @@ import { ToastContainer } from "react-toastify";
 import UserList from "admin/componentsAdmin/UserListAdmin/UserLIst";
 import Partner from "components/partner/Partner";
 import Contact from "components/contact/Contact";
+import Authors from "components/authors/Authors";
+import FaqPage from "components/faq/FaqPage";
+import Glossary from "components/glossary/GlossaryPage";
 
 interface SearchItem {
   id: number;
@@ -85,7 +88,10 @@ function App() {
             <Route path="/articles" element={<ArticleUser />} />
             <Route path="/articles/:id" element={<ArticlePageUser />} />
             <Route path="/about" element={<About />} />
+            <Route path="/authors" element={<Authors />} />
             <Route path="/partner" element={<Partner />} />
+            <Route path="/faq" element={<FaqPage />} />
+            <Route path="/glossary" element={<Glossary />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/search-results" element={<SearchResultsPage />} />
             <Route path="/search-error" element={<SearchErrorPage />} />

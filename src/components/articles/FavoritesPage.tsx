@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import styles from './favoritesPage.module.css';
 
 interface Article {
   id: number;
@@ -32,34 +33,31 @@ const FavoritesPage = () => {
       }
 
       const favoriteIds = JSON.parse(favorites) as number[];
-      const validArticles: Article[] = []; // Массив для найденных статей
-      const updatedFavorites: number[] = []; // Для обновления localStorage
+      const validArticles: Article[] = [];
+      const updatedFavorites: number[] = [];
 
       try {
         const requests = favoriteIds.map(id =>
           axios.get(`/api/articles/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
           }).catch(error => {
-            // Если сервер вернет 404, мы обработаем это
             if (error.response && error.response.status === 404) {
               console.warn(`Статья с ID ${id} не найдена и будет удалена из избранного.`);
-              return null; // Возвращаем null для удаленных статей
+              return null;
             }
-            throw error; // Если ошибка не связана с 404, выбрасываем её дальше
+            throw error;
           })
         );
 
         const responses = await Promise.all(requests);
 
-        // Обрабатываем ответы
         responses.forEach((response, index) => {
           if (response && response.data) {
             validArticles.push(response.data);
-            updatedFavorites.push(favoriteIds[index]); // Только статьи, которые существуют
+            updatedFavorites.push(favoriteIds[index]);
           }
         });
 
-        // Обновляем избранные статьи и localStorage
         setFavoriteArticles(validArticles);
         localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
 
@@ -75,30 +73,30 @@ const FavoritesPage = () => {
   }, []);
 
   if (loading) {
-    return <div>Загрузка избранных статей...</div>;
+    return <div className={styles.loading}>Загрузка избранных статей...</div>;
   }
 
   if (error) {
     return (
-      <div>
+      <div className={styles.error}>
         <p>{error}</p>
-        <button onClick={() => navigate('/login')}>Перейти на страницу авторизации</button>
+        <button className={styles.authButton} onClick={() => navigate('/login')}>Перейти на страницу авторизации</button>
       </div>
     );
   }
 
   if (favoriteArticles.length === 0) {
-    return <div>Нет избранных статей.</div>;
+    return <div className={styles.noFavorites}>Нет избранных статей.</div>;
   }
 
   return (
-    <div>
-      <h1>Избранные статьи</h1>
-      <ul>
+    <div className={styles.favoritesPage}>
+      <h1 className={styles.title}>Избранные статьи</h1>
+      <ul className={styles.articleList}>
         {favoriteArticles.map(article => (
-          <li key={article.id}>
-            <Link to={`/articles/${article.id}`}>
-              <h4>{article.title}</h4>
+          <li key={article.id} className={styles.articleItem}>
+            <Link to={`/articles/${article.id}`} className={styles.articleLink}>
+              <h4 className={styles.articleTitle}>{article.title}</h4>
             </Link>
           </li>
         ))}
