@@ -47,8 +47,8 @@ export default function Login({ onLoginSuccess }: LoginProps) {
   });
   const formik = useFormik({
     initialValues: {
-      username: "admin",
-      password: "Qwerty123?@",
+      username: "",
+      password: "",
     } as ILoginFormValues,
     validationSchema: schema,
     validateOnChange: false,
