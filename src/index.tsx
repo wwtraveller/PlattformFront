@@ -1,3 +1,4 @@
+import './responsive.css'; // Подключаем адаптивные стили
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { Provider } from 'react-redux';

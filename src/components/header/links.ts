@@ -8,39 +8,65 @@ interface ILinks {
 
 // Ссылки для незарегистрированных пользователей
 export const guestLinks: ILinks[] = [
-  {
-    pathname: '/about',
-    title: 'О нас',
-  },
-  {
-    pathname: '/dashboard',
-    title: 'Главная',
-  },
-
   // {
-  //   pathname: '/product',
-  //   title: 'Продукт',
+  //   pathname: '/dashboard',
+  //   title: 'Главная',
   // },
+  
+  // {
+  //     pathname: '/product',
+  //     title: 'Продукт',
+  //   },
+    
+    {
+      pathname: '/catLinks',
+      title: 'База знаний'
+    },
 
-  {
-    pathname: '/catLinks',
-    title: 'Категории'
-    }
-];
+    {
+      pathname: '/faq',
+      title: 'FAQ'
+    },
+
+    {
+      pathname: '/glossary',
+      title: 'Глоссарий'
+    },
+    
+    // {
+      //   pathname: '/authors',
+      //   title: 'Авторы',
+      // },
+      
+      {
+        pathname: '/partner',
+        title: 'Партнерство',
+      },
+      
+      {
+        pathname: '/about',
+        title: 'О нас',
+      },
+    // {
+    //   pathname: '/contact',
+    //   title: 'Контакты',
+    // },
+
+  ];
 
 // Ссылки для зарегистрированных пользователей
 export const userLinks: ILinks[] = [
-  {
-    pathname: '/about',
-    title: 'О нас',
-  },
+  // {
+  //   pathname: '/about',
+  //   title: 'О нас',
+  // },
   {
     pathname: '/dashboard',
     title: 'Главная',
   },
   {
     pathname: '/catLinks',
-    title: 'Категории'
+    title: 'База знаний'
     },
 
   {
@@ -53,11 +79,15 @@ export const userLinks: ILinks[] = [
 export const adminLinks: ILinks[] = [
   {
     pathname: '/dashboard',
-    title: 'Главная',
+    title: 'Дашбоард',
   },
   {
     pathname: '/catLinks',
-    title: 'Категории'
+    title: 'База знаний'
+    },
+    {
+      pathname: '/favorites',
+      title: 'Избранное'
     },
     {
       pathname: '/admin/createArticles',
@@ -68,12 +98,8 @@ export const adminLinks: ILinks[] = [
         title: 'Управление категориями'
       },
       {
-        pathname: '/favorites',
-        title: 'Избранное'
-      },
-      {
         pathname: '/userList',
-        title: 'user'
+        title: 'Управление пользователями'
       },
      
   ];

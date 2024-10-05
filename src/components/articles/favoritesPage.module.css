@@ -1,0 +1,74 @@
+.favoritesPage {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .articleList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .articleItem {
+    background-color: #f9f9f9;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .articleItem:hover {
+    transform: scale(1.02);
+  }
+  
+  .articleLink {
+    text-decoration: none;
+    color: #212121;
+  }
+  
+  .articleTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .loading {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  .error {
+    text-align: center;
+    font-size: 1.2rem;
+    color: red;
+  }
+  
+  .authButton {
+    background-color: #007bff;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .authButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .noFavorites {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+  }
+  

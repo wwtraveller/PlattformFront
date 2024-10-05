@@ -1,0 +1,88 @@
+.contactSection {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .photoAndText {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    margin-top: 50px;
+  }
+  
+  .photoContainer {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
+  
+  .photo {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .textContainer {
+    flex: 2;
+    margin-left: 40px;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    text-align: justify; /* Выравнивание текста по ширине (слева и справа) */
+  }
+  
+  .textContainer h1 {
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .textContainer p, .textContainer ul {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  
+  .textContainer h3 {
+    margin-top: 20px;
+    font-size: 1.5rem;
+  }
+  
+  .about {
+    list-style-type: disc;
+    margin-left: 20px;
+  }
+  
+  .contactInfo {
+    margin-top: 40px;
+    text-align: justify; /* Выравнивание текста по ширине (слева и справа) */
+  }
+  
+  .contactInfo h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .contactInfo ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .contactInfo ul li {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .contactInfo ul li a {
+    color: #5278f7;
+    text-decoration: none;
+  }
+  
+  .contactInfo ul li a:hover {
+    text-decoration: underline;
+  }
+  
