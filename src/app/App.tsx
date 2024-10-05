@@ -95,6 +95,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/search-results" element={<SearchResultsPage />} />
             <Route path="/search-error" element={<SearchErrorPage />} />
+            <Route path="/article/:id" element={<ArticlePage />} />
 
             {/* Проверка: если пользователь авторизован, показываем ему страницы личного кабинета */}
             {user?.username && (
