@@ -118,16 +118,17 @@ const ArticlePageUser = () => {
     <div className="w-full md:w-1/2">
       <h3>{article.title}</h3>
       {/*<img src={article.imageUrl} alt={article.title} />*/}
-      {/* <p>{article.content}</p> */}
-      <div className={styles.articlecontent} dangerouslySetInnerHTML={{ __html: article.content }} />
-
-      {/* Кнопка добавления в избранное */}
+      {/* <p>{article.content}</p> */} 
+           {/* Кнопка добавления в избранное */}
       <button onClick={toggleFavorite} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
       <i 
         className={isFavorite ? 'fas fa-star' : 'far fa-star'} 
         style={{ color: isFavorite ? 'gold' : 'gray', fontSize: '24px' }} 
       />
     </button>
+      <div className={styles.articlecontent} dangerouslySetInnerHTML={{ __html: article.content }} />
+
+
 
       <Comments
         article_id={article.id}
