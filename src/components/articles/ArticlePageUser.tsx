@@ -116,7 +116,7 @@ const ArticlePageUser = () => {
 
   return (
     <div className="w-full md:w-1/2">
-      <h3>{article.title}</h3>
+      <h3 className={styles.title}>{article.title}</h3>
       {/*<img src={article.imageUrl} alt={article.title} />*/}
       {/* <p>{article.content}</p> */} 
            {/* Кнопка добавления в избранное */}
