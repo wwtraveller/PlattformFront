@@ -11,6 +11,7 @@ interface SearchItem {
   title: string;
   description: string;
   group: string;
+  content: string;
 }
 
 interface SearchProps {
@@ -19,19 +20,12 @@ interface SearchProps {
   categories: string[];
 }
 
-// Новый компонент SearchFilter для отображения и фильтрации результатов
-const SearchFilter = ({
-  items,
-  query,
-}: {
-  items: SearchItem[];
-  query: string;
-}) => {
+const SearchFilter = ({ items, query }: { items: SearchItem[]; query: string }) => {
   // Фильтруем элементы на основе введённого текста
   const filteredItems = items.filter(
     (item) =>
-      item.title.toLowerCase().includes(query.toLowerCase()) ||
-      item.description.toLowerCase().includes(query.toLowerCase())
+      item.title?.toLowerCase().includes(query.toLowerCase()) ||
+      item.description?.toLowerCase().includes(query.toLowerCase())
   );
 
   // Отображаем отфильтрованные элементы
@@ -41,9 +35,12 @@ const SearchFilter = ({
         <p></p>
       ) : (
         filteredItems.map((item) => (
-          <div key={item.id} className={styles.searchItem}>
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
+          <div
+            key={item.id}
+            className={styles.searchItem}
+          >
+            <h3></h3>
+            <p></p>
           </div>
         ))
       )}
@@ -98,27 +95,36 @@ const Search = (props: SearchProps) => {
   };
 
   const handleSearch = async () => {
-    if (!validateSearch() || (group && !group.value)) {
+    if (!validateSearch()) {
       setQuery(""); // Очистка запроса при ошибке
       setGroup(null);
       return;
     }
-
+  
     setIsSearching(true);
     try {
-      // Отправка запроса на бэкенд для выполнения поиска
-      const response = await fetch(
-        `/api/search?query=${encodeURIComponent(query)}&groups=${encodeURIComponent(group?.value || '')}`
-      );
-
+      // Формируем URL для запроса
+      let apiUrl = '';
+  
+      // Проверяем, выбрана ли категория
+      if (group && group.value) {
+        // Используем эндпоинт с категорией и поисковым запросом
+        apiUrl = `/api/categories/findarticles?name=${encodeURIComponent(group.value)}&title=${encodeURIComponent(query)}`;
+      } else {
+        // Используем эндпоинт только с поисковым запросом
+        apiUrl = `/api/categories/findarticles?title=${encodeURIComponent(query)}`;
+      }
+  
+      const response = await fetch(apiUrl);
+  
       // Проверка, что запрос завершился успешно
       if (!response.ok) {
         throw new Error("Ошибка при выполнении запроса к серверу");
       }
-
+  
       // Получаем данные из ответа сервера в формате JSON
       const filteredResults = await response.json();
-
+      
       props.setSearchResults(filteredResults); // Сохраняем результаты поиска
       setItems(filteredResults);
       setHasSearched(true);
@@ -126,30 +132,33 @@ const Search = (props: SearchProps) => {
         state: { searchResults: filteredResults },
       });
     } catch (error) {
+      console.error("Ошибка:", error);
       props.setError("");
       navigate("/search-error", {
         state: { error: "Ошибка при выполнении поиска. Попробуйте снова." },
       });
-  
     } finally {
       setIsSearching(false);
       setQuery("");
       setGroup(null);
     }
   };
+  
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
+  
     // Реализуем live-фильтрацию на основе обновлённого query
     if (items.length > 0) {
-      const filtered = items.filter(
-        (item) =>
-          item.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
-          item.description.toLowerCase().includes(e.target.value.toLowerCase())
-      );
+      const filtered = items.filter((item) => {
+        const titleMatch = item.title?.toLowerCase().includes(e.target.value.toLowerCase());
+        const descriptionMatch = item.description?.toLowerCase().includes(e.target.value.toLowerCase());
+        return titleMatch || descriptionMatch; // Возвращаем результат фильтрации
+      });
       setFilteredItems(filtered);
     }
   };
+  
 
   const handleGroupChange = (newValue: SingleValue<{ value: string; label: string }>, actionMeta: ActionMeta<{ value: string; label: string }>) => {
     if (newValue) {

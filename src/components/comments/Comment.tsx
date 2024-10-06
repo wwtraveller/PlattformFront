@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Button from 'components/button/Button';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import styles from '../comments/coment.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,16 +19,32 @@ interface CommentProps {
     dislikes?: number;
     replies?: CommentProps['comment'][];
   };
-  //onLike: (id: number) => void;
-  //onDislike: (id: number) => void;
+  onLike: (id: number) => void;
+  onDislike: (id: number) => void;
   onReply: (id: number) => void;
   onEdit: (id: number, newText: string) => void;
   onDelete: (id: number) => void;
 }
 
-const Comment = ({ comment, onReply, onEdit, onDelete }: CommentProps) => {
+const Comment = ({ comment, onReply, onEdit, onDelete, onLike, onDislike }: CommentProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(comment.text);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    // Устанавливаем интервал для обновления времени каждую минуту
+    intervalRef.current = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000); // 60000 мс = 1 минута
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
 
   const handleEditSubmit = () => {
     onEdit(comment.id, editText);
@@ -36,55 +52,57 @@ const Comment = ({ comment, onReply, onEdit, onDelete }: CommentProps) => {
   };
   const isShortComment = comment.text ? comment.text.length < 50 : false;
 
-
   // Функция форматирования даты
   const formatDate = (dateString: string) => {
-    if (!dateString) return 'Дата недоступна'; // или другой подходящий текст
+    if (!dateString) return '08.10.2024 14:35'; 
     const date = new Date(dateString);
-    if (isNaN(date.getTime())) return 'Некорректная дата'; // Проверка на валидность даты
+    if (isNaN(date.getTime())) return 'Некорректная дата'; 
     return formatDistanceToNow(date, { addSuffix: true });
+
   };
 
   return (
     <div className={`${styles.comment} ${isShortComment ? styles.shortComment : ''}`}>
       <div className={styles.commentHeader}>
-      <p><strong>{comment.author}</strong> - {formatDate(comment.date)}</p></div>
+        <p><strong>{comment.author}</strong> - {formatDate(comment.date)}</p>
+      </div>
       {!isEditing ? (
         <p>{comment.text}</p>
       ) : (
         <textarea value={editText} onChange={(e) => setEditText(e.target.value)} />
       )}
       <div className={styles.commentActions}>
-        {/*<button onClick={() => onLike(comment.id)}>
-        <i className="bi bi-hand-thumbs-up" ></i> 
+        <button onClick={() => onLike(comment.id)}>
+          <i className="bi bi-hand-thumbs-up"></i> {comment.likes || 0}
         </button>
         <button onClick={() => onDislike(comment.id)}>
-        <i className="bi bi-hand-thumbs-down"></i>
-        </button>*/}
+          <i className="bi bi-hand-thumbs-down"></i> {comment.dislikes || 0}
+        </button>
         <button onClick={() => onReply(comment.id)}>
-        <i className="bi bi-reply"></i> 
+          <i className="bi bi-reply"></i>
         </button>
         <div className={styles.moreOptions} onClick={() => setIsEditing(true)}>
-        <i className="bi bi-pencil"></i> 
+          <i className="bi bi-pencil"></i>
         </div>
 
-            {isEditing && (
-               <div>
+        {isEditing && (
+          <div>
             <button onClick={handleEditSubmit}>
-            <i className="bi bi-save"></i> Сохранить</button>
+              <i className="bi bi-save"></i> Сохранить
+            </button>
             <button onClick={() => onDelete(comment.id)}>
-            <i className="bi bi-trash"></i>Удалить</button>
+              <i className="bi bi-trash"></i> Удалить
+            </button>
           </div>
-            )}
-          </div>
-      
+        )}
+      </div>
 
       {comment.replies && comment.replies.map(reply => (
         <Comment 
           key={reply.id} 
           comment={reply} 
-          //onLike={onLike} 
-          //onDislike={onDislike}
+          onLike={onLike} 
+          onDislike={onDislike}
           onReply={onReply}
           onEdit={onEdit}
           onDelete={onDelete}
@@ -110,14 +128,14 @@ interface CommentData {
   replies?: CommentData[];
 }
 
-const Comments = ({ article_id}: CommentsProps) => {
+const Comments = ({ article_id }: CommentsProps) => {
   const [comments, setComments] = useState<CommentData[]>([]);
   const [newComment, setNewComment] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-    // Получение userId из глобального состояния Redux
-    const currentUser = useSelector((state: RootState) => state.auth.user); // Здесь user — это слайс аутентификации
-    const currentUserId = currentUser?.id;
+  // Получение userId из глобального состояния Redux
+  const currentUser = useSelector((state: RootState) => state.auth.user); // Здесь user — это слайс аутентификации
+  const currentUserId = currentUser?.id;
 
   const fetchComments = async () => {
     try {
@@ -137,12 +155,25 @@ const Comments = ({ article_id}: CommentsProps) => {
         author: comment.author,
         text: comment.text,
         date: comment.date,
-        //likes: comment.likes,
-        //dislikes: comment.dislikes,
+        likes: comment.likes,
+        dislikes: comment.dislikes,
         replies: comment.replies,
       }));
 
-      setComments(transformedComments);
+      // Новый код: добавление сохраненных лайков и дизлайков
+      const storedLikes = localStorage.getItem('commentLikes');
+      const storedDislikes = localStorage.getItem('commentDislikes');
+      const likes = storedLikes ? JSON.parse(storedLikes) : {};
+      const dislikes = storedDislikes ? JSON.parse(storedDislikes) : {};
+
+      const updatedComments = transformedComments.map((comment: CommentData) => ({
+        ...comment,
+        likes: comment.likes + (likes[comment.id] || 0),
+        dislikes: comment.dislikes + (dislikes[comment.id] || 0),
+      }));
+      
+
+      setComments(updatedComments);
     } catch (error) {
       console.error("Ошибка при загрузке комментариев:", error);
       setError("Ошибка при загрузке комментариев.");
@@ -155,24 +186,24 @@ const Comments = ({ article_id}: CommentsProps) => {
       alert('Пользователь не аутентифицирован');
       return;
     }
-  
+
     // Получение токена из localStorage
     const token = localStorage.getItem('accessToken');
     if (!token) {
       alert('Отсутствует токен авторизации');
       return;
     }
-  
+
     // Данные комментария
     const commentData = {
       text: newComment,
       user_id: currentUserId,
       article_id: article_id,
     };
-  
+
     // Вывод данных комментария в консоль для проверки
     console.log(commentData);
-  
+
     // Отправка запроса на сервер
     fetch(`/api/comments`, {
       method: 'POST',
@@ -195,10 +226,10 @@ const Comments = ({ article_id}: CommentsProps) => {
           author: newComment.author,
           text: newComment.text,
           date: newComment.date,
-          //likes: newComment.likes,
-         // dislikes: newComment.dislikes,
+          likes: newComment.likes,
+          dislikes: newComment.dislikes,
         };
-  
+
         // Обновляем список комментариев
         setComments([...comments, transformedComment]);
         setNewComment(''); // Очищаем текстовое поле после добавления комментария
@@ -208,7 +239,6 @@ const Comments = ({ article_id}: CommentsProps) => {
         alert('Не удалось добавить комментарий. Проверьте сервер или маршрут.');
       });
   };
-  
 
   const handleDeleteComment = (commentId: number) => {
     const token = localStorage.getItem('accessToken');
@@ -251,8 +281,8 @@ const Comments = ({ article_id}: CommentsProps) => {
           author: updatedComment.author,
           text: updatedComment.text,
           date: updatedComment.date,
-          //likes: updatedComment.likes,
-//dislikes: updatedComment.dislikes,
+          likes: updatedComment.likes,
+          dislikes: updatedComment.dislikes,
         };
 
         setComments(comments.map(c => c.id === commentId ? transformedComment : c));
@@ -260,33 +290,23 @@ const Comments = ({ article_id}: CommentsProps) => {
       .catch(error => console.error('Ошибка при редактировании комментария:', error));
   };
 
- /* const handleLikeComment = (commentId: number) => {
+  const handleLikeComment = (commentId: number) => {
     const token = localStorage.getItem('accessToken');
     if (!token) {
       alert('Отсутствует токен авторизации');
       return;
     }
 
-    fetch(`/api/comments/${commentId}/like`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(updatedComment => {
-        const transformedComment = {
-          id: updatedComment.id,
-          author: updatedComment.author,
-          text: updatedComment.text,
-          date: updatedComment.date,
-          likes: updatedComment.likes,
-          dislikes: updatedComment.dislikes,
-        };
+    // Новый код: обновление localStorage
+    const storedLikes = localStorage.getItem('commentLikes');
+    const likes = storedLikes ? JSON.parse(storedLikes) : {};
+    likes[commentId] = (likes[commentId] || 0) + 1;
+    localStorage.setItem('commentLikes', JSON.stringify(likes));
 
-        setComments(comments.map(c => c.id === commentId ? transformedComment : c));
-      })
-      .catch(error => console.error('Ошибка при лайке комментария:', error));
+    // Обновление состояния комментариев
+    setComments(comments.map(c => 
+      c.id === commentId ? { ...c, likes: (c.likes || 0) + 1 } : c
+    ));
   };
 
   const handleDislikeComment = (commentId: number) => {
@@ -296,27 +316,17 @@ const Comments = ({ article_id}: CommentsProps) => {
       return;
     }
 
-    fetch(`/api/comments/${commentId}/dislike`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(updatedComment => {
-        const transformedComment = {
-          id: updatedComment.id,
-          author: updatedComment.author,
-          text: updatedComment.text,
-          date: updatedComment.date,
-          likes: updatedComment.likes,
-          dislikes: updatedComment.dislikes,
-        };
+    // Новый код: обновление localStorage
+    const storedDislikes = localStorage.getItem('commentDislikes');
+    const dislikes = storedDislikes ? JSON.parse(storedDislikes) : {};
+    dislikes[commentId] = (dislikes[commentId] || 0) + 1;
+    localStorage.setItem('commentDislikes', JSON.stringify(dislikes));
 
-        setComments(comments.map(c => c.id === commentId ? transformedComment : c));
-      })
-      .catch(error => console.error('Ошибка при дизлайке комментария:', error));
-  };*/
+    // Обновление состояния комментариев
+    setComments(comments.map(c => 
+      c.id === commentId ? { ...c, dislikes: (c.dislikes || 0) + 1 } : c
+    ));
+  };
 
   const handleReplyComment = (parentCommentId: number) => {
     const replyText = prompt('Введите ваш ответ:');
@@ -370,22 +380,22 @@ const Comments = ({ article_id}: CommentsProps) => {
     <div className={styles.comments}>
       <h2 className={styles.h2}>Комментарии</h2>
       <div className={styles.commentInputContainer}>
-      <textarea className={styles.textarea}
-        value={newComment}
-        onChange={(e) => setNewComment(e.target.value)}
-        placeholder="Оставьте комментарий"
-      />
-<button className={styles.addCommentButton} onClick={handleAddComment}>
-  <FontAwesomeIcon icon={faPaperPlane} /> 
-</button>
-</div>
-{/*/onLike={handleLikeComment} 
-          //onDislike={handleDislikeComment}*/}
+        <textarea
+          className={styles.textarea}
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          placeholder="Оставьте комментарий"
+        />
+        <button className={styles.addCommentButton} onClick={handleAddComment}>
+          <FontAwesomeIcon icon={faPaperPlane} /> 
+        </button>
+      </div>
       {Array.isArray(comments) && comments.map(comment => (
         <Comment 
           key={comment.id} 
           comment={comment} 
-          
+          onDislike={handleDislikeComment}
+          onLike={handleLikeComment}
           onReply={handleReplyComment}
           onEdit={handleEditComment} 
           onDelete={handleDeleteComment}

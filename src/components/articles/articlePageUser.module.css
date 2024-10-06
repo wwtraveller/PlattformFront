@@ -1,3 +1,10 @@
+.title {
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  font-size: 1.5em;
+}
+
 .articlecontent {
     font-family: Arial, sans-serif;
     line-height: 1.6;
@@ -5,7 +12,7 @@
     text-align: justify; /* Выравнивание текста по ширине (слева и справа) */
     margin: 20px auto; /* Центрирование статьи и отступы сверху/снизу */
     max-width: 800px; /* Ограничение ширины контента */
-    padding: 0 20px; /* Внутренние отступы слева и справа */
+    padding: 0 10px; /* Внутренние отступы слева и справа */
   }
   
   .articlecontent h1, .articlecontent h2, .articlecontent h3 {
@@ -72,3 +79,20 @@
     border-left: 4px solid #ddd;
     padding-left: 16px;
   }
+
+   /* Адаптив для статьи */
+/* @media (max-width: 768px) {
+  .articlecontent {
+    padding: 15px;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 576px) {
+  .articlecontent {
+    padding: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+} */
