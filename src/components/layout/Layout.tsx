@@ -4,6 +4,7 @@ import styles from './layout.module.css';
 import Header from '../header/Header';
 import { useEffect, useState } from 'react';
 import ScrollToTop from 'components/ScrollToTop';
+import Banner from 'components/banner/Banner';
 
 
 interface SearchItem {
@@ -16,6 +17,47 @@ interface SearchItem {
 function Layout() {
   const [error, setError] = useState<string | null>(null);
   const location = useLocation();
+  const [bannerText, setBannerText] = useState('');
+  const [backgroundImage, setBackgroundImage] = useState('');
+
+
+  useEffect(() => {
+    const pathParts = location.pathname.split('/'); // Разделяем путь
+    const categoryName = decodeURIComponent(pathParts[pathParts.length - 1]);
+
+  switch (location.pathname) {
+    case '/':
+      setBannerText('Добро пожаловать на главную страницу!');
+      setBackgroundImage('https://images.pexels.com/photos/164652/pexels-photo-164652.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); // Укажите URL изображения для главной страницы
+      break;
+    case '/about':
+      setBannerText('Узнайте больше о нас!');
+      setBackgroundImage('https://images.pexels.com/photos/356056/pexels-photo-356056.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); // Изображение по умолчанию
+      break;
+      case '/userList':
+        setBannerText('Список пользователей');
+        setBackgroundImage('https://images.pexels.com/photos/356056/pexels-photo-356056.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); // Изображение по умолчанию
+      break;
+      case '/profile':
+      setBannerText('Ваш профиль');
+      setBackgroundImage('https://images.pexels.com/photos/164652/pexels-photo-164652.jpeg?auto=compress&cs=tinysrgb&w=800'); // Укажите URL изображения для страницы "Продукты"
+      break;
+    // Добавьте дополнительные пути по необходимости
+    default:
+      setBannerText('Ваш текст здесь'); // Текст по умолчанию
+      setBackgroundImage('https://images.pexels.com/photos/67112/pexels-photo-67112.jpeg?auto=compress&cs=tinysrgb&w=800'); // Изображение по умолчанию
+  }
+  if (categoryName === 'Продажи') {
+    setBannerText('Продажи');
+    setBackgroundImage('https://images.pexels.com/photos/164652/pexels-photo-164652.jpeg?auto=compress&cs=tinysrgb&w=800');
+  } else if (categoryName === 'другаяКатегория') {
+    setBannerText('Ваш текст для другой категории');
+    setBackgroundImage('https://example.com/другая-картинка.jpg');
+  }
+}, [location.pathname]);
+
+
+  
 
   useEffect(() => {
   //обновление страницы, чтобы ошибка уходила при переходе на главную страницу
@@ -30,6 +72,7 @@ function Layout() {
     <div className={styles.page}>
       <ScrollToTop />
       <Header setError={setError} setSearchResults={()=>{}}  />
+      <Banner bannerText={bannerText} imageUrl={backgroundImage} /> {/* Передаем текст и изображение в компонент Banner */}
       <main className={styles.main}>
         {/* сюда вместо outlet приходят все компоненты из вложенных route */}
         <Outlet />
