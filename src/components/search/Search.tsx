@@ -183,10 +183,13 @@ const Search = (props: SearchProps) => {
   };
   
 
-  const options = categories.map((category: string) => ({
-    value: category,
-    label: category.charAt(0).toUpperCase() + category.slice(1)
-  }));
+  const options = [
+    { value: "Все категории", label: "Все категории" }, // Добавляем опцию "Все категории"
+    ...categories.map((category: string) => ({
+      value: category,
+      label: category.charAt(0).toUpperCase() + category.slice(1)
+    }))
+  ];
 
   return (
     <div className={styles.search_container}>
