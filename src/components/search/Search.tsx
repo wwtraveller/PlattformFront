@@ -96,7 +96,7 @@ const Search = (props: SearchProps) => {
   };
 
   const handleSearch = async () => {
-    if (!validateSearch() || (group && !group.value)) {
+    if (!validateSearch()) {
       setQuery(""); // Очистка запроса при ошибке
       setGroup(null);
       return;
@@ -105,8 +105,18 @@ const Search = (props: SearchProps) => {
     setIsSearching(true);
     try {
       // Формируем URL для запроса
-      const groupParam = group?.value ? `&group=${encodeURIComponent(group.value)}` : '';
-      const response = await fetch(`/api/articles?title=${encodeURIComponent(query)}${groupParam}`);
+      let apiUrl = '';
+  
+      // Проверяем, выбрана ли категория
+      if (group && group.value) {
+        // Используем эндпоинт с категорией и поисковым запросом
+        apiUrl = `/api/categories/findarticles?name=${encodeURIComponent(group.value)}&title=${encodeURIComponent(query)}`;
+      } else {
+        // Используем эндпоинт только с поисковым запросом
+        apiUrl = `/api/categories/findarticles?title=${encodeURIComponent(query)}`;
+      }
+  
+      const response = await fetch(apiUrl);
   
       // Проверка, что запрос завершился успешно
       if (!response.ok) {
