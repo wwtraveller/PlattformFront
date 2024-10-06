@@ -49,7 +49,7 @@ const ArticleUser = () => {
         );
          // Сортируем статьи, чтобы найти последнюю
          filteredArticles.sort((a: { id: number; }, b: { id: number; }) => b.id - a.id); // Предполагается, что ID статьи увеличивается с каждым созданием
-         setLatestArticle(filteredArticles[2] || null); // Устанавливаем последнюю статью
+         setLatestArticle(filteredArticles[0] || null); // Устанавливаем последнюю статью
         setArticles(filteredArticles);
       } catch (error) {
         console.error("Ошибка при получении статей:", error);

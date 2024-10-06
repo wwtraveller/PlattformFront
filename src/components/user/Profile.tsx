@@ -154,10 +154,11 @@ const Profile: React.FC = () => {
 
     try {
       const response = await axios.put(
-        `/api/users`, // проверьте корректность эндпоинта
+        `/api/changePassword`, // проверьте корректность эндпоинта
         {
-          currentPassword,
-          newPassword,
+          oldPassword: currentPassword,   
+          newPassword: newPassword,
+          repeatPassword: confirmPassword, 
         },
         {
           headers: {
