@@ -57,6 +57,7 @@ const Search = (props: SearchProps) => {
   const [error, setError] = useState<string | null>(null);
   const [items, setItems] = useState<SearchItem[]>([]); // Данные для фильтрации
   const [filteredItems, setFilteredItems] = useState<SearchItem[]>([]); // Результаты live-фильтрации
+  const [isExpanded, setIsExpanded] = useState(false); // Добавляем состояние для управления расширением поиска
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -161,10 +162,23 @@ const Search = (props: SearchProps) => {
   }
   };
 
+  const handleSearchClick = () => {
+    // Если поиск еще не развернут, разворачиваем его
+    if (!isExpanded) {
+      setIsExpanded(true);
+    }
+  };
+
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleSearch();
+      // Вызов логики для поиска
+      // Логика поиска
     }
+  };
+
+  const handleSearchToggle = () => {
+    setIsExpanded(!isExpanded); // Логика переключения состояния (свернуто/развернуто)
   };
 
   const handleCategoryChange = (updatedCategories: string[]) => {
@@ -180,9 +194,11 @@ const Search = (props: SearchProps) => {
 
   return (
     <div className={styles.search_container}>
+      {/* <div className={`${styles.search_input_wrapper} ${isExpanded ? styles.expanded : ""}`}> */}
       <div className={styles.search_input_wrapper}>
         {/* <div className={styles.icon_search}> */}
-        <button type="button" className={styles.search_button_icon}>
+        {/* Кнопка-лупа для сворачивания/разворачивания */}
+        <button type="button" className={styles.search_button_icon} onClick={handleSearchToggle}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -202,6 +218,9 @@ const Search = (props: SearchProps) => {
           </svg>
           {/* <i className="fas fa-search"></i> */}
         </button>
+        {/* Скрываем поиск и категории на маленьких экранах, пока не нажали на лупу */}
+        {isExpanded && (
+          <>
         <input
           type="text"
           value={query}
@@ -209,8 +228,9 @@ const Search = (props: SearchProps) => {
           onKeyPress={handleKeyPress}
           placeholder="Поиск"
           className={styles.search_input}
+          
         />
-      </div>
+      
       <div className={styles.separator}></div>
 
       <div className={styles.category_container}>
@@ -246,6 +266,9 @@ const Search = (props: SearchProps) => {
           }),
           }}
         />
+      </div>
+      </>
+      )}
       </div>
       <SearchFilter items={items} query={query} />
     </div>

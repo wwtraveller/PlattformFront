@@ -32,21 +32,21 @@
   justify-content: center;
   border: 2px solid transparent;
   border-radius: 40px;
-  outline: none;
+  /* outline: none; */
   background-color: transparent;
   cursor: pointer;
   height: 40px;
   transition: background-color 0.3s ease, border 0.3s ease;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   padding: 5px;
 
 }
 
 .search_input_wrapper:hover {
   background-color: #ffffffb2;
-  box-sizing: border-box;
+  /* box-sizing: border-box;
   border-radius: 40px;
-  height: 38px;
+  height: 38px; */
 }
 
 
@@ -65,17 +65,21 @@
 
 
 .search_input {
-  border: transparent;
+  border: none;
   outline: none;
   transition: width 0.3s ease;
   background-color: transparent;
   height: 40px;
   box-sizing: border-box;
-  width: 180px;
-  padding: 10px;
+  width: 180px; /* Исходная ширина на маленьких экранах */
+  opacity: 0; /* Скрываем текстовое поле, пока оно свернуто */
+  padding: 5px;
 }
 
-
+.expanded .search_input {
+  width: 150px; /* Расширяем при фокусе */
+  opacity: 1; /* Показываем текстовое поле при расширении */
+}
 
 
 .search_button_icon {
@@ -87,7 +91,7 @@
   cursor: pointer;
   background-color: transparent;
   border: none;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
 
 .icon_search {
@@ -101,12 +105,13 @@
 .category_container {
   position: relative;
   box-sizing: border-box;
+  margin-left: 10px;
 }
 
 
 .select_categories {
-  display: flex;
-  align-items: center;
+  /* display: flex; */
+  /* align-items: center; */
   /* justify-content: center; */
   font-size: 10px;
   font-weight: 600;
@@ -115,9 +120,9 @@
   /* border: 2px transparent; */
   outline: none;
   border-radius: 40px;
-  transition: background-color 0.3s ease, border 0.3s ease;
+  /* transition: background-color 0.3s ease, border 0.3s ease; */
   height: 35px;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
 
 .select_categories:hover {
@@ -180,4 +185,31 @@ input::placeholder {
   margin: 5px 0 0;
   font-size: 14px;
   color: #555;
+}
+
+/* Медиазапросы для маленьких экранов */
+@media (max-width: 768px) {
+  .search_container {
+    max-width: 50px; /* Ограничиваем максимальную ширину контейнера */
+    /* height: 40px; */
+  }
+
+  .search_input {
+    width: 0px;
+    opacity: 0;
+  }
+
+  .select_categories {
+    width: 0;
+    opacity: 0;
+  }
+
+  
+
+  .search_input_wrapper:focus-within .search_input,
+  .search_input_wrapper:focus-within .select_categories {
+    width: 180px; /* Поле и категории раскрываются при фокусе */
+    opacity: 1;
+  }
+
 }
