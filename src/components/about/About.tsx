@@ -91,7 +91,7 @@ export default function About() {
       caption: "Алена Шилимова",
     },
     {
-      src: "https://1.downloader.disk.yandex.ru/preview/fb642bb231c2a33a4ec7238a503e66cf30bc228acbff0ad3a102787071c079f3/inf/cMyxO6zz9fcvKyknLKom00p4KrYTav2nFrw8tmij4Luoaak_LKrDQ4Pp6WDP8Wv-kcTC-3uLL8d8K8etXOjemQ==?uid=7119991&filename=2022-07-21+19-19-55.HEIC&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&tknv=v2&owner_uid=7119991&size=3200x1362",
+      src: "https://i.okcdn.ru/i?r=BUHoKFKCs3-57yPBZdu-SuAV_IxhNI8hu4oBYgYl0gD1NZXUyyJMWzmmCTWINGpTEJV1p42hYaZrF9hWPkfZRDXZ&dpr=2",
       caption: "Александр Варнавин-Браун",
     },
     {
@@ -128,9 +128,9 @@ export default function About() {
     <div className={styles.aboutContainer}>
       <div className={styles.background}>
         <h1>Хочешь узнать о нас больше?</h1>
-        <button className={styles.scrollButton} onClick={scrollToCarousel}>
+        {/* <button className={styles.scrollButton} onClick={scrollToCarousel}>
           <FaArrowDown />
-        </button>
+        </button> */}
       </div>
 
       <div className={styles.ourDevelopers} ref={carouselRef}>
