@@ -1,0 +1,72 @@
+.resultsContainer {
+    width: 650px; /* Максимальная ширина контейнера */
+    margin: 0 auto; /* Центрирование контейнера */
+    padding: 20px; /* Отступы внутри контейнера */
+    background-color: #f9f9f9; /* Светлый фон */
+    border-radius: 8px; /* Закругленные углы */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
+  }
+  
+  .authContainer {
+    background-color: #fff; /* Белый фон для окна авторизации */
+    padding: 20px; /* Отступы */
+    border-radius: 8px; /* Закругленные углы */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    margin-bottom: 20px; /* Отступ снизу */
+  }
+  
+  .authContainer p {
+    margin-bottom: 10px; /* Отступ между абзацем и кнопками */
+    font-size: 16px; /* Размер шрифта */
+    color: #333; /* Темный цвет текста */
+  }
+  
+  .resultItem {
+    background-color: #ffffff; /* Белый фон для элемента результата */
+    padding: 15px; /* Отступы внутри элемента */
+    border-radius: 8px; /* Закругленные углы */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    margin-bottom: 15px; /* Отступ между элементами */
+    cursor: pointer; /* Курсор при наведении */
+    transition: transform 0.2s; /* Плавный эффект при наведении */
+  }
+  
+  .resultItem:hover {
+    transform: scale(1.02); /* Увеличение элемента при наведении */
+  }
+  
+  .resultItem h4 {
+    margin: 0; /* Убираем отступы у заголовка */
+    font-size: 18px; /* Размер шрифта заголовка */
+    color: #007bff; /* Цвет заголовка */
+  }
+  
+  .resultItem p {
+    margin: 5px 0 0; /* Отступы у описания */
+    color: #555; /* Цвет текста описания */
+  }
+  
+  .buttonRight {
+    margin-top: 10px; /* Отступ сверху для кнопки */
+  }
+  
+  .button {
+    display: inline-block; /* Блочный элемент для кнопки */
+    padding: 10px 20px; /* Отступы кнопки */
+    background-color: #007bff; /* Цвет фона кнопки */
+    color: white; /* Цвет текста кнопки */
+    border: none; /* Убираем рамку */
+    border-radius: 5px; /* Закругленные углы */
+    cursor: pointer; /* Курсор при наведении */
+    transition: background-color 0.3s; /* Плавный переход цвета */
+  }
+  
+  .button:hover {
+    background-color: #0056b3; /* Цвет фона при наведении */
+  }
+  
+  .button:disabled {
+    background-color: #ccc; /* Цвет кнопки при отключении */
+    cursor: not-allowed; /* Курсор для отключенной кнопки */
+  }
+  

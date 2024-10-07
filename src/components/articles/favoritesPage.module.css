@@ -71,4 +71,67 @@
     font-size: 1.2rem;
     color: #666;
   }
+
+
+.pageArrow {
+  padding: 5px; /* Уменьшаем размер кнопки стрелки */
+  margin: 0 5px;
+  background-color: #f0f0f0;
+  border: none;
+  cursor: pointer;
+  font-size: 14px; /* Уменьшаем размер шрифта */
+  border-radius: 50%; /* Делаем кнопку стрелки круглой */
+  width: 30px; /* Фиксируем ширину для круга */
+  height: 30px; /* Фиксируем высоту для круга */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  
+.pageArrow:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.pageItem {
+  background-color: #f0f0f0;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  width: 35px; /* Фиксируем ширину для круга с цифрой */
+  height: 35px; /* Фиксируем высоту для круга с цифрой */
+  border-radius: 50%; /* Делаем цифры в круге */
+  margin: 0 5px;
+  display: inline-flex; /* Центрируем текст внутри */
+  align-items: center;
+  justify-content: center;
+}
+
+.pageItem:hover {
+  background-color: #ddd; /* Добавляем hover-эффект для кнопок */
+}
+
+.active {
+  background-color: #6788f3; /* Синий цвет для активной страницы */
+  color: rgb(245, 240, 240); /* Белый текст на активной странице */
+}
+
+.pagination {
+  display: flex; /* Включаем Flexbox для выравнивания в одну строку */
+  justify-content: center; /* Центрируем все элементы пагинации */
+  align-items: center; /* Вертикально центрируем стрелки и цифры */
+  margin-top: 20px; /* Добавляем отступ сверху */
+}
+  
+  .modal {
+    position: fixed;
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
   

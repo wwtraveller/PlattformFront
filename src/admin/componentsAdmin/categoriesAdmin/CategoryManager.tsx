@@ -156,7 +156,7 @@ const CategoryManager = () => {
             zIndex: 1000,
           }}
           >
-          <h4>Удалить категорию "{editingCategory?.name}"?</h4>
+          <h4>Удалить категорию и все статьи с "{editingCategory?.name}"?</h4>
           <Button className={styles.button} onClick={handleDelete} name="Удалить" />
           <Button className={styles.button} onClick={() => setShowDeleteModal(false)} name="Отмена" />
         </div>
