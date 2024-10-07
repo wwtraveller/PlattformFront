@@ -42,9 +42,9 @@ const SearchResultsPage = () => {
     const token = localStorage.getItem('accessToken');
     if (!token) {
       // Если токена нет, сохраняем путь для редиректа после логина
-      setRedirectAfterLogin(`/article/${id}`);
+      setRedirectAfterLogin(`/articles/${id}`);
     } else {
-      navigate(`/article/${id}`); // Если токен есть, переходим сразу
+      navigate(`/articles/${id}`); // Если токен есть, переходим сразу
     }
   };
 
