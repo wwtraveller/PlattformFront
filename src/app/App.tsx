@@ -32,7 +32,7 @@ import FavoritesPage from "components/articles/FavoritesPage";
 import ArticlesListPage from "admin/componentsAdmin/articlesAdmin/ArticlesListPage";
 import Articles from "admin/componentsAdmin/articlesAdmin/Articles";
 import { ToastContainer } from "react-toastify";
-import UserList from "admin/componentsAdmin/UserListAdmin/UserLIst";
+import UserList from "admin/componentsAdmin/UserListAdmin.tsx/UserLIst";
 import Partner from "components/partner/Partner";
 import Contact from "components/contact/Contact";
 import Authors from "components/authors/Authors";
