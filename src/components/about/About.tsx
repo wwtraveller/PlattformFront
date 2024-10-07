@@ -76,15 +76,6 @@ const PhotoCard: React.FC<PhotoCardProps> = ({ img, caption }) => {
 export default function About() {
   const carouselRef = useRef<HTMLDivElement>(null);
 
-  const scrollToCarousel = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
-
   const imagesFront = [
     {
       src: "https://avatars.githubusercontent.com/u/30770110?v=4",
@@ -126,11 +117,35 @@ export default function About() {
 
   return (
     <div className={styles.aboutContainer}>
-      <div className={styles.background}>
-        <h1>Хочешь узнать о нас больше?</h1>
-        {/* <button className={styles.scrollButton} onClick={scrollToCarousel}>
-          <FaArrowDown />
-        </button> */}
+      <div className={styles.stackTechnology}>
+        <div className={styles.gridStack}>
+          <div className={styles.leftBlock}>
+            <h1>Стек технологий</h1>
+            <div className={styles.logos}>
+              <img src="https://lmsdo.rea.ru/pluginfile.php/14950/course/overviewfiles/react%404x.png" />
+              <img src="https://www.lerned.top/imj/kurses/f4.png" />
+              <img src="https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_typescript_icon_130108.png" />
+              <img src="https://www.lerned.top/imj/kurses/b1.png" />
+              <img src="https://ucarecdn.com/a1fe06da-7fe5-4e40-9726-267b4e91934c/" />
+              <img src="https://i.pinimg.com/originals/06/86/c0/0686c0c85407548ea5bd737a572974b6.png" />
+              <img src="https://harasou.jp/2018/02/10/one-execusion-file-in-docker-image/vertical.png" />
+              <img src="https://lmsdo.rea.ru/pluginfile.php/24789/course/overviewfiles/spring_beecoder.org-3.png" />
+              <img src="https://static.tildacdn.com/tild3435-3136-4939-a561-383935353232/javascript.png" />
+              <img src="https://gromcode.com/static/images/maven.webp" />
+              <img src="https://howtodoinjava.com/wp-content/uploads/2014/09/hibernate-logo.png" />
+              <img src="https://user-images.githubusercontent.com/98197909/222990768-452ebe01-9134-48af-b539-3dc9ef1eb179.png" />
+              <img src="https://assets.dataprovider.com/img/recipe/105-1631878131-DigitalOcean_NASDAQDOCN_COPY_2880pxDigitalOcean_logo_svg.png" />
+              <img src="https://www.chrismsmalley.com/img/tech/css3.png" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/HTML5_logo_black.svg/2048px-HTML5_logo_black.svg.png" />
+            </div>
+          </div>
+          <div className={styles.rightBlock}>
+            <img
+              src="https://edu.permaviat.ru/pluginfile.php/107289/course/overviewfiles/what-is-web-development.gif"
+              alt="Технологии"
+            />
+          </div>
+        </div>
       </div>
 
       <div className={styles.ourDevelopers} ref={carouselRef}>
