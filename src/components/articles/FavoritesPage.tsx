@@ -14,6 +14,9 @@ const FavoritesPage = () => {
   const [favoriteArticles, setFavoriteArticles] = useState<Article[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [articlesPerPage] = useState<number>(6);
+  const [showModal, setShowModal] = useState<{ visible: boolean, id: number | null, x: number, y: number }>({ visible: false, id: null, x: 0, y: 0 });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -74,14 +77,49 @@ const FavoritesPage = () => {
 
   const removeFromFavorites = (id: number) => {
     setFavoriteArticles((prevArticles) => prevArticles.filter(article => article.id !== id));
-    setFavoriteArticles((prevArticles) => prevArticles.filter(article => article.id !== id));
     
-    // Обновляем localStorage
     const favorites = localStorage.getItem('favorites');
     if (favorites) {
       const favoriteIds = JSON.parse(favorites) as number[];
       const updatedFavorites = favoriteIds.filter(favoriteId => favoriteId !== id);
       localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    }
+  };
+
+  const confirmRemoveFromFavorites = (id: number, x: number, y: number) => {
+    setShowModal({ visible: true, id, x, y });
+  };
+
+  const handleModalConfirm = () => {
+    if (showModal.id !== null) {
+      removeFromFavorites(showModal.id);
+    }
+    setShowModal({ visible: false, id: null, x: 0, y: 0 });
+  };
+
+  const handleModalCancel = () => {
+    setShowModal({ visible: false, id: null, x: 0, y: 0 });
+  };
+
+  // Пагинация: рассчитать индексы статей для текущей страницы
+  const indexOfLastArticle = currentPage * articlesPerPage;
+  const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
+  const currentArticles = favoriteArticles.slice(indexOfFirstArticle, indexOfLastArticle);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(favoriteArticles.length / articlesPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  const handleNextPage = () => {
+    if (currentPage < pageNumbers.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
     }
   };
 
@@ -105,21 +143,55 @@ const FavoritesPage = () => {
   return (
     <div className={styles.favoritesPage}>
       <h1 className={styles.title}>Избранные статьи</h1>
+      
       <ul className={styles.articleList}>
-        {favoriteArticles.map(article => (
+        {currentArticles.map(article => (
           <li key={article.id} className={styles.articleItem}>
             <Link to={`/articles/${article.id}`} className={styles.articleLink}>
               <h4 className={styles.articleTitle}>{article.title}</h4>
             </Link>
             <button 
               className={styles.removeFavorite} 
-              onClick={() => removeFromFavorites(article.id)}
+              onClick={(e) => confirmRemoveFromFavorites(article.id, e.clientX, e.clientY)} // Передаем позицию клика
             >
-              ⭐ {/* Здесь можно использовать любую иконку звезды */}
+              ⭐
             </button>
           </li>
         ))}
       </ul>
+
+      {/* Пагинация */}
+      <div className={styles.pagination}>
+        <button onClick={handlePrevPage} disabled={currentPage === 1} className={styles.pageArrow}>
+          ←
+        </button>
+        {pageNumbers.map(number => (
+          <button
+            key={number}
+            onClick={() => setCurrentPage(number)}
+            className={`${styles.pageItem} ${number === currentPage ? styles.active : ''}`}
+          >
+            {number}
+          </button>
+        ))}
+        <button onClick={handleNextPage} disabled={currentPage === pageNumbers.length} className={styles.pageArrow}>
+          →
+        </button>
+      </div>
+
+      {/* Модальное окно подтверждения удаления */}
+      {showModal.visible && (
+        <div 
+          className={styles.modal} 
+          style={{ top: showModal.y, left: showModal.x }} // Устанавливаем позицию модального окна
+        >
+          <div className={styles.modalContent}>
+            <p>Вы уверены, что хотите удалить статью из избранного?</p>
+            <button onClick={handleModalConfirm} className={styles.confirmButton}>Да</button>
+            <button onClick={handleModalCancel} className={styles.cancelButton}>Нет</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
