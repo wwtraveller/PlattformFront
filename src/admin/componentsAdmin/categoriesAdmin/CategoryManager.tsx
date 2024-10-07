@@ -1,7 +1,6 @@
 import Button from 'components/button/Button';
 import React, { useState, useEffect } from 'react';
-import styles from './categoryManager.module.css'
-
+import styles from './categoryManager.module.css';
 
 interface Category {
   id: number;
@@ -16,6 +15,7 @@ const CategoryManager = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [newCategoryName, setNewCategoryName] = useState('');
+  const [deleteCategoryPosition, setDeleteCategoryPosition] = useState<{ top: number; left: number } | null>(null);
 
   // Загружаем категории при монтировании компонента
   useEffect(() => {
@@ -42,7 +42,8 @@ const CategoryManager = () => {
       const token = localStorage.getItem('accessToken'); // Получение токена
       const response = await fetch('/api/categories', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json',
+        headers: {
+          'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}` // Передача токена
         },
         body: JSON.stringify({ name: newCategoryName }),
@@ -51,6 +52,7 @@ const CategoryManager = () => {
       const newCategory = await response.json();
       setCategories([...categories, newCategory]);
       setShowEditModal(false);
+      setNewCategoryName(''); // Очистка имени новой категории
     } catch (error) {
       console.error('Ошибка при создании категории', error);
     }
@@ -63,19 +65,17 @@ const CategoryManager = () => {
         const token = localStorage.getItem('accessToken'); // Получение токена
         const response = await fetch(`/api/categories/${editingCategory.id}`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json',
+          headers: {
+            'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}` // Передача токена 
-            },
+          },
           body: JSON.stringify({ name: newCategoryName }),
         });
         if (!response.ok) throw new Error('Ошибка обновления категории');
         const updatedCategory = await response.json();
-        setCategories(
-          categories.map((cat) =>
-            cat.id === updatedCategory.id ? updatedCategory : cat
-          )
-        );
+        setCategories(categories.map((cat) => (cat.id === updatedCategory.id ? updatedCategory : cat)));
         setShowEditModal(false);
+        setNewCategoryName(''); // Очистка имени новой категории
       } catch (error) {
         console.error('Ошибка при обновлении категории', error);
       }
@@ -96,10 +96,19 @@ const CategoryManager = () => {
         if (!response.ok) throw new Error('Ошибка удаления категории');
         setCategories(categories.filter((cat) => cat.id !== editingCategory.id));
         setShowDeleteModal(false);
+        setEditingCategory(null); // Очистка редактируемой категории
       } catch (error) {
         console.error('Ошибка при удалении категории', error);
       }
     }
+  };
+
+  // Обработчик для показа модального окна удаления
+  const handleShowDeleteModal = (category: Category) => (event: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = (event.currentTarget as HTMLButtonElement).getBoundingClientRect();
+    setDeleteCategoryPosition({ top: rect.bottom + window.scrollY, left: rect.left });
+    setEditingCategory(category);
+    setShowDeleteModal(true);
   };
 
   if (loading) return <p>Загрузка...</p>;
@@ -114,9 +123,8 @@ const CategoryManager = () => {
           <li className={styles.li} key={category.id}>
             {category.name}
             <div className={styles.buttonGroup}>
-            <Button onClick={() => { setEditingCategory(category); setNewCategoryName(category.name); setShowEditModal(true); }} name="Редактировать" />
-            <Button onClick={() => { setEditingCategory(category); setShowDeleteModal(true); }} name="Удалить" />
-
+              <Button onClick={() => { setEditingCategory(category); setNewCategoryName(category.name); setShowEditModal(true); }} name="Редактировать" />
+              <Button onClick={handleShowDeleteModal(category)} name="Удалить" />
             </div>
           </li>
         ))}
@@ -124,7 +132,7 @@ const CategoryManager = () => {
 
       {/* Модальное окно для создания/редактирования */}
       {showEditModal && (
-        <div className="modal">
+        <div className={styles.modal}>
           <h2>{editingCategory ? 'Редактировать категорию' : 'Создать категорию'}</h2>
           <input
             type="text"
@@ -137,9 +145,18 @@ const CategoryManager = () => {
       )}
 
       {/* Модальное окно для удаления */}
-      {showDeleteModal && (
-        <div className="modal">
-          <h2>Удалить категорию "{editingCategory?.name}"?</h2>
+      {showDeleteModal && deleteCategoryPosition && (
+        <div
+          className={styles.modalDelete}
+          style={{
+            position: 'absolute',
+            top: deleteCategoryPosition.top + 'px',
+            left: deleteCategoryPosition.left + 'px',
+            transform: 'translateY(10px)',
+            zIndex: 1000,
+          }}
+          >
+          <h4>Удалить категорию "{editingCategory?.name}"?</h4>
           <Button className={styles.button} onClick={handleDelete} name="Удалить" />
           <Button className={styles.button} onClick={() => setShowDeleteModal(false)} name="Отмена" />
         </div>
