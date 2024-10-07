@@ -72,7 +72,10 @@ function Layout() {
     <div className={styles.page}>
       <ScrollToTop />
       <Header setError={setError} setSearchResults={()=>{}}  />
-      <Banner bannerText={bannerText} imageUrl={backgroundImage} /> {/* Передаем текст и изображение в компонент Banner */}
+      
+      {/* Передаем текст и изображение в компонент Banner */}
+      {/* <Banner bannerText={bannerText} imageUrl={backgroundImage} /> */}
+
       <main className={styles.main}>
         {/* сюда вместо outlet приходят все компоненты из вложенных route */}
         <Outlet />
