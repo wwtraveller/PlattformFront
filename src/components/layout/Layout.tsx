@@ -26,10 +26,10 @@ function Layout() {
     const categoryName = decodeURIComponent(pathParts[pathParts.length - 1]);
 
   switch (location.pathname) {
-    case '/':
-      setBannerText('Добро пожаловать на главную страницу!');
-      setBackgroundImage('https://images.pexels.com/photos/164652/pexels-photo-164652.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); // Укажите URL изображения для главной страницы
-      break;
+    // case '/':
+    //   setBannerText('Добро пожаловать на главную страницу!');
+    //   setBackgroundImage('https://images.pexels.com/photos/164652/pexels-photo-164652.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); // Укажите URL изображения для главной страницы
+    //   break;
     case '/about':
       setBannerText('Узнайте больше о нас!');
       setBackgroundImage('https://images.pexels.com/photos/356056/pexels-photo-356056.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); // Изображение по умолчанию
@@ -44,8 +44,8 @@ function Layout() {
       break;
     // Добавьте дополнительные пути по необходимости
     default:
-      setBannerText('Ваш текст здесь'); // Текст по умолчанию
-      setBackgroundImage('https://images.pexels.com/photos/67112/pexels-photo-67112.jpeg?auto=compress&cs=tinysrgb&w=800'); // Изображение по умолчанию
+      setBannerText('Ваш текст здесь'); 
+      setBackgroundImage('https://images.pexels.com/photos/67112/pexels-photo-67112.jpeg?auto=compress&cs=tinysrgb&w=800');
   }
   if (categoryName === 'Продажи') {
     setBannerText('Продажи');

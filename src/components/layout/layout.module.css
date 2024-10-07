@@ -36,6 +36,7 @@
   overflow: hidden;
   animation: profileAnimate 1500ms ease infinite;
   transition: all ease 2s;
+  z-index: 2;
 }
 
 .iconProfile:hover {
