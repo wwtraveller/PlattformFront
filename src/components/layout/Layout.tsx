@@ -34,7 +34,7 @@ function Layout() {
       setBannerText('Узнайте больше о нас!');
       setBackgroundImage('https://images.pexels.com/photos/356056/pexels-photo-356056.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); // Изображение по умолчанию
       break;
-      case '/userList':
+      case '/userlist':
         setBannerText('Список пользователей');
         setBackgroundImage('https://images.pexels.com/photos/356056/pexels-photo-356056.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); // Изображение по умолчанию
       break;
