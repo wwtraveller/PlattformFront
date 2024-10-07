@@ -3,7 +3,7 @@ import styles from './button.module.css'
 interface IButtonProps {
     name?: string
     type?: 'button' | 'submit' | 'reset'
-    onClick?: () => void;
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
     count?: number;
     className?: string;
     children?: React.ReactNode;
