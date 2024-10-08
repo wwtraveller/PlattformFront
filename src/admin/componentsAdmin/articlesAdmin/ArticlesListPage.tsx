@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ArticleList from './ArticleList'; 
 import axios from 'axios';
 import ArticleForm from './ArticleForm';
+import Loader from 'components/loader/Loader';
 
 interface Article {
     id: number;
@@ -24,12 +25,20 @@ const ArticlesListPage = () => {
     const [error, setError] = useState<string | null>(null); 
     const [editingArticleId, setEditingArticleId] = useState<number | null>(null); // ID редактируемой статьи
     const [isEditing, setIsEditing] = useState(false);
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         const fetchArticles = async () => {
             try {
                 const response = await axios.get('/api/articles'); 
                 setArticles(response.data); 
+                const timer = setTimeout(() => {
+                    setLoading(false);
+                  }, 2000); // Загрузчик будет виден 3 секунды
+          
+                  // Очистка таймера
+                  return () => clearTimeout(timer);
             } catch (err) {
                 setError('Ошибка при загрузке статей');
                 console.error(err);
@@ -98,6 +107,15 @@ const ArticlesListPage = () => {
         fetchArticles();
     };
 
+    if (!articles) {
+        return (
+          <div>
+            <h1>Загрузка...</h1>
+            <Loader />
+          </div>
+        );
+      }
+    
     return (
         <div>
             {/* Список статей */}

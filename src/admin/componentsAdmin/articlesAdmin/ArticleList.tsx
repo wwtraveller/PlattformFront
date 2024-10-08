@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './articleList.module.css';
 import axios from 'axios';
 import DeleteModal from './DeleteModal';
+import Loader from 'components/loader/Loader';
 
 interface Article {
   id: number;
@@ -43,6 +44,12 @@ const ArticleList = ({ articles, onEdit, onDelete }: ArticleListProps) => {
       try {
         const response = await axios.get('/api/categories');
         setCategories(response.data);
+        const timer = setTimeout(() => {
+          setLoading(false);
+        }, 3000); // Загрузчик будет виден 3 секунды
+  
+        // Очистка таймера
+        return () => clearTimeout(timer);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
@@ -131,7 +138,11 @@ const ArticleList = ({ articles, onEdit, onDelete }: ArticleListProps) => {
     return pages;
   };
 
-  if (loading) return <p>Загрузка категорий...</p>;
+  if (loading) return  <div>
+<p>Загрузка категорий...</p>;
+  <Loader />
+</div>
+
   if (error) return <p>Ошибка: {error}</p>;
 
   return (

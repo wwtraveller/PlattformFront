@@ -4,6 +4,7 @@ import axios from "axios";
 import { useAppSelector } from "redux/hooks";
 import styles from "../articles/articleUser.module.css";
 import ButtonLogReg from "components/button/ButtonLogReg";
+import Loader from "components/loader/Loader";
 
 interface Article {
   id: number;
@@ -29,9 +30,11 @@ const ArticleUser = () => {
   const [redirectPath, setRedirectPath] = useState<string | null>(null);
 
   useEffect(() => {
+    const scrollToPosition = window.scrollY - window.innerHeight / 2; // Скролл на 50% вниз от текущей позиции
+
     // Скролл вверх при изменении страницы
     window.scrollTo({
-      top:0, 
+      top:scrollToPosition, 
       left: 0,
        behavior: 'smooth'});
   }, [location.pathname, currentPage]); 
@@ -86,7 +89,10 @@ const ArticleUser = () => {
     "https://images.unsplash.com/photo-1617375819318-67968e5b25c3?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
   if (loading) {
-    return <p>Загрузка статей...</p>;
+    return  <div>
+    <h1>Loading...</h1>
+    <Loader />
+  </div>;
   }
 
   if (error) {
@@ -212,15 +218,62 @@ const ArticleUser = () => {
         )}
         </div>
         <div className={styles.pagination}>
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index + 1}
-              onClick={() => setCurrentPage (index + 1)}
-              className={`${styles.pageButton} ${currentPage === index + 1 ? styles.active : ""}`}
-            >
-              {index + 1}
-            </button>
-          ))}
+            {/* Кнопка для перелистывания назад */}
+  <button
+    onClick={() => setCurrentPage(prevPage => Math.max(prevPage - 1, 1))}
+    className={styles.arrowButton}
+    disabled={currentPage === 1}  // Отключаем кнопку на первой странице
+  >
+    ← {/* Символ стрелки влево */}
+  </button>
+
+  <button
+    onClick={() => setCurrentPage(1)}
+    className={`${styles.pageButton} ${currentPage === 1 ? styles.active : ""}`}
+  >
+    1
+  </button>
+
+  {/* Если текущая страница больше 4, отображаем "..." перед ближайшими страницами */}
+  {currentPage > 4 && <span className={styles.ellipsis}>...</span>}
+
+  {Array.from({ length: 5 }, (_, index) => {
+    const page = currentPage - 2 + index;
+    if (page > 1 && page < totalPages) {
+      return (
+        <button
+          key={page}
+          onClick={() => setCurrentPage(page)}
+          className={`${styles.pageButton} ${currentPage === page ? styles.active : ""}`}
+        >
+          {page}
+        </button>
+      );
+    }
+    return null;
+  })}
+
+{currentPage < totalPages - 3 && <span className={styles.ellipsis}>...</span>}
+
+
+ {/* Последняя страница всегда отображается */}
+ {totalPages > 1 && (
+    <button
+      onClick={() => setCurrentPage(totalPages)}
+      className={`${styles.pageButton} ${currentPage === totalPages ? styles.active : ""}`}
+    >
+      {totalPages}
+    </button>
+  )}
+
+          {/* Кнопка для перелистывания вперёд */}
+  <button
+    onClick={() => setCurrentPage(prevPage => Math.min(prevPage + 1, totalPages))}
+    className={styles.arrowButton}
+    disabled={currentPage === totalPages}  // Отключаем кнопку на последней странице
+  >
+   → {/* Символ стрелки вправо */}
+  </button>
         </div>
     </div>
   );

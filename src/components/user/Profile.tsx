@@ -37,8 +37,9 @@ const Profile: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const { user } = useSelector((state: any) => state.auth); // Получаем данные текущего пользователя
   const [showCurPassword, setShowCurPassword] = useState(false);
-const [showNewPassword, setShowNewPassword] = useState(false);
-const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [newAvatarUrl, setNewAvatarUrl] = useState(""); 
 
   const toggleCurPasswordVisibility = () => {
     setShowCurPassword((prevState) => !prevState); // Переключаем видимость пароля
@@ -88,9 +89,10 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     }
   };
 
-  const saveProfile = () => {
-    const updatedProfile = { ...user, username };
-    dispatch(updateUserProfile(updatedProfile)); // Экшен для сохранения данных на сервере
+  const saveProfile = async () => {
+    const updatedProfile = { ...userData, username };
+    await dispatch(updateUserProfile(updatedProfile));
+    await fetchUserData(); // Обновляем данные после сохранения
   };
 
   const handleSave = async () => {
@@ -110,16 +112,16 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
         firstName: firstName,
         lastName: lastName,
         email: email,
-        avatarUrl: avatarUrl,
+        photo: avatarUrl,
       };
 
       // Если аватар выбран, сначала загружаем его
       if (avatar) {
         const avatarData = await uploadAvatar(avatar, accessToken);
-        dataToSend.avatarUrl = avatarData; // Сохраняем URL загруженного аватара
+        dataToSend.photo = avatarData; // Сохраняем URL загруженного аватара
       } else if (avatarUrl) {
         // Если URL аватара был введен, сохраняем его
-        dataToSend.avatarUrl = avatarUrl;
+        dataToSend.photo = avatarUrl;
       }
 
       handleUsernameChange();
@@ -132,11 +134,12 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
       });
 
       dispatch(setUserAvatar(response.data.avatar));
-
       toast.success("Профиль успешно обновлен!");
-
       setAvatarPreview(response.data.avatar);
       setAvatarUrl("");
+
+      await fetchUserData(); // Теперь пользователь видит обновленные данные
+
     } catch (error: any) {
       console.error(
         "Ошибка при сохранении профиля:",
@@ -148,11 +151,30 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     }
   };
 
+  const fetchUserData = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) return;
+
+    try {
+      const response = await axios.get(`/api/auth/me`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      // Обновляем состояние пользователя в Redux
+      dispatch(setUserData(response.data));
+    } catch (error) {
+      console.error("Ошибка при получении данных пользователя:", error);
+    }
+  };
+
+
   const uploadAvatar = async (file: File, accessToken: string) => {
     const formData = new FormData();
     formData.append("avatar", file);
 
-    const response = await axios.put("/api/users", formData, {
+    const response = await axios.put("/api/users/${userId}", formData, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "multipart/form-data",
@@ -190,13 +212,20 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
       setAvatarPreview(null);
     }
   };
+
+
   // Загрузка аватара через URL
-  const handleUrlChange = async (
+  const handleUrlChange = (
     event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+    ) => {
     const newAvatarUrl = event.target.value;
     setAvatarUrl(newAvatarUrl);
     setAvatarPreview(newAvatarUrl);
+  };
+  
+  
+  const handleSaveAvatar = async () => {
+    const userId = userData.id;
 
     try {
       const accessToken = localStorage.getItem("accessToken");
@@ -204,9 +233,9 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
         throw new Error("Пользователь не авторизован");
       }
 
-      const response = await axios.post(
-        `/api/users/photo/url`,
-        { avatarUrl: newAvatarUrl },
+      const response = await axios.put(
+        `/api/users/${userId}`,
+        { photo: newAvatarUrl },
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -214,7 +243,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
           },
         }
       );
-      const updatedAvatarUrl = response.data.photoUrl;
+      const updatedAvatarUrl = response.data.photo;
 
       dispatch(setUserAvatar(updatedAvatarUrl)); // Обновляем состояние аватара в Redux
       toast.success("Аватар успешно обновлен!");
@@ -222,7 +251,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
       console.error("Ошибка при обновлении аватара:", error);
       toast.error("Ошибка при обновлении аватара.");
     }
-  };
+  } 
 
   const handleRemoveAvatar = () => {
     setAvatar(null);

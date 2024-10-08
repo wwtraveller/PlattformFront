@@ -126,11 +126,11 @@ export default function About() {
               <img src="https://www.lerned.top/imj/kurses/f4.png" />
               <img src="https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_typescript_icon_130108.png" />
               <img src="https://www.lerned.top/imj/kurses/b1.png" />
-              <img src="https://ucarecdn.com/a1fe06da-7fe5-4e40-9726-267b4e91934c/" />
+              <img src="https://www.javacodegeeks.com/wp-content/uploads/2023/04/pngwing.com-2.png" />
               <img src="https://i.pinimg.com/originals/06/86/c0/0686c0c85407548ea5bd737a572974b6.png" />
               <img src="https://harasou.jp/2018/02/10/one-execusion-file-in-docker-image/vertical.png" />
               <img src="https://lmsdo.rea.ru/pluginfile.php/24789/course/overviewfiles/spring_beecoder.org-3.png" />
-              <img src="https://static.tildacdn.com/tild3435-3136-4939-a561-383935353232/javascript.png" />
+              <img src="https://logos-world.net/wp-content/uploads/2023/02/JavaScript-Emblem.png" />
               <img src="https://gromcode.com/static/images/maven.webp" />
               <img src="https://howtodoinjava.com/wp-content/uploads/2014/09/hibernate-logo.png" />
               <img src="https://user-images.githubusercontent.com/98197909/222990768-452ebe01-9134-48af-b539-3dc9ef1eb179.png" />

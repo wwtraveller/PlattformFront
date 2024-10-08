@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './favoritesPage.module.css';
+import Loader from 'components/loader/Loader';
 
 interface Article {
   id: number;
@@ -123,9 +124,13 @@ const FavoritesPage = () => {
     }
   };
 
-  if (loading) {
-    return <div className={styles.loading}>Загрузка избранных статей...</div>;
-  }
+  if (loading)
+  return (
+    <div>
+      <h1>Загрузка...</h1>
+      <Loader />
+    </div>
+  );
 
   if (error) {
     return (
