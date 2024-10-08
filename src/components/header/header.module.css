@@ -107,6 +107,10 @@
   font-weight: 800;
 }
 
+.buttonLogout:hover {
+  color: var(--bg-color);
+}
+
 /* Стили для выпадающего меню категорий */
 .categoryMenu {
   position: absolute;

@@ -36,7 +36,24 @@ const ArticleList = ({ articles, onEdit, onDelete }: ArticleListProps) => {
 
   // Пагинация: текущее состояние страницы
   const [currentPage, setCurrentPage] = useState(1);
-  const articlesPerPage = 6; // Количество статей на странице
+  const articlesPerPage = 10; // Количество статей на странице
+
+  // Прокрутка наверх при смене страницы
+  useEffect(() => {
+    window.scrollTo(0, 0); // Прокрутка на начало страницы при загрузке
+  }, [currentPage]);
+
+  // Прокрутка наверх при обновлении страницы
+  useEffect(() => {
+    window.scrollTo(0, 0); // Прокрутка на начало страницы при обновлении
+  }, []);
+
+  // const scrollToTop = () => {
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: 'smooth',
+  //   });
+  // };
 
   // Получение категорий из API
   useEffect(() => {
@@ -146,7 +163,7 @@ const ArticleList = ({ articles, onEdit, onDelete }: ArticleListProps) => {
   if (error) return <p>Ошибка: {error}</p>;
 
   return (
-    <div className={styles.articleList}>
+    <div className={styles.articleList1}>
       {/* Фильтр по категориям */}
       <div>
         <label>Категории:</label>
@@ -163,28 +180,32 @@ const ArticleList = ({ articles, onEdit, onDelete }: ArticleListProps) => {
         </select>
       </div>
 
-      <h2>Список статей</h2>
-      <ul>
+      <div className={styles.container}>
+      <h2>Управление статьями</h2>
+      <ul className={styles.articleContainer}>
         {/* Отображаем только статьи для текущей страницы */}
         {currentArticles.map((article) => (
-          <li key={article.id}>
-            <strong>{article.title}</strong> — Автор: {article.username}
-            <div className={styles.buttonGroup}>
-              <button className={styles.button} onClick={() => onEdit(article.id)}>Редактировать</button>
-              <button className={styles.button} onClick={(e) => handleDeleteClick(article, e)}>Удалить</button> {/* Передаем событие клика */}
+          <li key={article.id} className={styles.articleItem}>
+            <strong><a href={`/api/articles/${article.id}#/articles/${article.id}`} className={styles.articleLink}>
+                {article.title}
+            </a></strong>
+             {/* — Автор: {article.username} */}
+            <div className={styles.actionButtons}>
+              <button className={styles.editButton} onClick={() => onEdit(article.id)}>Редактировать</button>
+              <button className={styles.deleteButton} onClick={() => onDelete(article.id)}>Удалить</button> {/* Передаем событие клика */}
             </div>
             {/* Модальное окно для подтверждения удаления */}
-            {showDeleteModal && articleToDelete?.id === article.id && (
+            {/* {showDeleteModal && articleToDelete?.id === article.id && (
               <DeleteModal
                 onConfirm={confirmDelete}
                 onCancel={closeModal}
                 articleTitle={articleToDelete.title}
               />
-            )}
+            )} */}
           </li>
         ))}
       </ul>
-
+      </div>
       {/* Пагинация */}
       <div className={styles.pagination}>
         <button

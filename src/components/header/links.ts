@@ -23,21 +23,16 @@ export const guestLinks: ILinks[] = [
       pathname: '/faq',
       title: 'FAQ'
     },
-
-    {
-      pathname: '/glossary',
-      title: 'Глоссарий'
-    },
     
     // {
       //   pathname: '/authors',
       //   title: 'Авторы',
       // },
       
-      {
-        pathname: '/partner',
-        title: 'Партнерство',
-      },
+      // {
+      //   pathname: '/partner',
+      //   title: 'Партнерство',
+      // },
       
       {
         pathname: '/about',
@@ -65,10 +60,26 @@ export const userLinks: ILinks[] = [
     title: 'База знаний'
     },
 
+    {
+      pathname: '/blog',
+      title: 'Блог'
+    },
+
   {
     pathname: '/favorites',
     title: 'Избранное',
   },
+
+  {
+    pathname: '/glossary',
+    title: 'Глоссарий'
+  },
+
+  {
+    pathname: '/faq',
+    title: 'FAQ'
+  },
+
   ];
 
   // Ссылки для админов
@@ -83,16 +94,16 @@ export const adminLinks: ILinks[] = [
       title: 'Избранное'
     },
     {
-      pathname: '/admin/createArticles',
-      title: 'Управление статьями',
+      pathname: '/admin/adminarticles',
+      title: 'Статьи',
     },
     {
-        pathname: '/admin/createCategories',
-        title: 'Управление категориями'
+        pathname: '/admin/admincategories',
+        title: 'Категории'
       },
       {
-        pathname: '/userList',
-        title: 'Управление пользователями'
+        pathname: '/userlist',
+        title: 'Пользователи'
       },
      
   ];

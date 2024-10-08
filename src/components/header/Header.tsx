@@ -176,7 +176,7 @@ export default function Header({ setError, setSearchResults }: HeaderProps) {
           {/* Если пользователь авторизован, показываем его имя и кнопку "Выйти" */}
           {user?.username ? (
             <>
-              <Link to="/dashboard">
+              <Link to="/profile">
                 <div className={styles.userInfo}>
                   <img
                     src={user.photo || '/default-FFA-avatar.png'}

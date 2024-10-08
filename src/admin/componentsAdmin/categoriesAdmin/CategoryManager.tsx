@@ -2,6 +2,7 @@ import Button from "components/button/Button";
 import React, { useState, useEffect } from "react";
 import styles from "./categoryManager.module.css";
 import Loader from "components/loader/Loader";
+import { Link } from 'react-router-dom';
 
 interface Category {
   id: number;
@@ -142,33 +143,21 @@ const CategoryManager = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className={styles.div}>
+    <div className={styles.container}>
       <h2 className={styles.h2}>Управление категориями</h2>
-      <Button
-        onClick={() => {
-          setShowEditModal(true);
-          setEditingCategory(null);
-          setNewCategoryName("");
-        }}
-        name="Создать категорию"
-      />
-      <ul className={styles.ul}>
+
+      <Button className={styles.createButton} onClick={() => { setShowEditModal(true); setEditingCategory(null); setNewCategoryName(''); }} name="Создать категорию" />
+      <ul className={styles.categoryList}>
         {categories.map((category) => (
-          <li className={styles.li} key={category.id}>
-            {category.name}
-            <div className={styles.buttonGroup}>
-              <Button
-                onClick={() => {
-                  setEditingCategory(category);
-                  setNewCategoryName(category.name);
-                  setShowEditModal(true);
-                }}
-                name="Редактировать"
-              />
-              <Button
-                onClick={handleShowDeleteModal(category)}
-                name="Удалить"
-              />
+          <li className={styles.categoryItem} key={category.id}>
+            <span className={styles.categoryName}>{category.name}</span>
+            <div className={styles.actionButtons}>
+            <Link to={`/admin/articles/category/${category.id}`} className={styles.viewLink}>
+                Посмотреть статью
+              </Link>
+              <Button className={styles.editButton} onClick={() => { setEditingCategory(category); setNewCategoryName(category.name); setShowEditModal(true); }} name="Редактировать" />
+              <Button className={styles.deleteButton} onClick={handleShowDeleteModal(category)} name="Удалить" />
+
             </div>
           </li>
         ))}

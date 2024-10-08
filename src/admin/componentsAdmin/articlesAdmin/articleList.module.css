@@ -1,3 +1,94 @@
+.container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
+}
+
+.articleContainer {
+  /* list-style-type: none; */
+  list-style: none;
+  padding: 0;
+  justify-content: space-between;
+}
+
+.articleItem strong {
+  max-width: 60%; /* Ограничиваем ширину заголовка */
+  white-space: nowrap; /* Запрещаем перенос текста */
+  overflow: hidden; /* Скрываем переполнение */
+  text-overflow: ellipsis; /* Добавляем многоточие */
+  text-align: left; /* Выравниваем по левому краю */
+}
+
+.articleItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  transition: box-shadow 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.articleItem:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.articleLink {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.articleLink:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 10px; /* Расстояние между кнопками */
+  margin-left: 15px; /* Расстояние между кнопками и заголовком */
+}
+
+.editButton, .deleteButton {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.editButton {
+  /* margin: 5px;
+    padding: 10px 20px; */
+    background-color: var(--background-color); /* Используем общий фон */
+    border: 1px solid var(--primary-color); /* Легкая граница для выделения */
+    /* border-radius: 10px;
+    transition: background-color 0.3s, color 0.3s, transform 0.1s ease-in-out;
+    width: 130px; */
+}
+
+.editButton:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.deleteButton {
+  background-color: var(--background-color); /* Используем общий фон */
+  border: 1px solid #dc3545; /* Легкая граница для выделения */
+  color:#dc3545;
+}
+
+.deleteButton:hover {
+  background-color: #c82333;
+  color: #fff;
+}
+
+
 .articleList {
   width: 600px;
   margin: 20px auto;
@@ -112,24 +203,24 @@
   color: #0b1015;
   border: 1px solid #007bff;
   border-radius: 50%; /* Круглая форма */
-  width: 30px; /* Устанавливаем фиксированную ширину */
-  height: 30px; /* Устанавливаем фиксированную высоту */
+  width: 35px; /* Устанавливаем фиксированную ширину */
+  height: 35px; /* Устанавливаем фиксированную высоту */
   margin: 0 5px;
   cursor: pointer;
   transition: background-color 0.3s;
   display: flex; /* Используем flexbox для центрирования текста */
   align-items: center; /* Центрируем по вертикали */
   justify-content: center; /* Центрируем по горизонтали */
-  font-size: 14px; /* Размер шрифта для цифр */
+  font-size: 16px; /* Размер шрифта для цифр */
 }
 
 .pageButton:hover {
-  background-color: #97c2f0;
+  background-color: #007bff;
   color: white;
 }
 
 .arrowButton {
-  background-color: #97c2f0;
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
