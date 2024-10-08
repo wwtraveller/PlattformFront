@@ -15,26 +15,48 @@ const Homepage = () => {
   const [articles, setArticles] = useState([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true); // Добавляем состояние загрузки
+  const [isDelayed, setIsDelayed] = useState(false);
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsDelayed(true);
+    }, 300); // Задержка в 100 мс
+  
+    return () => clearTimeout(timer);
+  }, [loading]);
+
+
 
   useEffect(() => {
     // Если пользователь зарегистрирован, загружаем статьи
+    const fetchArticles = async () => {
+      setLoading(true); 
     if (user?.username) {
-      const fetchArticles = async () => {
         try {
           const response = await axios.get('/api/articles');
           setArticles(response.data);
         } catch (error) {
+          setError("Ошибка при загрузке статей.");
           toast.error("Ошибка при загрузке статей.");
         } finally {
-          setLoading(false); // Устанавливаем загрузку как завершенную
+          setLoading(false);
         }
-      };
-
-      fetchArticles();
-    } else {
+      } else {
       setLoading(false); // Если пользователь не авторизован, отключаем лоадер
     }
+  };
+      fetchArticles();
   }, [user]);
+
+
+
+if (loading || !isDelayed) {
+  return <Loader />;
+}
+
+  if (error) return <p>{error}</p>;
+
 
   const handleLoginSuccess = () => {
     navigate('/articles'); // Перенаправляем на страницу со статьями после логина
@@ -138,15 +160,9 @@ const Homepage = () => {
     </div>
   );
 
-  // Основная логика отображения контента
-  if (loading)
-    return (
-      <div>
-        <h1>Загрузка...</h1>
-        <Loader />
-      </div>
-    );
-  if (error) return <p>{error}</p>;
+ 
+
+
 
   if (!user?.username) {
     return renderGuestContent(); // Незарегистрированные пользователи
