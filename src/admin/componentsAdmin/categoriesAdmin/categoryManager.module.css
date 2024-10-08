@@ -73,21 +73,24 @@
   }
   
   .editButton {
-    background-color: #ffc107;
-    color: #fff;
+    background-color: var(--background-color); /* Используем общий фон */
+    border: 1px solid var(--primary-color); /* Легкая граница для выделения */
   }
   
   .editButton:hover {
-    background-color: #e0a800;
+    background-color: var(--primary-color);
+    color: #fff;
   }
   
   .deleteButton {
-    background-color: #dc3545;
-    color: #fff;
+    background-color: var(--background-color); /* Используем общий фон */
+    border: 1px solid #dc3545; /* Легкая граница для выделения */
+    color:#dc3545;
   }
   
   .deleteButton:hover {
     background-color: #c82333;
+    color: #fff;
   }
 
 .modal,

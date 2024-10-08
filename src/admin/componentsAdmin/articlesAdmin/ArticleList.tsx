@@ -47,6 +47,13 @@ const ArticleList = ({ articles, onEdit, onDelete }: ArticleListProps) => {
     window.scrollTo(0, 0); // Прокрутка на начало страницы при обновлении
   }, []);
 
+  // const scrollToTop = () => {
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: 'smooth',
+  //   });
+  // };
+
   // Получение категорий из API
   useEffect(() => {
     const fetchCategories = async () => {
@@ -168,20 +175,22 @@ const ArticleList = ({ articles, onEdit, onDelete }: ArticleListProps) => {
         {/* Отображаем только статьи для текущей страницы */}
         {currentArticles.map((article) => (
           <li key={article.id} className={styles.articleItem}>
-            <strong>{article.title}</strong>
+            <strong><a href={`/api/articles/${article.id}#/articles/${article.id}`} className={styles.articleLink}>
+                {article.title}
+            </a></strong>
              {/* — Автор: {article.username} */}
             <div className={styles.actionButtons}>
               <button className={styles.editButton} onClick={() => onEdit(article.id)}>Редактировать</button>
-              <button className={styles.deleteButton} onClick={(e) => handleDeleteClick(article, e)}>Удалить</button> {/* Передаем событие клика */}
+              <button className={styles.deleteButton} onClick={() => onDelete(article.id)}>Удалить</button> {/* Передаем событие клика */}
             </div>
             {/* Модальное окно для подтверждения удаления */}
-            {showDeleteModal && articleToDelete?.id === article.id && (
+            {/* {showDeleteModal && articleToDelete?.id === article.id && (
               <DeleteModal
                 onConfirm={confirmDelete}
                 onCancel={closeModal}
                 articleTitle={articleToDelete.title}
               />
-            )}
+            )} */}
           </li>
         ))}
       </ul>
