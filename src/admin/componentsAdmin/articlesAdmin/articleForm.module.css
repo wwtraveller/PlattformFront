@@ -106,7 +106,7 @@
 }
 
 .successMessage {
-  background-color: lightgreen;
+  background-color: #ddd;
   padding: 20px;
   position: fixed;
   top: 20px;

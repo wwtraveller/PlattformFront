@@ -150,11 +150,13 @@ const CategoryManager = () => {
       <ul className={styles.categoryList}>
         {categories.map((category) => (
           <li className={styles.categoryItem} key={category.id}>
-            <span className={styles.categoryName}>{category.name}</span>
+            <span className={styles.categoryName}><a href={`/api/category/${category.id}#/category/${category.name}`} className={styles.articleLink}>
+                {category.name}
+            </a></span>
             <div className={styles.actionButtons}>
-            <Link to={`/admin/articles/category/${category.id}`} className={styles.viewLink}>
+            {/* <Link to={`/admin/articles/category/${category.id}`} className={styles.viewLink}>
                 Посмотреть статью
-              </Link>
+              </Link> */}
               <Button className={styles.editButton} onClick={() => { setEditingCategory(category); setNewCategoryName(category.name); setShowEditModal(true); }} name="Редактировать" />
               <Button className={styles.deleteButton} onClick={handleShowDeleteModal(category)} name="Удалить" />
 
