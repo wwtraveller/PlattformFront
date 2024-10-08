@@ -6,11 +6,15 @@ import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Loader from 'components/loader/Loader';
+
 
 const Homepage = () => {
   const navigate = useNavigate();
   const { user } = useAppSelector((state: RootState) => state.auth);
   const [articles, setArticles] = useState([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true); // Добавляем состояние загрузки
 
   useEffect(() => {
     // Если пользователь зарегистрирован, загружаем статьи
@@ -21,10 +25,14 @@ const Homepage = () => {
           setArticles(response.data);
         } catch (error) {
           toast.error("Ошибка при загрузке статей.");
+        } finally {
+          setLoading(false); // Устанавливаем загрузку как завершенную
         }
       };
 
       fetchArticles();
+    } else {
+      setLoading(false); // Если пользователь не авторизован, отключаем лоадер
     }
   }, [user]);
 
@@ -84,16 +92,20 @@ const Homepage = () => {
       <section className={styles.articlesSection}>
         <h1>Последние статьи</h1>
         {articles.length > 0 ? (
-          <ul className={styles.articleList}>
-            {articles.map((article: any) => (
-              <li key={article.id}>
-                <Link to={`/articles/${article.id}`}>{article.title}</Link>
-              </li>
+          <div className={styles.articleGrid}>
+            {articles.slice(0, 5).map((article: any) => (
+              <div key={article.id} className={styles.articleCard}>
+                <Link to={`/articles/${article.id}`}>
+                  <h3>{article.title}</h3>
+                  <p>{article.category?.name}</p>
+                </Link>
+              </div>
             ))}
-          </ul>
+          </div>
         ) : (
           <p>Пока нет новых статей.</p>
         )}
+        <Link to="/articles" className={styles.viewAllButton}>Показать все статьи</Link>
       </section>
     </div>
   );
@@ -101,15 +113,41 @@ const Homepage = () => {
   // Контент для администраторов
   const renderAdminContent = () => (
     <div className={styles.homepage}>
-      <section className={styles.adminSection}>
+      <section className={styles.adminPanel}>
         <h1>Панель управления</h1>
-        <Link to="/admin/createArticles" className={styles.ctaButton}>Управление статьями</Link>
-        <Link to="/admin/createCategories" className={styles.ctaButton}>Управление категориями</Link>
+        <div className={styles.adminActions}>
+          <Link to="/admin/adminarticles" className={styles.ctaButton}>Управление статьями</Link>
+          <Link to="/admin/admincategories" className={styles.ctaButton}>Управление категориями</Link>
+          <Link to="/userlist" className={styles.ctaButton}>Управление пользователями</Link>
+        </div>
+        <div className={styles.adminDashboard}>
+          <div className={styles.dashboardCard}>
+            <h3>Пользователи</h3>
+            <p>Всего: 102</p> {/* Пример, можно заменить динамическими данными */}
+          </div>
+          <div className={styles.dashboardCard}>
+            <h3>Категории</h3>
+            <p>Всего: 8</p> {/* Пример */}
+          </div>
+          <div className={styles.dashboardCard}>
+            <h3>Статьи</h3>
+            <p>Всего: 35</p> {/* Пример */}
+          </div>
+        </div>
       </section>
     </div>
   );
 
   // Основная логика отображения контента
+  if (loading)
+    return (
+      <div>
+        <h1>Загрузка...</h1>
+        <Loader />
+      </div>
+    );
+  if (error) return <p>{error}</p>;
+
   if (!user?.username) {
     return renderGuestContent(); // Незарегистрированные пользователи
   } else if (user.roles?.some((role) => role.authority === "ROLE_ADMIN")) {
