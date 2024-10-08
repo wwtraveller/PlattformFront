@@ -1,6 +1,6 @@
 
 .articles {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f9f9f9;
@@ -13,19 +13,20 @@
   color: #333;
 }
 
-.articles button {
-  display: inline-block;
-  padding: 10px 20px;
-  margin: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.articles .createButton {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    background-color: #007bff;
+    color: #fff;
+    width: 400px;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
-.articles button:hover {
+.articles .createButton:hover {
   background-color: #0056b3;
 }
 

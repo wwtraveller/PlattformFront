@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import ArticleList from './ArticleList'; 
 import axios from 'axios';
 import ArticleForm from './ArticleForm';
+import Loader from 'components/loader/Loader';
+import Modal from 'components/modal/Modal';
 
 interface Article {
     id: number;
@@ -24,12 +26,24 @@ const ArticlesListPage = () => {
     const [error, setError] = useState<string | null>(null); 
     const [editingArticleId, setEditingArticleId] = useState<number | null>(null); // ID редактируемой статьи
     const [isEditing, setIsEditing] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+
+    // Alena:
+    const [isModalOpen, setIsModalOpen] = useState(false); // Управление модальным окном
+    const [articleToDelete, setArticleToDelete] = useState<number | null>(null); // ID статьи для удаления
 
     useEffect(() => {
         const fetchArticles = async () => {
             try {
                 const response = await axios.get('/api/articles'); 
                 setArticles(response.data); 
+                const timer = setTimeout(() => {
+                    setLoading(false);
+                  }, 2000); // Загрузчик будет виден 3 секунды
+          
+                  // Очистка таймера
+                  return () => clearTimeout(timer);
             } catch (err) {
                 setError('Ошибка при загрузке статей');
                 console.error(err);
@@ -57,27 +71,38 @@ const ArticlesListPage = () => {
         setIsEditing(true);
     };
 
-    const handleDelete = async (id: number) => {
-        // Функция для получения токена
+    const handleDelete = async () => {
+        if (articleToDelete === null) return;
+
         const token = localStorage.getItem('accessToken'); 
-    
         if (!token) {
             setError('Токен не найден. Пожалуйста, войдите в систему.');
             return;
         }
-    
+
         try {
-            await axios.delete(`/api/articles/${id}`, {
-                headers: { Authorization: `Bearer ${token}` }, // Передаем токен в заголовках
+            await axios.delete(`/api/articles/${articleToDelete}`, {
+                headers: { Authorization: `Bearer ${token}` }, 
             });
-            setArticles(articles.filter((article) => article.id !== id)); // Обновляем список статей
-            console.log(`Статья с id ${id} удалена`);
+            setArticles(articles.filter((article) => article.id !== articleToDelete));
+            setArticleToDelete(null); // Сброс состояния
+            setIsModalOpen(false); // Закрываем модальное окно
         } catch (err) {
             setError('Ошибка при удалении статьи');
             console.error(err);
         }
     };
     
+    // Alena
+    const confirmDelete = (id: number) => {
+        setArticleToDelete(id);
+        setIsModalOpen(true); // Открываем модальное окно
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setArticleToDelete(null); // Сброс ID статьи
+    };
 
     // Закрытие формы и обновление списка после редактирования
     const handleSuccess = () => {
@@ -98,14 +123,34 @@ const ArticlesListPage = () => {
         fetchArticles();
     };
 
+    if (!articles) {
+        return (
+          <div>
+            <h1>Загрузка...</h1>
+            <Loader />
+          </div>
+        );
+      }
+    
     return (
         <div>
+            {/* Модальное окно подтверждения удаления */}
+            <Modal
+                isOpen={isModalOpen}
+                title="Удалить статью?"
+                onClose={handleCloseModal}
+                onConfirm={handleDelete}
+            >
+                <p>Вы уверены, что хотите удалить эту статью? Это действие необратимо.</p>
+            </Modal>
+
             {/* Список статей */}
             {!isEditing ? (
                 <ArticleList 
                     articles={articles} 
                     onEdit={handleEdit} 
-                    onDelete={handleDelete} 
+                    // onDelete={handleDelete} 
+                    onDelete={confirmDelete} // Вызываем модалку при удалении
                 />
             ) : (
                 // Форма редактирования

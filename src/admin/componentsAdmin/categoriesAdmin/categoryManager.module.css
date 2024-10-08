@@ -1,150 +1,155 @@
-/* Основные стили контейнера */
-.div {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    max-width: 800px;
-    margin: 0 auto;
+.createButton {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    background-color: #007bff;
+    color: #fff;
+    width: 400px;
+    margin-bottom: 20px;
+}
+
+.container {
     padding: 20px;
     background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .h2 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    justify-content: space-between;
+}
+
+.h2 {
+    font-size: 24px;
     color: #333;
-    text-align: center;
-  }
-  
-  .ul {
-    list-style-type: none;
+    margin-bottom: 20px;
+}
+
+.categoryList {
+    /* list-style-type: none; */
+    list-style: none;
     padding: 0;
-  }
-  
-  .li {
+    justify-content: space-between;
+}
+
+.categoryItem {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px;
-    background-color: #fff;
-    margin-bottom: 10px;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
+    background-color: #fff;
+    transition: box-shadow 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.categoryItem:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.categoryName {
+    font-size: 18px;
+    color: #333;
   }
   
-  .li:hover {
-    background-color: #f0f0f0;
-  }
-  
-  /* Контейнер для кнопок внутри li */
-  .buttonGroup {
+
+.actionButtons {
     display: flex;
-    gap: 10px; /* Отступ между кнопками */
-  }
-  
-  .button {
-    font-size: 1rem;
-    padding: 10px 16px;
+    gap: 10px; /* Расстояние между кнопками */
+}
+
+.viewLink:hover {
     background-color: #007bff;
-    color: white;
+    color: #fff;
+  }
+
+  .editButton, .deleteButton {
+    padding: 8px 12px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: inline-block;
-    text-align: center;
-    min-width: 100px; /* Минимальная ширина кнопки для выравнивания */
+    transition: background-color 0.2s ease;
   }
   
-  .button:hover {
-    background-color: #0056b3;
+  .editButton {
+    background-color: var(--background-color); /* Используем общий фон */
+    border: 1px solid var(--primary-color); /* Легкая граница для выделения */
   }
   
-  /* Выравнивание текста по центру */
-  .button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .editButton:hover {
+    background-color: var(--primary-color);
+    color: #fff;
   }
   
-  /* Модальное окно */
-  .modal {
+  .deleteButton {
+    background-color: var(--background-color); /* Используем общий фон */
+    border: 1px solid #dc3545; /* Легкая граница для выделения */
+    color:#dc3545;
+  }
+  
+  .deleteButton:hover {
+    background-color: #c82333;
+    color: #fff;
+  }
+
+.modal,
+.modalDelete {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    max-width: 400px;
-    width: 100%;
-  }
-  
-  .modal h2 {
-    font-size: 1.6rem;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .modal input {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    z-index: 1000;
+    width: 300px; /* Ширина модального окна */
+    text-align: center; /* Центрируем текст внутри модального окна */
+}
+
+.modal h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.modal input {
     width: 100%;
     padding: 10px;
-    font-size: 1rem;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    transition: border-color 0.3s ease;
-  }
-  
-  .modal input:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  .modal button {
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    margin-top: 10px;
-    border-radius: 8px;
-  }
-  
-  .modal button:first-child {
-    background-color: #28a745;
-  }
-  
-  .modal button:first-child:hover {
-    background-color: #218838;
-  }
-  
-  .modal button:last-child {
-    background-color: #dc3545;
-  }
-  
-  .modal button:last-child:hover {
-    background-color: #c82333;
-  }
-  
-  /* Адаптивность */
-  @media (max-width: 600px) {
-    .div {
-      padding: 10px;
-    }
-  
-    .li {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .button-group {
-      width: 100%;
-      justify-content: space-between;
-    }
-  
-    .button {
-      width: 100%;
-    }
-  }
-  
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff; /* Цвет кнопки */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Плавный переход цвета */
+}
+
+.button:hover {
+    background-color: #0056b3; /* Темнее при наведении */
+    transform: translateY(-2px); /* Легкий подъем при наведении */
+}
+
+.button:active {
+    transform: translateY(0); /* Возвращаем к исходному положению */
+}
+
+.modalDelete h2 {
+    color: #d9534f; /* Красный цвет для заголовка модального окна удаления */
+}
+
+.modalDelete .button {
+    background-color: #d9534f; /* Красный цвет кнопки удаления */
+}
+
+.modalDelete .button:hover {
+    background-color: #c9302c; /* Темнее при наведении на кнопку удаления */
+}

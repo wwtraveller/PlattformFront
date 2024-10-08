@@ -32,13 +32,14 @@ import FavoritesPage from "components/articles/FavoritesPage";
 import ArticlesListPage from "admin/componentsAdmin/articlesAdmin/ArticlesListPage";
 import Articles from "admin/componentsAdmin/articlesAdmin/Articles";
 import { ToastContainer } from "react-toastify";
-import UserList from "admin/componentsAdmin/UserListAdmin/UserLIst";
+import UserList from "admin/componentsAdmin/UserListAdmin.tsx/UserLIst";
 import Partner from "components/partner/Partner";
 import Contact from "components/contact/Contact";
 import Authors from "components/authors/Authors";
 import FaqPage from "components/faq/FaqPage";
 import Glossary from "components/glossary/GlossaryPage";
 import Homepage from "components/home/Homepage";
+import Blog from "components/blog/Blog";
 
 interface SearchItem {
   id: number;
@@ -93,7 +94,7 @@ function App() {
             <Route path="/authors" element={<Authors />} />
             <Route path="/partner" element={<Partner />} />
             <Route path="/faq" element={<FaqPage />} />
-            <Route path="/glossary" element={<Glossary />} />
+            {/* <Route path="/glossary" element={<Glossary />} /> */}
             <Route path="/contact" element={<Contact />} />
             <Route path="/search-results" element={<SearchResultsPage />} />
             <Route path="/search-error" element={<SearchErrorPage />} />
@@ -104,6 +105,8 @@ function App() {
               <>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/glossary" element={<Glossary />} />
                 {/* <Route path="/catLinks" element={<CategoryLinks />} />
                 <Route path="/category/:category" element={<ArticleUser />} />
               <Route path="/article/:id" element={<ArticlePage />} /> */}
@@ -118,7 +121,7 @@ function App() {
             {user?.roles?.some((role) => role.authority === "ROLE_ADMIN") && (
               <>
                 <Route
-                  path="/admin/createArticles"
+                  path="/admin/adminarticles"
                   element={
                     <AdminRoute>
                       <Articles />
@@ -126,7 +129,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/admin/createCategories"
+                  path="/admin/admincategories"
                   element={
                     <AdminRoute>
                       <CategoryManager />
@@ -142,7 +145,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/userList"
+                  path="/userlist"
                   element={
                     <AdminRoute>
                       <UserList />
@@ -160,8 +163,18 @@ function App() {
         </Routes>
 
         {isOpen && <AuthWindow onLoginSuccess={handleLoginSuccess} />}
-      </HashRouter>
-      <ToastContainer />
+        <ToastContainer 
+        position="top-right" // Позиция уведомлений
+        autoClose={3000} // Время автоматического закрытия
+        hideProgressBar={false} // Показать полоску прогресса
+        newestOnTop={false} // Новые уведомления выше старых
+        closeOnClick // Закрывать по клику
+        rtl={false} // Если используется RTL
+        pauseOnFocusLoss // Приостановка при потере фокуса
+        draggable // Возможность перетаскивания
+        pauseOnHover // Приостановка при наведении
+      />
+            </HashRouter>
     </div>
   );
 }

@@ -4,42 +4,94 @@
     background-color: rgb(255, 255, 255);
 }
 
-.background {
-    background-image: url('https://img.freepik.com/free-photo/3d-abstract-plexus-background_1048-8113.jpg?t=st=1727721405~exp=1727725005~hmac=b3af2d69100d51b84a902dfc4428a2379459f64393ed246ffb15729fb2a2a483&w=1800');
-    /* Замените на путь к вашему изображению */
+.stackTechnology {
     background-size: cover;
     background-position: center;
     height: 100vh;
     width: 100vw;
-    display: flex;
+    display: grid;
     justify-content: center;
     align-items: center;
-    margin: 0;
+    margin-top: -70px;
     position: relative;
 }
 
-.scrollButton {
-    background: transparent;
-    border: transparent;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 4rem;
-    color: rgb(255, 255, 255);
-    /* Или любой другой цвет для стрелки */
-    position: absolute;
-    bottom: 300px;
-    /* Расположите кнопку по желанию */
-    left: 50%;
-    /* Центрируем кнопку */
-    transform: translateX(-50%);
-    /* Центрируем кнопку по горизонтали */
-    -webkit-box-reflect: below 0px linear-gradient(transparent, #0005);
-    box-shadow: 0 0 0px #dcf403, 0 0 10px #e9af3b9f, 0 0 25px #dcf403, 0 0 100px #dcf403;
-    z-index: 10;
-    animation: glow 3s infinite;
-    width: 100px;
+.gridStack {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Две колонки: одна для текста, другая для изображения */
+    gap: 20px; /* Расстояние между колонками */
+    /* align-items: center;  */
+    margin-top: -120px;
+    /* border: 1px solid #000000;
+    border-radius: 15px; */
+    width: 1500px;
+    margin-top: -40px;
+
+  }
+  
+  .gridStack h1 {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 500;
+}
+  
+  .gridStack img {
+margin-top: -40px;
 }
 
+.leftBlock {
+    display: flex;
+    flex-direction: column; /* Размещаем картинки вертикально */
+    justify-content: center;
+    margin: 20px;   
+    border: 1px solid #0026ff;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+    background-color: rgba(234, 234, 234, 0.537);
+  }
+  
+
+  .rightBlock img {
+    max-width: 100%; /* Картинка в правом блоке занимает доступную ширину */
+    max-height: 100%;
+    margin-top: 30px;
+
+  }
+
+  .logos{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Определяем сетку с тремя колонками */
+    grid-template-rows: auto;
+    gap: 60px;
+    justify-items: center;
+    padding: 20px;
+    /* margin-left: 100px; */
+    margin-top: 30px;
+
+  }
+
+
+.logos img {
+    width: 80px; /* Устанавливаем одинаковую ширину для всех картинок */
+    height: 80px; /* Устанавливаем одинаковую высоту */
+    object-fit: cover; /* Убираем возможные искажения изображений */
+    border-radius: 10px; /* Добавляем округлые углы для изображений */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Добавляем тень для визуального эффекта */
+    transition: transform 0.3s ease; /* Анимация при наведении */
+  }
+  
+  .logos img:hover {
+    transform: scale(1.05); /* Легкое увеличение изображения при наведении */
+  }
+
+.background h1 {
+    margin-top: -300px;
+    font-size: 50px;
+    color: rgba(32, 126, 193, 0.878);
+    display: flex;
+    flex-direction: row;
+    text-decoration:overline underline;
+}
 
 @keyframes glow {
     0% {
@@ -61,7 +113,7 @@
     flex-direction: column;
     align-items: center;
     font-size: 25px;
-    margin-top: 50px;
+    margin-top: 10px;
 }
 
 .carouselContainer {
@@ -72,14 +124,7 @@
     padding: 40px 0;
 }
 
-.background h1 {
-    margin-top: -300px;
-    font-size: 50px;
-    color: rgba(221, 238, 250, 0.878);
-    display: flex;
-    flex-direction: row;
-    text-decoration:overline underline;
-}
+
 
 .category {
     /* margin-bottom: 20px; */

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import styles from '../categories/categoryLink.module.css'
+import Loader from 'components/loader/Loader';
 
 const CategoryLinks: React.FC = () => {
   const [categories, setCategories] = useState<string[]>([]);
@@ -46,7 +47,10 @@ const CategoryLinks: React.FC = () => {
           ))}
         </ul>
       ) : (
+        <div>
         <p>Загрузка категорий...</p>
+        <Loader />
+      </div>
       )}
     </div>
   );

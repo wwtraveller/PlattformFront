@@ -105,6 +105,31 @@
   overflow-wrap: break-word;
 }
 
+.successMessage {
+  background-color: lightgreen;
+  padding: 20px;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  border: 2px solid green;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #3c763d;
+}
+
+
+
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
   
@@ -120,3 +145,5 @@
     padding: 10px;
   }
 }
+
+

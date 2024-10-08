@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Yeseva+One&display=swap');
+
+
+.bannerContainer{
+    margin-top: 70px;
+}
+
+.banner {
+    position: relative; /* Для позиционирования текста внутри */
+    width: 100%; /* Занимает всю ширину страницы */
+    height: 180px; /* Высота баннера */
+    background-size: cover; /* Занимает всю область */
+    background-position: center; /* Центрирует изображение */
+
+  }
+  
+  .bannerText {
+    position: absolute; /* Позволяет наложить текст на баннер */
+    left: 50%; /* Центрируем по горизонтали */
+    transform: translateX(-50%); /*Центрируем текст по оси X */ 
+    color: rgb(0, 0, 0); /* Цвет текста */
+    font-size: 24px; /* Размер шрифта */
+    height: 100px;
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center; /* Выравнивание текста */
+    padding: 0 10px; /* Отступы по бокам */
+    background: rgb(255, 255, 255); /* Полупрозрачный фон для читаемости */
+    border-radius: 20px 20px 0 0; /* Скругленные углы */
+    bottom: 0px;
+    font-family: "Yeseva One", serif;
+
+  }
+  

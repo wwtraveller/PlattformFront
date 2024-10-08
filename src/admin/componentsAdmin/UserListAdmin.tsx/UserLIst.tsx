@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from './userList.module.css';
+import Loader from 'components/loader/Loader';
 
 interface User {
   id: number;
@@ -22,6 +23,7 @@ const UserList = () => {
       return;
     }
 
+
     // Функция для получения списка пользователей
     const fetchUsers = async () => {
       setLoading(true);
@@ -32,6 +34,12 @@ const UserList = () => {
           },
         });
         setUsers(response.data); // Предполагаем, что список пользователей приходит в response.data
+        const timer = setTimeout(() => {
+          setLoading(false);
+        }, 3000); // Загрузчик будет виден 3 секунды
+  
+        // Очистка таймера
+        return () => clearTimeout(timer);
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
@@ -92,7 +100,10 @@ const UserList = () => {
     }
   };
 
-  if (loading) return <p>Загрузка...</p>;
+  if (loading) return  <div>
+  <h1>Загрузка...</h1>
+  <Loader />
+</div>;
   if (error) return <p>Ошибка: {error}</p>;
 
   return (

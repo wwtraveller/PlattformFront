@@ -25,7 +25,7 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f8f9fa; /* Светлый фон для всей страницы */
+  /* background-color: #f8f9fa; */
   color: #212529; /* Основной цвет текста */
   line-height: 1.6;
  

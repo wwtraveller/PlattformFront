@@ -1,36 +1,99 @@
 import React, { useEffect, useState } from "react";
-import { setUserAvatar, setUserData } from "features/auth/authSlice";
+import {
+  updateUserProfile,
+  logoutUser,
+  setUserAvatar,
+  setUserData,
+} from "features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import axios from "axios";
 import { RootState } from "redux/store";
-import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./profile.module.css";
 import Sidebar from "./Sidebar"; // Подключаем боковое меню
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import { useSelector } from "react-redux";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 // import { fetchUserData } from "features/auth/authAction";
 
 const Profile: React.FC = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [initialUsername, setInitialUsername] = useState("");
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string>(""); // Для URL аватара
   const [isLoading, setIsLoading] = useState(false); // Для состояния загрузки
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const userData = useAppSelector((state: RootState) => state.auth.user);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const { user } = useSelector((state: any) => state.auth); // Получаем данные текущего пользователя
+  const [showCurPassword, setShowCurPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [newAvatarUrl, setNewAvatarUrl] = useState(""); 
+
+  const toggleCurPasswordVisibility = () => {
+    setShowCurPassword((prevState) => !prevState); // Переключаем видимость пароля
+  };
+  const toggleNewPasswordVisibility = () => {
+    setShowNewPassword((prevState) => !prevState); // Переключаем видимость пароля
+  };
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword((prevState) => !prevState); // Переключаем видимость пароля
+  };
 
   useEffect(() => {
     if (userData) {
       setFirstName(userData.firstName);
       setLastName(userData.lastName); // Предполагается, что это имя пользователя
       setEmail(userData.email);
+      setUsername(userData.username);
+      setInitialUsername(userData.username);
       setAvatarPreview(userData.photo || null); // Предварительный просмотр аватара
     }
   }, [userData]);
+
+  const handleUsernameChange = () => {
+    if (username !== initialUsername) {
+      confirmAlert({
+        title: "Подтверждение",
+        message:
+          "Вы изменили никнейм. После этого вам потребуется войти в аккаунт снова используя новый Никнейм. Продолжить?",
+        buttons: [
+          {
+            label: "Да",
+            onClick: () => {
+              saveProfile(); // Сохранение профиля с новым никнеймом
+              dispatch(logoutUser()); // Выход из аккаунта
+              navigate("/");
+              console.log("Никнейм изменен, выход из аккаунта");
+            },
+          },
+          {
+            label: "Нет",
+            onClick: () => console.log("Изменение никнейма отменено"),
+          },
+        ],
+      });
+    } else {
+      saveProfile(); // Если никнейм не изменился, просто сохраняем профиль
+    }
+  };
+
+  const saveProfile = async () => {
+    const updatedProfile = { ...userData, username };
+    await dispatch(updateUserProfile(updatedProfile));
+    await fetchUserData(); // Обновляем данные после сохранения
+  };
 
   const handleSave = async () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -45,18 +108,23 @@ const Profile: React.FC = () => {
       setIsLoading(true);
 
       const dataToSend = {
-        username: userData.username,
+        username: username,
         firstName: firstName,
         lastName: lastName,
         email: email,
-        avatarUrl: avatarUrl,
+        photo: avatarUrl,
       };
 
       // Если аватар выбран, сначала загружаем его
       if (avatar) {
         const avatarData = await uploadAvatar(avatar, accessToken);
-        dataToSend.avatarUrl = avatarData; // Сохраняем URL загруженного аватара
+        dataToSend.photo = avatarData; // Сохраняем URL загруженного аватара
+      } else if (avatarUrl) {
+        // Если URL аватара был введен, сохраняем его
+        dataToSend.photo = avatarUrl;
       }
+
+      handleUsernameChange();
 
       const response = await axios.put(`/api/users/${userId}`, dataToSend, {
         headers: {
@@ -67,9 +135,11 @@ const Profile: React.FC = () => {
 
       dispatch(setUserAvatar(response.data.avatar));
       toast.success("Профиль успешно обновлен!");
-
       setAvatarPreview(response.data.avatar);
       setAvatarUrl("");
+
+      await fetchUserData(); // Теперь пользователь видит обновленные данные
+
     } catch (error: any) {
       console.error(
         "Ошибка при сохранении профиля:",
@@ -81,11 +151,30 @@ const Profile: React.FC = () => {
     }
   };
 
+  const fetchUserData = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) return;
+
+    try {
+      const response = await axios.get(`/api/auth/me`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      // Обновляем состояние пользователя в Redux
+      dispatch(setUserData(response.data));
+    } catch (error) {
+      console.error("Ошибка при получении данных пользователя:", error);
+    }
+  };
+
+
   const uploadAvatar = async (file: File, accessToken: string) => {
     const formData = new FormData();
     formData.append("avatar", file);
 
-    const response = await axios.put("/api/users", formData, {
+    const response = await axios.put("/api/users/${userId}", formData, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "multipart/form-data",
@@ -123,11 +212,46 @@ const Profile: React.FC = () => {
       setAvatarPreview(null);
     }
   };
+
+
   // Загрузка аватара через URL
-  const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAvatarUrl(event.target.value);
-    setAvatarPreview(event.target.value); // Обновить предварительный просмотр для URL
+  const handleUrlChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+    const newAvatarUrl = event.target.value;
+    setAvatarUrl(newAvatarUrl);
+    setAvatarPreview(newAvatarUrl);
   };
+  
+  
+  const handleSaveAvatar = async () => {
+    const userId = userData.id;
+
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) {
+        throw new Error("Пользователь не авторизован");
+      }
+
+      const response = await axios.put(
+        `/api/users/${userId}`,
+        { photo: newAvatarUrl },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const updatedAvatarUrl = response.data.photo;
+
+      dispatch(setUserAvatar(updatedAvatarUrl)); // Обновляем состояние аватара в Redux
+      toast.success("Аватар успешно обновлен!");
+    } catch (error: any) {
+      console.error("Ошибка при обновлении аватара:", error);
+      toast.error("Ошибка при обновлении аватара.");
+    }
+  } 
 
   const handleRemoveAvatar = () => {
     setAvatar(null);
@@ -136,28 +260,39 @@ const Profile: React.FC = () => {
   };
 
   const handlePasswordChange = async () => {
+    console.log("handlePasswordChange вызвана");
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
+      console.log("Пользователь не авторизован"); // временный лог
       toast.error("Ошибка: пользователь не авторизован.");
       return;
     }
 
+    if (!currentPassword !== !currentPassword) {
+      console.log("Неверно введён текущий пароль"); // временный лог
+      toast.error("Неверно введён текущий пароль.");
+      return;
+    }
+
     if (!currentPassword || !newPassword || !confirmPassword) {
+      console.log("Все поля должны быть заполнены"); // временный лог
       toast.error("Все поля для смены пароля должны быть заполнены.");
       return;
     }
 
     if (newPassword !== confirmPassword) {
+      console.log("Пароли не совпадают"); // временный лог
       toast.error("Новый пароль и подтверждение пароля не совпадают.");
       return;
     }
 
     try {
       const response = await axios.put(
-        `/api/users`, // проверьте корректность эндпоинта
+        `/api/changePassword`,
         {
-          currentPassword,
-          newPassword,
+          oldPassword: currentPassword,
+          newPassword: newPassword,
+          repeatPassword: confirmPassword,
         },
         {
           headers: {
@@ -167,10 +302,11 @@ const Profile: React.FC = () => {
         }
       );
 
-      toast.success("Пароль успешно изменен!");
+      console.log("Пароль успешно изменен"); // временный лог
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
+      toast.success("Пароль успешно изменен!");
 
       // Если API возвращает новый токен после смены пароля, обновите его
       if (response.data.token) {
@@ -182,7 +318,6 @@ const Profile: React.FC = () => {
     }
   };
 
-
   const handleDeleteAccount = async () => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
@@ -190,12 +325,15 @@ const Profile: React.FC = () => {
       return;
     }
 
-    const confirmed = window.confirm("Вы уверены, что хотите удалить свой аккаунт? Это действие невозможно отменить.");
+    const confirmed = window.confirm(
+      "Вы уверены, что хотите удалить свой аккаунт? Это действие невозможно отменить."
+    );
 
     if (!confirmed) return;
 
     try {
-      await axios.delete(`/api/users/${userData.id}`, { // Убедитесь в корректности эндпоинта
+      await axios.delete(`/api/users/${userData.id}`, {
+        // Убедитесь в корректности эндпоинта
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -209,7 +347,10 @@ const Profile: React.FC = () => {
       // Перенаправить на главную страницу или страницу регистрации
       window.location.href = "/";
     } catch (error: any) {
-      console.error("Ошибка при удалении аккаунта:", error.response || error.message);
+      console.error(
+        "Ошибка при удалении аккаунта:",
+        error.response || error.message
+      );
       toast.error("Ошибка при удалении аккаунта.");
     }
   };
@@ -225,51 +366,59 @@ const Profile: React.FC = () => {
         <div className={styles.backgroundHeader}></div>
 
         <div className={styles.profileContent}>
-        <div className={styles.profileHeader}>
-          {avatarPreview ? (
-            <img
-              src={avatarPreview}
-              alt="Avatar Preview"
-              className={styles.profileAvatar}
-            />
-          ) : (
-            <img
-              src="/default-FFA-avatar.png"
-              alt="Default Avatar"
-              className={styles.profileAvatar}
-            />
-          )}
-
-          <div className={styles.avatarButtons}>
-            <label htmlFor="fileInput" className={styles.customFileButton}>
-              <span>Выбрать аватар</span>
-            </label>
-
-            {avatarPreview && (
-              <button
-                onClick={handleRemoveAvatar}
-                className={styles.removeAvatarButton}
-              >
-                Удалить
-              </button>
+          <div className={styles.profileHeader}>
+            {avatarPreview ? (
+              <img
+                src={avatarPreview}
+                alt="Avatar Preview"
+                className={styles.profileAvatar}
+              />
+            ) : (
+              <img
+                src="/default-FFA-avatar.png"
+                alt="Default Avatar"
+                className={styles.profileAvatar}
+              />
             )}
+
+            <div className={styles.avatarButtons}>
+              <label htmlFor="fileInput" className={styles.customFileButton}>
+                <span>Выбрать аватар</span>
+              </label>
+
+              {avatarPreview && (
+                <button
+                  onClick={handleRemoveAvatar}
+                  className={styles.removeAvatarButton}
+                >
+                  Удалить
+                </button>
+              )}
+            </div>
           </div>
-        </div>
 
           <form className={styles.profileForm}>
-          <input
-            id="fileInput"
-            className={styles.imageInput}
-            type="file"
-            onChange={handleAvatarChange}
-          />
-           <input
-            className={styles.profileInput}
-            type="text"
-            placeholder="URL аватара"
-            value={avatarUrl}
-            onChange={handleUrlChange}
-          />
+            <input
+              id="fileInput"
+              className={styles.imageInput}
+              type="file"
+              onChange={handleAvatarChange}
+            />
+            <input
+              className={styles.profileInput}
+              type="text"
+              placeholder="URL аватара"
+              value={avatarUrl}
+              onChange={handleUrlChange}
+            />
+            <p>Никнейм</p>
+            <input
+              className={styles.profileInput}
+              type="text"
+              placeholder="Никнейм"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
             <p>Имя</p>
             <input
               className={styles.profileInput}
@@ -295,44 +444,76 @@ const Profile: React.FC = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
             <button
-            type="button"
-            className={styles.profileButton}
-            onClick={handleSave}
-            disabled={isLoading} // Отключить кнопку при загрузке
-          >
-            {isLoading ? "Сохранение..." : "Сохранить изменения"}
-          </button>
+              type="button"
+              className={styles.profileButton}
+              onClick={handleSave}
+              disabled={isLoading} // Отключить кнопку при загрузке
+            >
+              {isLoading ? "Сохранение..." : "Сохранить изменения"}
+            </button>
           </form>
 
           <div className={styles.changePasswordContainer}>
             <p>Изменить пароль</p>
-            <input
-              className={styles.profileInputPassword}
-              type="password"
-              placeholder="Текущий пароль"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-            />
-            <input
-              className={styles.profileInputPassword}
-              type="password"
-              placeholder="Новый пароль"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-            />
-            <input
-              className={styles.profileInputPassword}
-              type="password"
-              placeholder="Подтвердите новый пароль"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-            <button className={styles.passwordButton} onClick={handlePasswordChange}>
+            <div className={styles.currentPassword}>
+              <input
+                className={styles.profileInputPassword}
+                type={showCurPassword ? "text" : "password"}
+                placeholder="Текущий пароль"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+              />
+              <span
+                onClick={toggleCurPasswordVisibility}
+                className={styles.eyeIcon}
+              >
+                {showCurPassword ? <FaEyeSlash /> : <FaEye />}{" "}
+              </span>
+            </div>
+            <div className={styles.newPassword}>
+              <input
+                className={styles.profileInputPassword}
+                type={showNewPassword ? "text" : "password"}
+                placeholder="Новый пароль"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+              <span
+                onClick={toggleNewPasswordVisibility}
+                className={styles.eyeIcon}
+              >
+                {showNewPassword ? <FaEyeSlash /> : <FaEye />}{" "}
+              </span>
+            </div>
+
+            <div className={styles.confirmPassword}>
+              <input
+                className={styles.profileInputPassword}
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="Подтвердите новый пароль"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <span
+                onClick={toggleConfirmPasswordVisibility}
+                className={styles.eyeIcon}
+              >
+                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}{" "}
+              </span>
+            </div>
+
+            <button
+              className={styles.passwordButton}
+              onClick={handlePasswordChange}
+            >
               Изменить пароль
             </button>
           </div>
 
-          <button className={styles.deleteAccountButton} onClick={handleDeleteAccount}>
+          <button
+            className={styles.deleteAccountButton}
+            onClick={handleDeleteAccount}
+          >
             Удалить аккаунт
           </button>
         </div>
@@ -346,6 +527,3 @@ export default Profile;
 // Написать полный функционал редактирования профиля.
 //  чтоб можно было менять аватар и сохранять его,
 //  так чтобы он отображался и в header и удалять его.
-//  Также чтобы можно было изменять пароль и сохранять его,
-//   вводя сначала старый пароль,
-//    потом прописав новый и вновь подтвердить новый пароль.

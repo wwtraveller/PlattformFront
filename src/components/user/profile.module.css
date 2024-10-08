@@ -11,10 +11,15 @@
   border-radius: 10px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   margin: 20px;
+  width: 800px;
 }
 
 .title {
   text-align: center;
+  justify-content: center;
+  flex-direction: row;
+  display: flex;
+  gap: 15px;
 }
 
 .backgroundHeader {
@@ -28,7 +33,7 @@
 
 .profileHeader {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 20px;
   margin-bottom: 20px;
 }
@@ -38,7 +43,7 @@
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #fff;
+  border: 4px solid #007bff;
 }
 
 .profileForm {
@@ -115,4 +120,31 @@
 }
 .imageInput {
   display: none; /* Скрывает инпут */
+}
+
+
+
+
+
+.eyeIcon {
+  position: absolute;
+  right: 10px;
+  top: 35%;
+  transform: translateY(-40%);
+  cursor: pointer;
+
+}
+
+.currentPassword{
+  position: relative;
+
+}
+.newPassword{
+  position: relative;
+
+}
+
+.confirmPassword{
+  position: relative;
+
 }

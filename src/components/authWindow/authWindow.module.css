@@ -18,6 +18,9 @@
   overflow: hidden;
   justify-content: center;
   align-items: center;
+  z-index: 10000;
+  box-sizing: border-box;
+
 }
 
 
@@ -31,6 +34,8 @@
   background-color: rgb(239, 239, 239);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+
 }
 
 /* Заголовки секций */
@@ -98,12 +103,15 @@
 }
 
 .authSectionSign {
+  position: relative;
   width: 50%;
   padding: 20px;
   /* background-color: rgb(239, 239, 239); */
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   align-items: center;
+  box-sizing: border-box;
+
 
 }
 
@@ -124,11 +132,14 @@
   flex-direction: column;
   gap: 10px;
   margin-top: 20px;
+  box-sizing: border-box;
+
 
 }
 
 .authSectionSign input {
   padding: 10px;
+  position: relative;
   border: 0.5px solid #ccc;
   border-radius: 4px;
   background-color: #e8e8e8a3;
@@ -136,6 +147,8 @@
   flex-direction: column;
   align-items: center;
   width: 250px;
+  box-sizing: border-box;
+
 }
 
 .authSectionSign button {
@@ -191,11 +204,15 @@
   align-items: center;
   background-color: #f0f0f049;
   z-index: 1;
+  box-sizing: border-box;
+
 }
 
 .authSectionLog {
   right: 0;
   transform: translateX(0);
+  box-sizing: border-box;
+
 }
 
 .showLogin {
@@ -205,6 +222,8 @@
 .authSectionSign {
   left: 50%;
   transform: translateX(0);
+  box-sizing: border-box;
+
 }
 
 
@@ -218,8 +237,8 @@
   left: 50%;
   width: 50%;
   height: 100%;
-  background-position: center;
-  background-image: url('https://images.unsplash.com/photo-1725832062946-2ec9aae5c4e2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMDl8fHxlbnwwfHx8fHw%3D');
+  background-position:right;
+  background-image: url('https://images.unsplash.com/photo-1669802639411-84ad84e930a4?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
   background-color: #007bff;
   color: rgb(255, 255, 255);
   transition: left 0.6s ease-in-out;
@@ -244,9 +263,13 @@
 }
 
 .overlayContent p {
-  font-size: 16px;
+  font-size: 14px;
   margin: 10px 0;
   width: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
 }
 
 button {
