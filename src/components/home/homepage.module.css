@@ -81,27 +81,86 @@
 /* Стили для контента зарегистрированных пользователей */
 .articlesSection {
   padding: 60px;
+  text-align: center;
 }
 
-.articleList {
-  list-style-type: none;
-  padding: 0;
+.articleGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
-.articleList li {
-  margin: 10px 0;
+.articleCard {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  width: 250px;
+  text-align: left;
+  border-radius: 8px;
 }
 
-.articleList li a {
-  color: #007bff;
+.articleCard h3 {
+  margin: 0 0 10px;
+  font-size: 1.25rem;
+}
+
+.articleCard p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.viewAllButton {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
   text-decoration: none;
+  border-radius: 5px;
 }
 
-.articleList li a:hover {
-  text-decoration: underline;
+.viewAllButton:hover {
+  background-color: #218838;
 }
 
 /* Стили для администраторов */
-.adminSection {
+.adminPanel {
   padding: 60px;
+  text-align: center;
+}
+
+.adminActions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.adminDashboard {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.dashboardCard {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  width: 200px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.ctaButton {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.ctaButton:hover {
+  background-color: #218838;
+  color: white;
 }

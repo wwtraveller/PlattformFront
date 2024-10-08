@@ -144,7 +144,7 @@ const Articles = () => {
 
     return (
         <div className={styles.articles}>
-            <h3>Управление статьями</h3>
+            <h2>Управление статьями</h2>
             {/* Кнопка для создания новой статьи */}
             <button onClick={handleCreateArticle} className={styles.createButton}>Создать новую статью</button>
 

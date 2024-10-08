@@ -23,7 +23,7 @@ const Sidebar: React.FC = () => {
         </li>
       </ul>
       
-<div className="p-4 bg-white shadow-lg rounded-2xl dark:bg-gray-700">
+{/* <div className="p-4 bg-white shadow-lg rounded-2xl dark:bg-gray-700">
     <div className="flex flex-wrap overflow-hidden">
         <div className="w-full rounded shadow-sm">
             <div className="flex items-center justify-between mb-4">
@@ -215,7 +215,7 @@ const Sidebar: React.FC = () => {
             </div>
         </div>
     </div>
-</div>
+</div> */}
 
     </nav>
   );
