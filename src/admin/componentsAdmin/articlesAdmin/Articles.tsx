@@ -3,7 +3,9 @@ import axios from 'axios';
 import ArticleForm from './ArticleForm';
 import { useNavigate } from 'react-router-dom';
 import styles from './articles.module.css'
+import Loader from 'components/loader/Loader';
 import ArticleList from './ArticleList';
+
 
 // Интерфейсы для статей и категорий
 interface Article {
@@ -124,7 +126,13 @@ const Articles = () => {
 
         fetchUpdatedArticles();
     };
-    if (loading) return <p>Загрузка данных...</p>;
+
+
+    if (loading) return  <div>
+    <p>Загрузка данных...</p>;
+    <Loader />
+  </div>
+  
     if (error) return <p>Ошибка: {error}</p>;
 
     const filteredArticles = selectedCategory

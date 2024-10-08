@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import Comments from 'components/comments/Comment';
-import styles from "./articlePageUser.module.css"
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import Comments from "components/comments/Comment";
+import styles from "./articlePageUser.module.css";
+import Loader from "components/loader/Loader";
 
 interface Article {
   id: number;
@@ -17,14 +18,15 @@ const ArticlePageUser = () => {
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
+    const token = localStorage.getItem("accessToken");
     console.log(`Token: ${token}`);
 
     if (!token) {
-      console.error('Токен отсутствует. Пожалуйста, авторизуйтесь.');
-      setError('Токен отсутствует. Пожалуйста, авторизуйтесь.');
+      console.error("Токен отсутствует. Пожалуйста, авторизуйтесь.");
+      setError("Токен отсутствует. Пожалуйста, авторизуйтесь.");
       return;
     }
 
@@ -32,11 +34,17 @@ const ArticlePageUser = () => {
       try {
         const response = await axios.get(`/api/articles/${id}`, {
           headers: {
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
         console.log("Article data:", response.data);
         setArticle(response.data);
+        const timer = setTimeout(() => {
+          setLoading(false);
+        }, 2000); // Загрузчик будет виден 3 секунды
+
+        // Очистка таймера
+        return () => clearTimeout(timer);
       } catch (error: any) {
         if (axios.isAxiosError(error)) {
           console.error("Ошибка при получении статьи:", error);
@@ -55,7 +63,7 @@ const ArticlePageUser = () => {
   }, [id]);
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
+    const token = localStorage.getItem("accessToken");
     if (!token) {
       return;
     }
@@ -64,13 +72,16 @@ const ArticlePageUser = () => {
       try {
         const response = await axios.get("/api/users", {
           headers: {
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
         setCurrentUser(response.data.username);
       } catch (error: any) {
         if (axios.isAxiosError(error)) {
-          console.error("Ошибка при получении информации о пользователе:", error);
+          console.error(
+            "Ошибка при получении информации о пользователе:",
+            error
+          );
         }
       }
     };
@@ -81,7 +92,7 @@ const ArticlePageUser = () => {
   // Проверяем, есть ли статья в избранном при загрузке страницы
   useEffect(() => {
     if (article) {
-      const favorites = localStorage.getItem('favorites');
+      const favorites = localStorage.getItem("favorites");
       if (favorites) {
         const parsedFavorites = JSON.parse(favorites);
         setIsFavorite(parsedFavorites.includes(article.id));
@@ -91,19 +102,19 @@ const ArticlePageUser = () => {
 
   // Функция для добавления или удаления статьи из избранного
   const toggleFavorite = () => {
-    const favorites = localStorage.getItem('favorites');
+    const favorites = localStorage.getItem("favorites");
     let favoritesArray: number[] = favorites ? JSON.parse(favorites) : [];
 
     if (isFavorite) {
       // Если уже в избранном, удаляем
-      favoritesArray = favoritesArray.filter(favId => favId !== article?.id);
+      favoritesArray = favoritesArray.filter((favId) => favId !== article?.id);
     } else {
       // Если не в избранном, добавляем
       favoritesArray.push(article!.id);
     }
 
-    localStorage.setItem('favorites', JSON.stringify(favoritesArray));
-    setIsFavorite(!isFavorite);  // Меняем состояние
+    localStorage.setItem("favorites", JSON.stringify(favoritesArray));
+    setIsFavorite(!isFavorite); // Меняем состояние
   };
 
   if (error) {
@@ -111,24 +122,33 @@ const ArticlePageUser = () => {
   }
 
   if (!article) {
-    return <div>Загрузка...</div>;
+    return (
+      <div>
+        <h1>Загрузка...</h1>
+        <Loader />
+      </div>
+    );
   }
 
   return (
     <div className="w-full md:w-1/2">
       <h3 className={styles.title}>{article.title}</h3>
       {/*<img src={article.imageUrl} alt={article.title} />*/}
-      {/* <p>{article.content}</p> */} 
-           {/* Кнопка добавления в избранное */}
-      <button onClick={toggleFavorite} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-      <i 
-        className={isFavorite ? 'fas fa-star' : 'far fa-star'} 
-        style={{ color: isFavorite ? 'gold' : 'gray', fontSize: '24px' }} 
+      {/* <p>{article.content}</p> */}
+      {/* Кнопка добавления в избранное */}
+      <button
+        onClick={toggleFavorite}
+        style={{ background: "none", border: "none", cursor: "pointer" }}
+      >
+        <i
+          className={isFavorite ? "fas fa-star" : "far fa-star"}
+          style={{ color: isFavorite ? "gold" : "gray", fontSize: "24px" }}
+        />
+      </button>
+      <div
+        className={styles.articlecontent}
+        dangerouslySetInnerHTML={{ __html: article.content }}
       />
-    </button>
-      <div className={styles.articlecontent} dangerouslySetInnerHTML={{ __html: article.content }} />
-
-
 
       <Comments
         article_id={article.id}
