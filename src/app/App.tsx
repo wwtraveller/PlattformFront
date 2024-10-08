@@ -163,8 +163,18 @@ function App() {
         </Routes>
 
         {isOpen && <AuthWindow onLoginSuccess={handleLoginSuccess} />}
-      </HashRouter>
-      <ToastContainer />
+        <ToastContainer 
+        position="top-right" // Позиция уведомлений
+        autoClose={3000} // Время автоматического закрытия
+        hideProgressBar={false} // Показать полоску прогресса
+        newestOnTop={false} // Новые уведомления выше старых
+        closeOnClick // Закрывать по клику
+        rtl={false} // Если используется RTL
+        pauseOnFocusLoss // Приостановка при потере фокуса
+        draggable // Возможность перетаскивания
+        pauseOnHover // Приостановка при наведении
+      />
+            </HashRouter>
     </div>
   );
 }

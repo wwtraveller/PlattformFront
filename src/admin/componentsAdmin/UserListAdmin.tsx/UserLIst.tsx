@@ -22,6 +22,7 @@ const UserList = () => {
       return;
     }
 
+
     // Функция для получения списка пользователей
     const fetchUsers = async () => {
       setLoading(true);

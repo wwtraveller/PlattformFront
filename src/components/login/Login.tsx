@@ -33,7 +33,7 @@ export default function Login({ onLoginSuccess }: LoginProps) {
     username: Yup.string()
       .required("Введите ваш Никнейм")
       .min(2, "Минимум 2 символа")
-      .max(15, "Максимум 15 символов"),
+      .max(20, "Максимум 20 символов"),
     password: Yup.string()
       .required("Введите пароль")
       .min(8, "Пароль должен содержать минимум 8 символов")

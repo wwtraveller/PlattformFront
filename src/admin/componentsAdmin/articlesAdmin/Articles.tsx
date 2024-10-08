@@ -3,6 +3,7 @@ import axios from 'axios';
 import ArticleForm from './ArticleForm';
 import { useNavigate } from 'react-router-dom';
 import styles from './articles.module.css'
+import ArticleList from './ArticleList';
 
 // Интерфейсы для статей и категорий
 interface Article {
@@ -67,6 +68,7 @@ const Articles = () => {
         fetchData();
     }, []);
 
+    // этот блок нужен?
     const handleCategoryChange = (categoryId: number) => {
         setSelectedCategory(categoryId);
     };
@@ -76,12 +78,14 @@ const Articles = () => {
         setIsCreating(true);
     };
 
+    // этот блок нужен?
     const handleEditArticle = (articleId: number) => {
         const article = articles.find((a) => a.id === articleId);
         setSelectedArticle(article || null);
         setIsCreating(true);
     };
 
+    // этот блок нужен?
     const handleDeleteArticle = async (articleId: number) => {
         try {
             const token = checkAuthToken();
@@ -120,7 +124,6 @@ const Articles = () => {
 
         fetchUpdatedArticles();
     };
-
     if (loading) return <p>Загрузка данных...</p>;
     if (error) return <p>Ошибка: {error}</p>;
 
@@ -134,6 +137,18 @@ const Articles = () => {
     return (
         <div className={styles.articles}>
             <h3>Управление статьями</h3>
+            {/* Кнопка для создания новой статьи */}
+            <button onClick={handleCreateArticle} className={styles.createButton}>Создать новую статью</button>
+
+            {/* Список статей */}
+            {/* <ArticleList
+            articles={articles}
+            onEdit={(id) => {
+                const selectedArticle = articles.find(article => article.id === id) || null;
+                setSelectedArticle(selectedArticle);
+            }}
+            onDelete={fetchUpdatedArticles}
+        /> */}
 
 {/* Кнопка для перехода на страницу со списком артиклей */}
 <button onClick={() => navigate('/articlesList')}>Список статей</button>
@@ -154,7 +169,7 @@ const Articles = () => {
             <ArticleList articles={filteredArticles} onEdit={handleEditArticle} onDelete={handleDeleteArticle} />*/}
 
             {/* Кнопка для создания нового артикля */}
-            <button onClick={handleCreateArticle}>Создать новую статью</button>
+            {/* <button onClick={handleCreateArticle}>Создать новую статью</button> */}
 
             {/* Форма для создания/редактирования артикля */}
             {isCreating && (

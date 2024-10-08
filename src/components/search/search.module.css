@@ -72,7 +72,7 @@
   height: 40px;
   box-sizing: border-box;
   width: 180px; /* Исходная ширина на маленьких экранах */
-  opacity: 0; /* Скрываем текстовое поле, пока оно свернуто */
+  opacity: 1; /* Скрываем текстовое поле, пока оно свернуто */
   padding: 5px;
 }
 
@@ -91,6 +91,10 @@
   cursor: pointer;
   background-color: transparent;
   border: none;
+
+  /* Анимация открытия влево **/
+  /* transform: translateX(-150px);
+  transition: transform 0.3s ease; */
   /* box-sizing: border-box; */
 }
 

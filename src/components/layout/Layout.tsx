@@ -26,13 +26,13 @@ function Layout() {
     const categoryName = decodeURIComponent(pathParts[pathParts.length - 1]);
 
   switch (location.pathname) {
-    case '/':
-      setBannerText('Добро пожаловать на главную страницу!');
-      setBackgroundImage('https://images.pexels.com/photos/164652/pexels-photo-164652.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); // Укажите URL изображения для главной страницы
-      break;
+    // case '/':
+    //   setBannerText('Добро пожаловать на главную страницу!');
+    //   setBackgroundImage('https://images.pexels.com/photos/164652/pexels-photo-164652.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); // Укажите URL изображения для главной страницы
+    //   break;
     case '/about':
-      setBannerText('Узнайте больше о нас!');
-      setBackgroundImage('https://images.pexels.com/photos/356056/pexels-photo-356056.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); // Изображение по умолчанию
+      setBannerText('Наши технологии и команда');
+      setBackgroundImage('https://images.unsplash.com/photo-1694327876207-15246f69b411?q=80&w=3264&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); // Изображение по умолчанию
       break;
       case '/userlist':
         setBannerText('Список пользователей');
@@ -40,12 +40,12 @@ function Layout() {
       break;
       case '/profile':
       setBannerText('Ваш профиль');
-      setBackgroundImage('https://images.pexels.com/photos/164652/pexels-photo-164652.jpeg?auto=compress&cs=tinysrgb&w=800'); // Укажите URL изображения для страницы "Продукты"
+      setBackgroundImage('https://images.unsplash.com/photo-1694327876207-15246f69b411?q=80&w=3264&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); // Укажите URL изображения для страницы "Продукты"
       break;
     // Добавьте дополнительные пути по необходимости
     default:
-      setBannerText('Ваш текст здесь'); // Текст по умолчанию
-      setBackgroundImage('https://images.pexels.com/photos/67112/pexels-photo-67112.jpeg?auto=compress&cs=tinysrgb&w=800'); // Изображение по умолчанию
+      setBannerText('Ваш текст здесь'); 
+      setBackgroundImage('https://images.unsplash.com/photo-1694327876207-15246f69b411?q=80&w=3264&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
   }
   if (categoryName === 'Продажи') {
     setBannerText('Продажи');
