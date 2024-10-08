@@ -41,7 +41,7 @@ const ArticlePageUser = () => {
         setArticle(response.data);
         const timer = setTimeout(() => {
           setLoading(false);
-        }, 2000); // Загрузчик будет виден 3 секунды
+        }, 2000); 
 
         // Очистка таймера
         return () => clearTimeout(timer);
