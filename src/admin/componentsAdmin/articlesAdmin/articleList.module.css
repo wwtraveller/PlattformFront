@@ -13,6 +13,14 @@
   justify-content: space-between;
 }
 
+.articleItem strong {
+  max-width: 60%; /* Ограничиваем ширину заголовка */
+  white-space: nowrap; /* Запрещаем перенос текста */
+  overflow: hidden; /* Скрываем переполнение */
+  text-overflow: ellipsis; /* Добавляем многоточие */
+  text-align: left; /* Выравниваем по левому краю */
+}
+
 .articleItem {
   display: flex;
   justify-content: space-between;
@@ -30,9 +38,20 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+.articleLink {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.articleLink:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
 .actionButtons {
   display: flex;
   gap: 10px; /* Расстояние между кнопками */
+  margin-left: 15px; /* Расстояние между кнопками и заголовком */
 }
 
 .editButton, .deleteButton {
@@ -44,21 +63,29 @@
 }
 
 .editButton {
-  background-color: #ffc107;
-  color: #fff;
+  /* margin: 5px;
+    padding: 10px 20px; */
+    background-color: var(--background-color); /* Используем общий фон */
+    border: 1px solid var(--primary-color); /* Легкая граница для выделения */
+    /* border-radius: 10px;
+    transition: background-color 0.3s, color 0.3s, transform 0.1s ease-in-out;
+    width: 130px; */
 }
 
 .editButton:hover {
-  background-color: #e0a800;
+  background-color: var(--primary-color);
+  color: #fff;
 }
 
 .deleteButton {
-  background-color: #dc3545;
-  color: #fff;
+  background-color: var(--background-color); /* Используем общий фон */
+  border: 1px solid #dc3545; /* Легкая граница для выделения */
+  color:#dc3545;
 }
 
 .deleteButton:hover {
   background-color: #c82333;
+  color: #fff;
 }
 
 
