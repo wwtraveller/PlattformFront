@@ -34,7 +34,7 @@ function Layout() {
       setBannerText('Наши технологии и команда');
       setBackgroundImage('https://images.unsplash.com/photo-1694327876207-15246f69b411?q=80&w=3264&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); // Изображение по умолчанию
       break;
-      case '/userList':
+      case '/userlist':
         setBannerText('Список пользователей');
         setBackgroundImage('https://images.pexels.com/photos/356056/pexels-photo-356056.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); // Изображение по умолчанию
       break;
@@ -72,7 +72,10 @@ function Layout() {
     <div className={styles.page}>
       <ScrollToTop />
       <Header setError={setError} setSearchResults={()=>{}}  />
-      <Banner bannerText={bannerText} imageUrl={backgroundImage} /> {/* Передаем текст и изображение в компонент Banner */}
+      
+      {/* Передаем текст и изображение в компонент Banner */}
+      {/* <Banner bannerText={bannerText} imageUrl={backgroundImage} /> */}
+
       <main className={styles.main}>
         {/* сюда вместо outlet приходят все компоненты из вложенных route */}
         <Outlet />
