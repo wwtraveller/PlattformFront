@@ -14,9 +14,9 @@ This version of the repository was created for the final project presentation an
 - Admin panel for content management.
 
 ## Technologies Used
-- **Front-end:** React, HTML5, CSS3, JavaScript.
-- **Back-end:** Node.js, Express, MongoDB.
-- **Additional Tools:** Postman for API testing, Jenkins for CI/CD, Selenium for test automation.
+- **Front-end:** TypeScript, React, React Router, React Context API, React Hook Form, Axios, Webpack, Tailwind CSS, Draft.js.
+- **Back-end:** Java Spring (Spring Boot, Spring Security), BcryptPass, Postgres, Mockito, Spring Boot Test, Swagger.
+- **Additional Tools:** Docker, Postman for API testing, Jenkins for CI/CD, Selenium for test automation.
 
 ## Deployment
 This project has been deployed and can be viewed at: https://platform-qxs32.ondigitalocean.app/.
