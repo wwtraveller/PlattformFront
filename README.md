@@ -21,7 +21,7 @@ This version of the repository was created for the final project presentation an
 ## Deployment
 This project has been deployed and can be viewed at: https://platform-qxs32.ondigitalocean.app/.
 
-Please note that this is the final project version, and active development has been moved to a private repository. For inquiries, please contact shilimova.a@gmail.com.
+Please note that this is the final project version, and active development has been moved to a private repository. For inquiries, please contact shilimovapro@gmail.com.
 
 ## Team Members
 - **Front-end developers:** Alena Shilimova, Alexander Varnavin-Braun, Katja Weimer.
@@ -36,4 +36,4 @@ Please note that this is the final project version, and active development has b
 This project is licensed under the MIT License – see the [LICENSE](./LICENSE) file for details.
 
 ## Contact Information
-For further questions about this version of the project, please contact: shilimova.a@gmail.com.
+For further questions about this version of the project, please contact: shilimovapro@gmail.com.
