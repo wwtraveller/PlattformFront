@@ -64,8 +64,19 @@ const Footer = () => {
           <p>© Все права защищены</p>
         </div>
       </div>
+      {/* Информация о проекте */}
+      <div className={styles.projectInfo}>
+        <h3>About This Project</h3>
+        <p>
+          This version of the Expert Information Portal was developed as part of a final programming course project. 
+          It showcases the work of front-end developers, back-end developers, and QA engineers who collaborated to create 
+          an information platform for experts. Further development of this project is now continued privately.
+        </p>
+        <p>
+          For inquiries regarding this final project version, please contact us at <a href="mailto:shilimovapro@gmail.com">shilimovapro@gmail.com</a>.
+        </p>
+      </div>
     </footer>
   );
 };
-
 export default Footer;
