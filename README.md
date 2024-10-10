@@ -33,7 +33,7 @@ Please note that this is the final project version, and active development has b
 - Registration errors may occur with non-standard email domains.
 
 ## License
-This project is licensed under the MIT License – see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the MIT License – see the [LICENSE](./LICENSE.md) file for details.
 
 ## Contact Information
 For further questions about this version of the project, please contact: shilimovapro@gmail.com.
